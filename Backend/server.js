@@ -7,6 +7,7 @@ const corsMiddleware = require("./middleware/corsConfig");
 const routes = require("./Pages/index");
 const loginRoute = require("./Pages/loginManager");
 const registerRoute = require("./Pages/registerManager");
+const host = "localhost";
 
 const app = express();
 const port = 7777; // HTTP port
