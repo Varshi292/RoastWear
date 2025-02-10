@@ -1,55 +1,57 @@
-**Sprint 1 Report**
+#**Sprint 1 Report**
 
-User Stories
+##**User Stories**
 
-As a user, I want to customize my own T-shirts so that I can create a unique design.
+1.As a user, I want to customize my own T-shirts so that I can create a unique design.
 
-As a user, I want to add T-shirts to my cart so that I can purchase them later.
+2.As a user, I want to add T-shirts to my cart so that I can purchase them later.
 
-As a user, I want a secure login/signup system so that my data is protected.
+3.As a user, I want a secure login/signup system so that my data is protected.
 
-As a user, I want seamless navigation between different pages so that I can easily explore the website.
+4.As a user, I want seamless navigation between different pages so that I can easily explore the website.
 
-Issues Planned to Address
+---
 
-Implementing the home page with routing components.
+##**Issues Planned to Address
+**
+-Implementing the home page with routing components.
 
-Setting up authentication (login/signup) and connecting it to the SQLite database.
+-Setting up authentication (login/signup) and connecting it to the SQLite database.
 
-Ensuring proper UI design for product listings.
+-Ensuring proper UI design for product listings.
 
-Implementing an "Add to Cart" button.
+-Implementing an "Add to Cart" button.
 
-Developing the T-shirt customization feature.
+-Developing the T-shirt customization feature.
 
-Successfully Completed
+##**Successfully Completed
+**
+1.All components in the home page were implemented and set up as routing components.
 
-All components in the home page were implemented and set up as routing components.
+2.User authentication (login/signup) was successfully connected to the SQLite database.
 
-User authentication (login/signup) was successfully connected to the SQLite database.
+3.UI design for product listings was developed.
 
-UI design for product listings was developed.
+##**Issues Not Completed and Reasons
+**
+-The "Add to Cart" functionality was not fully implemented due to time constraints and backend dependencies.
 
-Issues Not Completed and Reasons
+-Some UI elements need improvement to ensure a smoother user experience.
 
-The "Add to Cart" functionality was not fully implemented due to time constraints and backend dependencies.
+-Error handling and validation in the authentication process require further testing and refinement.
 
-Some UI elements need improvement to ensure a smoother user experience.
+-The T-shirt customization feature was not completed due to prioritization of authentication and UI setup.
 
-Error handling and validation in the authentication process require further testing and refinement.
+**Next Steps
+**
+-Complete the "Add to Cart" functionality and integrate it with the backend.
 
-The T-shirt customization feature was not completed due to prioritization of authentication and UI setup.
+-Implement the T-shirt customization feature.
 
-Next Steps
+-Improve UI design based on feedback.
 
-Complete the "Add to Cart" functionality and integrate it with the backend.
+-Enhance authentication validation and error handling.
 
-Implement the T-shirt customization feature.
-
-Improve UI design based on feedback.
-
-Enhance authentication validation and error handling.
-
-Begin working on the checkout and payment integration.
+-Begin working on the checkout and payment integration.
 
 
