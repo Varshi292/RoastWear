@@ -23,7 +23,8 @@
 
 1. All components in the home page were implemented and set up as routing components.  
 2. User authentication (login/signup) was successfully connected to the SQLite database.  
-3. UI design for product listings was developed.  
+3. UI design for product listings was developed.
+4. Users can upload memes to the backend to retrieve at a later time when they want to make some merch
 
 ---
 
@@ -43,3 +44,7 @@
 - Improve UI design based on feedback.  
 - Enhance authentication validation and error handling.  
 - Begin working on the checkout and payment integration.  
+
+
+## Backend Video
+https://youtu.be/dL3xkGiFavI
