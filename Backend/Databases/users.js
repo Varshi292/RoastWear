@@ -3,7 +3,7 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 // Path to your database file (resolved from the current script's directory)
-const dbPath = path.resolve(__dirname, 'users.db');  // This will create it in the same directory as this script
+const dbPath = path.resolve(__dirname, './users.db');  // This will create it in the same directory as this script
 
 // Open the database (will create it if it doesn't exist)
 const db = new sqlite3.Database(dbPath, (err) => {

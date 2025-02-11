@@ -17,15 +17,11 @@ const port = 7777; // HTTP port
 app.use(cors({ origin: "http://localhost:3000" }));
 app.use(corsMiddleware);
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "../Frontend")));
 app.get("/", (req, res) => {
-  res.send("CORS enabled!");
+  res.send("Backend Homepage!");
 });
 
-// Use routes
-app.use("/", routes);
-app.use("/login", loginRoute);
-app.use("/register", registerRoute);
+app.use(routes);
 
 // Start the server using HTTP
 app.listen(port, host, () => {
