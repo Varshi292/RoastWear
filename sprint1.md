@@ -5,7 +5,8 @@
 1. **As a user,** I want to customize my own T-shirts so that I can create a unique design.  
 2. **As a user,** I want to add T-shirts to my cart so that I can purchase them later.  
 3. **As a user,** I want a secure login/signup system so that my data is protected.  
-4. **As a user,** I want seamless navigation between different pages so that I can easily explore the website.  
+4. **As a user,** I want seamless navigation between different pages so that I can easily explore the website.
+5. **As a user,** I want to see my previous designs and meme uploads so my workflow is more efficient.
 
 ---
 
@@ -17,6 +18,8 @@
 - Implementing an "Add to Cart" button.  
 - Developing the T-shirt customization feature.  
 - Adding Wishlist feature.
+- Better user encryption
+- Tokenized sessions
 ---
 
 ## Successfully Completed  
@@ -43,7 +46,8 @@
 - Implement the T-shirt customization feature.  
 - Improve UI design based on feedback.  
 - Enhance authentication validation and error handling.  
-- Begin working on the checkout and payment integration.  
+- Begin working on the checkout and payment integration.
+- More organized user data organization and retrieval (to set us up for shopping carts, past designs, and past purchases)  
 
 
 ## Backend Video
