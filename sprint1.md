@@ -16,7 +16,7 @@
 - Ensuring proper UI design for product listings.  
 - Implementing an "Add to Cart" button.  
 - Developing the T-shirt customization feature.  
-
+- Adding Wishlist feature.
 ---
 
 ## Successfully Completed  
