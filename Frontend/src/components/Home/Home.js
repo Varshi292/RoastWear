@@ -64,6 +64,14 @@ const Home = () => {
     />
   </Link>
 
+   <Link to="/shop/movie/balayya">
+    <img
+      src="/Assets/balayya.jpeg"
+      alt="balayya babu"
+      className="rounded-full object-cover cursor-pointer w-24 h-24 sm:w-30 sm:h-30 md:w-32 md:h-32"
+    />
+  </Link>
+
   {/* Friends */}
   <Link to="/shop/movie/friends">
     <img
@@ -72,6 +80,28 @@ const Home = () => {
       className="rounded-full object-cover cursor-pointer w-24 h-24 sm:w-30 sm:h-30 md:w-32 md:h-32"
     />
   </Link>
+  <Link to="/shop/movie/modernfamily">
+    <img
+      src="/Assets/mrdnf.webp"
+      alt="modern family"
+      className="rounded-full object-cover cursor-pointer w-24 h-24 sm:w-30 sm:h-30 md:w-32 md:h-32"
+    />
+  </Link>
+  <Link to="/shop/movie/ene">
+    <img
+      src="/Assets/koushik.jpeg"
+      alt="ene"
+      className="rounded-full object-cover cursor-pointer w-24 h-24 sm:w-30 sm:h-30 md:w-32 md:h-32"
+    />
+  </Link>
+  <Link to="/shop/movie/pellichoopulu">
+    <img
+      src="/Assets/darshi.jpeg"
+      alt="pelli choopulu"
+      className="rounded-full object-cover cursor-pointer w-24 h-24 sm:w-30 sm:h-30 md:w-32 md:h-32"
+    />
+  </Link>
+ 
 </div>
 
       </div>
