@@ -10,7 +10,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
-import Cart from "./components/Cart"
+import Detail from "./components/Home/detail";
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/:slug" element={<Detail />} />
       </Routes>
     </Router>
   );
