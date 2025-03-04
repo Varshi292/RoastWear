@@ -38,6 +38,7 @@
 7. Upgraded codes to props for state Management.
 8. Successfully done Cypress Component Testing on Login/Register components.
 9. Partially implemented Wishlist functionality.
+10. Retrieval of previous meme uploads
 
 ---
 
@@ -64,6 +65,8 @@
 ## Backend Video
 
 https://uflorida-my.sharepoint.com/:v:/g/personal/nboussarhane_ufl_edu/EZyJHX0ERWJLn3tEyrh0AQ8BbhIWlItUi2XFmhw6vWYXHw
+
+https://youtu.be/zDFAH9irk0I
 
 ## Frontend Video
 
