@@ -66,4 +66,4 @@
 
 
 ## Frontend Video
-https://docs.google.com/presentation/d/1USNHJUljf8NKpwUfbD_HVnp1WbtPGB9ylVnxi92792k/edit#slide=id.p
+https://drive.google.com/file/d/1tAPfAphZXtvw6bGnFKY_fODphHd9YXqi/view?usp=drive_link
