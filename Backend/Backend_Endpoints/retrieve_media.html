@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrieve User Media</title>
+</head>
+
+<body>
+    <h1>Retrieve Uploaded Media</h1>
+    <form id="retrieveForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required />
+        <br><br>
+        <button type="submit">Retrieve Media</button>
+    </form>
+
+    <p id="status"></p>
+    <div id="mediaContainer"></div>
+
+    <script>
+        document.getElementById('retrieveForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); 
+
+            const username = document.getElementById('username').value;
+            const status = document.getElementById('status');
+            const mediaContainer = document.getElementById('mediaContainer');
+
+            if (!username) {
+                status.textContent = "Please enter a username.";
+                return;
+            }
+
+            status.textContent = "Fetching media...";
+            mediaContainer.innerHTML = "";
+
+            try {
+                const response = await fetch(`/get_user_media?username=${encodeURIComponent(username)}`);
+
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.images.length > 0) {
+                        status.textContent = "Media retrieved successfully.";
+                        result.images.forEach(filepath => {
+                            const img = document.createElement('img');
+                            img.src = `/user_images/${filepath.split('/').pop()}`;
+                            img.alt = "User uploaded media";
+                            img.style.maxWidth = "200px";
+                            img.style.margin = "10px";
+                            mediaContainer.appendChild(img);
+                        });
+
+                    } else {
+                        status.textContent = "No media found for this user.";
+                    }
+                } else {
+                    const error = await response.json();
+                    status.textContent = `Error: ${error.error}`;
+                }
+            } catch (err) {
+                status.textContent = `Error: ${err.message}`;
+            }
+        });
+    </script>
+</body>
+
+</html>

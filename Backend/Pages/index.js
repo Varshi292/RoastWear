@@ -3,6 +3,7 @@ const registerRoute = require("./registerManager");
 const loginRoute = require("./loginManager");
 const manageData = require("./userDataManager");
 const manageUserMedia = require("./uploadMediaManager");
+const collectUserMedia = require("./get_user_media");
 const path = require("path");
 
 const router = express.Router();
@@ -12,6 +13,12 @@ router.use("/static", express.static(path.resolve(__dirname, "../Backend_Endpoin
 router.get("/upload_image", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../Backend_Endpoints/upload_media.html"));
 });
+
+router.get("/retrieve_media", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../Backend_Endpoints/retrieve_media.html"));
+});
+
+router.use('/get_user_media', collectUserMedia);
 
 // Handle registration API request
 router.use("/register", registerRoute);

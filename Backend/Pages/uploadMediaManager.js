@@ -28,38 +28,48 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     fileFilter: (req, file, cb) => {
-        // Accept only PNG files
         if (file.mimetype === 'image/png') {
-            cb(null, true);
+            cb(null, true); // Accept PNG files
         } else {
-            cb(new Error('Only PNG images are allowed.'));
+            cb(null, false); // Reject non-PNG files
         }
-    },
+    }
 });
 
-// POST endpoint to handle image uploads
-router.post("/", upload.single('image'), (req, res) => {
-    const { username } = req.body;
-    const filepath = path.join(imageDir, req.file.filename);
 
-    console.log("Recieved");
 
-    if (!username) {
-        return res.status(400).json({ error: "Username is required." });
-    }
-
-    // Insert the new record into the database
-    const insertQuery = `
-        INSERT INTO user_uploads (username, filepath)
-        VALUES (?, ?)
-    `;
-    db.run(insertQuery, [username, filepath], (err) => {
+router.post("/", (req, res) => {
+    upload.single('image')(req, res, (err) => {
         if (err) {
-            console.error("Error inserting data into the database:", err.message);
-            return res.status(500).json({ error: "Failed to store image data." });
+            return res.status(500).json({ error: 'An error occurred during file upload.' });
         }
-        res.status(200).json({ message: "Image uploaded and data saved.", filepath });
+
+        // If file was rejected by Multer, req.file will be undefined
+        if (!req.file) {
+            return res.status(500).json({ error: "Only PNG images are allowed." });
+        }
+
+        const { username } = req.body;
+        if (!username) {
+            return res.status(400).json({ error: "Username is required." });
+        }
+
+        const filename = req.file.filename; // Store only filename, not full path
+
+        // Insert into database
+        const insertQuery = `
+            INSERT INTO user_uploads (username, filepath)
+            VALUES (?, ?)
+        `;
+        db.run(insertQuery, [username, filename], (err) => {
+            if (err) {
+                console.error("Error inserting data into the database:", err.message);
+                return res.status(500).json({ error: "Failed to store image data." });
+            }
+            res.status(200).json({ message: "Image uploaded and data saved.", filepath: filename });
+        });
     });
 });
+
 
 module.exports = router;

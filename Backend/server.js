@@ -17,6 +17,7 @@ const port = 7777; // HTTP port
 app.use(cors({ origin: "http://localhost:3000" }));
 app.use(corsMiddleware);
 app.use(bodyParser.json());
+app.use('/user_images', express.static(path.join(__dirname, 'user_images')));
 app.get("/", (req, res) => {
   res.send("Backend Homepage!");
 });
