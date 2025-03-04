@@ -21,6 +21,9 @@
 - Better user encryption.
 - Tokenized sessions.
 - Adding a page for displaying product.
+- Implementing WishList.
+- Implementing Cypress Component Testing
+- Introducing Props for State Management 
 
 ---
 
@@ -32,7 +35,9 @@
 4. Restricted username and email address as unique keys in database.
 5. Created error handling for more invalid user account input.
 6. Product pages added, which can be used to display more information about each product.
-
+7. Upgraded codes to props for state Management.
+8. Successfully done Cypress Component Testing on Login/Register components.
+9. Partially implemented Wishlist functionality.
 
 ---
 
