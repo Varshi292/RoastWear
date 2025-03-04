@@ -54,7 +54,7 @@
 - Fully remake backend with Go.
 - Add validation of empty input outside of backend.
 - Implement session management.
-- Implement wishlist and favoriting products.
+- Implement wishlist and favoring products.
 
 ## Backend Video
 
