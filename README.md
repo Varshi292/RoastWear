@@ -28,30 +28,17 @@ RoastWear is a web application that brings humor, creativity, and customization 
     cd RoastWear
     ```
 
-2. **Set Up Environment Variables:**  
-   Create a `.env` file in the root directory:
-    ```env
-    PORT=7777
-    STATIC_FILES_PATH=./frontend/build
-    DB_PATH=./db/users.db
-    ```
-
-3. **Install Backend Dependencies:**
-    ```bash
-    npm install
-    ```
-
-4. **Install Frontend Dependencies and Build:**
+2. **Install Frontend Dependencies and Build:**
     ```bash
     cd frontend
     npm install
     npm run build
     ```
 
-5. **Run the Application:**
+3. **Run the Application:**
     ```bash
-    go run cmd/main.go
+    go run ../main.go
     ```
 
-6. **Access the App:**
+4. **Access the App:**
     - Open your browser and go to `http://localhost:7777`.
