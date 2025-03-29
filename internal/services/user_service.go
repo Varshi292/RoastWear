@@ -20,10 +20,10 @@ func NewUserService(repo interfaces.UserRepository) *UserService {
 
 func (service *UserService) RegisterUser(request *models.UserRegisterRequest) error {
 	if service.repo.HasUser("username", request.Username) {
-		return fmt.Errorf("username '%service' already exists", request.Username)
+		return fmt.Errorf("username '%s' already exists", request.Username)
 	}
 	if service.repo.HasUser("email", request.Email) {
-		return fmt.Errorf("email '%service' already exists", request.Email)
+		return fmt.Errorf("email '%s' already exists", request.Email)
 	}
 	hashedPassword, err := utils.HashPassword(request.Password)
 	if err != nil {
@@ -35,7 +35,7 @@ func (service *UserService) RegisterUser(request *models.UserRegisterRequest) er
 		Password: hashedPassword,
 	}
 	if err := service.repo.CreateUser(user); err != nil {
-		return fmt.Errorf("error creating user '%service': %v", request.Username, err)
+		return fmt.Errorf("error creating user '%s': %v", request.Username, err)
 	}
 	log.Printf("✅ User '%s' created successfully.\n", user.Username)
 	return nil
@@ -45,14 +45,14 @@ func (service *UserService) RemoveUser(username string) error {
 	target, err := service.repo.GetUser("username", username)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			err = fmt.Errorf("user '%service' not found", username)
+			err = fmt.Errorf("user '%s' not found", username)
 		}
-		return fmt.Errorf("error retrieving user '%service': %v", username, err)
+		return fmt.Errorf("error retrieving user '%s': %v", username, err)
 	}
 	if err := service.repo.DeleteUser(target); err != nil {
-		return fmt.Errorf("error removing user '%service': %v", username, err)
+		return fmt.Errorf("error removing user '%s': %v", username, err)
 	}
-	log.Printf("✅ User '%service' deleted successfully.\n", username)
+	log.Printf("✅ User '%s' deleted successfully.\n", username)
 	return nil
 }
 
