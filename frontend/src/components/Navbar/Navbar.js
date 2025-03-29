@@ -1,16 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import iconCart from "../../assets/images/iconCart.png";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleStatusTab } from "../../stores/cart";
 import "@fortawesome/fontawesome-free/css/all.css";
+import CartTab from "../Carts/CartTab"; // Make sure the CartTab component is imported
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [totalQuantity, setTotalQuantity] = useState(0);
+
+  const carts = useSelector((store) => store.cart.items); // Access cart items from Redux
+  const statusTabCart = useSelector((store) => store.cart.statusTab); // Access cart tab state
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    let total = 0;
+    carts.forEach((item) => (total += item.quantity)); // Calculate total quantity
+    setTotalQuantity(total);
+  }, [carts]);
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    setMenuOpen(!menuOpen); // Toggle mobile menu visibility
+  };
+
+  const handleOpenTabCart = () => {
+    dispatch(toggleStatusTab()); // Dispatch Redux action to toggle cart tab visibility
   };
 
   return (
-    <nav className="bg-gray-800 text-white">
+    <nav className="bg-gray-800 text-white sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Logo */}
         <div className="text-2xl font-bold">
@@ -53,9 +72,15 @@ const Navbar = () => {
           <Link to="/wishlist" className="hover:text-gray-400">
             <i className="far fa-heart"></i> {/* Hollow heart icon */}
           </Link>
-          <Link to="/cart" className="hover:text-gray-400">
-            <i className="fas fa-shopping-bag"></i> {/* Hollow bag icon */}
-          </Link>
+          <div
+            className="w-10 h-10 bg-gray-100 rounded-full flex justify-center items-center relative"
+            onClick={handleOpenTabCart} // Open the CartTab when clicked
+          >
+            <img src={iconCart} alt="Cart" className="w-6" />
+            <span className="absolute top-2/3 right-1/2 bg-red-500 text-white text-sm w-5 h-5 rounded-full flex justify-center items-center">
+              {totalQuantity}
+            </span>
+          </div>
         </div>
 
         {/* Hamburger Menu Toggle (Mobile Only) */}
@@ -118,6 +143,9 @@ const Navbar = () => {
           <i className="fas fa-shopping-bag"></i> Cart
         </Link>
       </div>
+
+      {/* Cart Tab (Should be placed outside the Navbar component to be part of the layout) */}
+      <CartTab />
     </nav>
   );
 };

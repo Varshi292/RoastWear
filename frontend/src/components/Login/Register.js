@@ -1,7 +1,6 @@
 // src/components/Login/Register.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {BASE_URL} from "../../App";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -19,7 +18,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch(BASE_URL + "/register", {
+      const response = await fetch("http://localhost:7777/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),

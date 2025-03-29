@@ -3,4 +3,4 @@ unstruct/Backend/node_modules/
 
 # Ignore package-lock.json
 unstruct/Backend/package-lock.json
-/backend/-unimplemented/
+/unstruct/backend/-unimplemented/

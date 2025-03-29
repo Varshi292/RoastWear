@@ -10,8 +10,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
-
-export const BASE_URL = "http://localhost:" + PORT
+import Detail from "./components/Home/detail";
 
 function App() {
   return (
@@ -26,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/:slug" element={<Detail />} />
       </Routes>
     </Router>
   );
