@@ -10,6 +10,7 @@ import Login from "./Login";
 import Register from "./Register";
 
 // 🔧 Utility to render with routing support
+
 const renderWithRouter = (ui, { route = "/" } = {}) => {
   return render(
     <MemoryRouter initialEntries={[route]}>
