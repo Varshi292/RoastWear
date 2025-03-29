@@ -37,8 +37,7 @@ func (service *UserService) RegisterUser(request *models.UserRegisterRequest) er
 	if err := service.repo.CreateUser(user); err != nil {
 		return fmt.Errorf("error creating user '%service': %v", request.Username, err)
 	}
-	service.ShowUsers()
-	log.Printf("✅ User '%service' created successfully.\n", user.Username)
+	log.Printf("✅ User '%s' created successfully.\n", user.Username)
 	return nil
 }
 

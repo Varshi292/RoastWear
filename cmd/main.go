@@ -1,21 +1,27 @@
 package main
 
 import (
-	"github.com/Varshi292/RoastWear/internal/configurations"
+	"github.com/Varshi292/RoastWear/internal/config"
 	"github.com/Varshi292/RoastWear/internal/database"
-	"github.com/Varshi292/RoastWear/internal/models"
+	"github.com/Varshi292/RoastWear/internal/handlers"
 	"github.com/Varshi292/RoastWear/internal/repository"
 	"github.com/Varshi292/RoastWear/internal/services"
+	"github.com/Varshi292/RoastWear/internal/session"
 	"github.com/gofiber/fiber/v2"
 	"log"
 )
 
 func main() {
 	// Load environmental variables
-	cfg, err := config.Load()
-	if err != nil {
-		log.Fatalf("Failed to load configuration: %s", err)
+	cfg := config.AppConfig{}
+	if err := config.LoadConfig(&cfg); err != nil {
+		log.Fatalf("Failed to load app configuration: %s", err)
 	}
+	if err := config.LoadConfig(config.SessionConfig{}); err != nil {
+		log.Fatalf("Failed to load session configuration: %s", err)
+	}
+	sessCfg := config.SessionConfig{}
+	session.InitializeSessionStore(sessCfg)
 
 	// Initialize Fiber
 	app := fiber.New()
@@ -32,13 +38,12 @@ func main() {
 
 	userRepo := &repository.UserRepository{Db: db}
 	userService := services.NewUserService(userRepo)
-	if err := userService.RegisterUser(&models.UserCreateRequest{
-		Username: "hi",
-		Email:    "hi",
-		Password: "hi",
-	}); err != nil {
-		log.Fatalf("Failed to register user: %s", err)
-	}
+	registerHandler := handlers.NewRegisterHandler(userService)
+	app.Post("/register", registerHandler.UserRegister)
+
+	authService := services.NewAuthService(userRepo)
+	loginHandler := handlers.NewLoginHandler(authService)
+	app.Post("/login", loginHandler.UserLogin)
 
 	log.Printf("Server running on port %s\n", cfg.Port)
 	if err := app.Listen(":" + cfg.Port); err != nil {
