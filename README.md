@@ -37,7 +37,8 @@ RoastWear is a web application that brings humor, creativity, and customization 
 
 3. **Run the Application:**
     ```bash
-    go run ../main.go
+    cd ../
+    go run cmd/main.go
     ```
 
 4. **Access the App:**
