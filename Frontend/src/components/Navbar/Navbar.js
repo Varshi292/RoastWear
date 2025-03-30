@@ -11,7 +11,6 @@ const Navbar = () => {
   const [totalQuantity, setTotalQuantity] = useState(0);
 
   const carts = useSelector((store) => store.cart.items);
-  const statusTabCart = useSelector((store) => store.cart.statusTab);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -55,9 +54,10 @@ const Navbar = () => {
 
         {/* Wishlist + Cart (Desktop) */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link to="/wishlist" className="hover:text-gray-400">
-            <i className="far fa-heart"></i>
-          </Link>
+        <Link to="/wishlist" className="hover:text-red-500">
+  <i className="fas fa-heart mr-1"></i> Wishlist
+</Link>
+
           <div
             className="w-10 h-10 bg-gray-100 rounded-full flex justify-center items-center relative"
             onClick={handleOpenTabCart}

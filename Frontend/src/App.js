@@ -11,6 +11,12 @@ import Contact from "./components/Contact";
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
 import Detail from "./components/Home/detail";
+import WishlistPage from "./Pages/WishlistPage";
+
+
+
+
+// import WishlistPage from "./pages/WishlistPage";
 
 function App() {
   return (
@@ -25,10 +31,12 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/:slug" element={<Detail />} />
+        <Route path="/product/:slug" element={<Detail />} />
+        <Route path="/wishlist" element={<WishlistPage />} /> 
       </Routes>
     </Router>
   );
 }
+
 
 export default App;
