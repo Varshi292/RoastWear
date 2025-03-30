@@ -1,12 +1,11 @@
-// CartItem.test.js
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import CartItem from "./CartItem";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import { changeQuantity } from "../../stores/cart";
+import { changeQuantity, removeFromCart } from "../../stores/cart";
 
-// Mock the product list (simulates ../Home/Product.js)
+// Mock product data
 jest.mock("../Home/Product", () => ({
   products: [
     {
@@ -14,6 +13,7 @@ jest.mock("../Home/Product", () => ({
       name: "Test T-Shirt",
       price: 10,
       image: "https://fakeimage.com/shirt.jpg",
+      designer: "Test Designer",
     },
   ],
 }));
@@ -51,20 +51,21 @@ describe("CartItem Component", () => {
 
   test("renders item details correctly", async () => {
     setup();
-
-    // Wait for useEffect to resolve
     const itemName = await screen.findByText("Test T-Shirt");
-    const price = screen.getByText("$20");
+    const price = screen.getByText((content) => content.includes("20.00"));
 
     expect(itemName).toBeInTheDocument();
     expect(price).toBeInTheDocument();
     expect(screen.getByText("2")).toBeInTheDocument();
-    expect(screen.getByRole("img")).toHaveAttribute("src", expect.stringContaining("shirt.jpg"));
+    expect(screen.getByRole("img")).toHaveAttribute(
+      "src",
+      expect.stringContaining("shirt.jpg")
+    );
   });
 
   test("clicking + calls dispatch with incremented quantity", async () => {
     setup();
-    const plusButton = await screen.findByText("+");
+    const plusButton = screen.getByRole("button", { name: /plus/i });
     fireEvent.click(plusButton);
 
     expect(mockDispatch).toHaveBeenCalledWith(
@@ -74,11 +75,19 @@ describe("CartItem Component", () => {
 
   test("clicking - calls dispatch with decremented quantity", async () => {
     setup();
-    const minusButton = await screen.findByText("-");
+    const minusButton = screen.getByRole("button", { name: /minus/i });
     fireEvent.click(minusButton);
 
     expect(mockDispatch).toHaveBeenCalledWith(
       changeQuantity({ productId: 1, quantity: 1 })
     );
+  });
+
+  test("clicking trash calls removeFromCart", async () => {
+    setup();
+    const removeButton = screen.getByRole("button", { name: /remove item/i });
+    fireEvent.click(removeButton);
+
+    expect(mockDispatch).toHaveBeenCalledWith(removeFromCart(1));
   });
 });
