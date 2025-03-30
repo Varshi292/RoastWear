@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { products } from "../Home/Product";
 import { useDispatch } from "react-redux";
-import { changeQuantity } from "../../stores/cart";
-import { FaMinus, FaPlus } from "react-icons/fa";
+import { changeQuantity, removeFromCart } from "../../stores/cart";
+import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 
 const CartItem = ({ data }) => {
   const { productId, quantity } = data;
@@ -22,6 +22,9 @@ const CartItem = ({ data }) => {
 
   const handlePlusQuantity = () => {
     dispatch(changeQuantity({ productId, quantity: quantity + 1 }));
+  };
+  const handleRemove = () => {
+    dispatch(removeFromCart(productId));
   };
 
   if (!detail) return null;
@@ -49,6 +52,7 @@ const CartItem = ({ data }) => {
         <div className="flex items-center gap-2 bg-zinc-100 rounded-full px-3 py-1">
           <button
             onClick={handleMinusQuantity}
+            aria-label="minus"
             className="text-rose-500 hover:text-rose-700 transition"
           >
             <FaMinus />
@@ -56,12 +60,20 @@ const CartItem = ({ data }) => {
           <span className="px-2 font-medium">{quantity}</span>
           <button
             onClick={handlePlusQuantity}
+            aria-label="plus"
             className="text-green-600 hover:text-green-800 transition"
           >
             <FaPlus />
           </button>
         </div>
-        {/* Trash icon on the same row */}n{" "}
+        {/* Trash icon on the same row */}
+        <button
+          onClick={handleRemove}
+          className="text-zinc-400 hover:text-rose-600 transition"
+          aria-label="Remove item"
+        >
+          <FaTrash />
+        </button>
       </div>
     </div>
   );
