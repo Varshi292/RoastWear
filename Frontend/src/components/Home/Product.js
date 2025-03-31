@@ -6,7 +6,7 @@ export const products = [
     price: 19.25,
     discount: "25% off",
     description: "...",
-    slug: "i-choose-violence-funny-duck-tshirt",
+    slug: "tobe-fonseca",
     image: "https://ih1.redbubble.net/image.10557653.9817/ssrco,slim_fit_t_shirt,womens,fafafa:ca443f4786,front,square_product,600x600.u7.jpg",
   },
   {

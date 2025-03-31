@@ -67,8 +67,11 @@ const ProductCart = ({ data }) => {
       </div>
 
       <h3 className="text-lg sm:text-xl md:text-2xl font-semibold truncate">
-        {name}
-      </h3>
+  <Link to={`/product/${slug}`} className="hover:text-blue-500 transition-colors">
+    {name}
+  </Link>
+</h3>
+
       <p className="text-gray-600 text-xs sm:text-sm">{designer}</p>
 
       <div className="flex justify-between items-center mt-2">
