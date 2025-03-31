@@ -43,3 +43,6 @@ RoastWear is a web application that brings humor, creativity, and customization 
 
 4. **Access the App:**
     - Open your browser and go to `http://localhost:7777`.
+
+5. **View Documentation:**
+   - Go to `http://localhost:7777/docs` to view the Swagger API documentation for the app.
