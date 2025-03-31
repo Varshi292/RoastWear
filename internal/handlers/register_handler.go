@@ -2,7 +2,6 @@
 package handlers
 
 import (
-	"errors"
 	"github.com/Varshi292/RoastWear/internal/models"
 	"github.com/Varshi292/RoastWear/internal/services"
 	"github.com/Varshi292/RoastWear/internal/utils"
@@ -56,8 +55,8 @@ func (handler *RegisterHandler) UserRegister(c *fiber.Ctx) error {
 		})
 	}
 	if err := handler.service.RegisterUser(&request); err != nil {
-		if errors.Is(utils.NewErrUserExists(request.Username), err) || errors.Is(utils.NewErrEmailExists(request.
-			Email), err) {
+		if utils.NewErrUserExists(request.Username).Error() == err.Error() || utils.NewErrEmailExists(request.Email).
+			Error() == err.Error() {
 			return c.Status(fiber.StatusConflict).JSON(fiber.Map{
 				"error":   "conflict error",
 				"details": err.Error(),
