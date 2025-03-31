@@ -72,6 +72,10 @@ func main() {
 	loginHandler := handlers.NewLoginHandler(authService)
 	app.Post("/login", loginHandler.UserLogin)
 
+	app.Post("/post_user_image", handlers.UploadImageHandler(db))
+	app.Get("/get_user_images", handlers.GetImagesHandler(db))
+
+
 	// Serve docs at /docs
 	app.Get("/docs/*", swagger.HandlerDefault)
 
