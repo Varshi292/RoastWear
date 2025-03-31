@@ -1,3 +1,4 @@
+// Package services ...
 package services
 
 import (
@@ -11,22 +12,41 @@ import (
 	"time"
 )
 
+// AuthService ...
+//
+// Fields:
+//   - repo: ...
 type AuthService struct {
 	repo interfaces.UserRepository
 }
 
+// NewAuthService ...
+//
+// Parameters:
+//   - repo: ...
+//
+// Returns:
+//   - *AuthService: ...
 func NewAuthService(repo interfaces.UserRepository) *AuthService {
 	return &AuthService{repo: repo}
 }
 
+// LoginUser ...
+//
+// Parameters:
+//   - request: ...
+//   - c: ...
+//
+// Returns:
+//   - error: ...
 func (service *AuthService) LoginUser(request *models.UserLoginRequest, c *fiber.Ctx) error {
 	user, err := service.repo.GetUser("username", request.Username)
-	if err != nil || !utils.VerifyPassword(user.Password, request.Password) {
-		return errors.New("invalid username or password")
+	if err != nil || !utils.VerifyPassword(request.Password, user.Password) {
+		return utils.ErrInvalidCredentials
 	}
 	sess, err := session.Store.Get(c)
 	if err != nil {
-		return errors.New("session not found")
+		return utils.ErrSessionNotFound
 	}
 	sess.Set("userID", user.ID)
 	sess.Set("username", user.Username)

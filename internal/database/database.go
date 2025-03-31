@@ -1,3 +1,4 @@
+// Package database ...
 package database
 
 import (
@@ -8,6 +9,14 @@ import (
 	"log"
 )
 
+// Open ...
+//
+// Parameters:
+//   - dsn: ...
+//
+// Returns:
+//   - *gorm.DB: ...
+//   - error: ...
 func Open(dsn string) (*gorm.DB, error) {
 	db, err := gorm.Open(sqlite.Open(dsn), &gorm.Config{
 		TranslateError: true,
@@ -20,6 +29,13 @@ func Open(dsn string) (*gorm.DB, error) {
 	return db, nil
 }
 
+// Migrate ...
+//
+// Parameters:
+//   - db: ...
+//
+// Returns:
+//   - error: ...
 func Migrate(db *gorm.DB) error {
 	if err := db.AutoMigrate(&models.User{}); err != nil {
 		return err

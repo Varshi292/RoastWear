@@ -1,3 +1,4 @@
+// Package config ...
 package config
 
 import (
@@ -6,6 +7,13 @@ import (
 	"github.com/spf13/viper"
 )
 
+// LoadConfig ...
+//
+// Parameters:
+//   - config: ...
+//
+// Returns:
+//   - error: ...
 func LoadConfig(config interface{}) error {
 	viper.AddConfigPath(".")
 	viper.SetConfigName(".env")

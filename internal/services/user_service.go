@@ -1,3 +1,4 @@
+// Package services ...
 package services
 
 import (
@@ -10,20 +11,38 @@ import (
 	"log"
 )
 
+// UserService ...
+//
+// Fields:
+//   - repo: ...
 type UserService struct {
 	repo interfaces.UserRepository
 }
 
+// NewUserService ...
+//
+// Parameters:
+//   - repo: ...
+//
+// Returns:
+//   - *UserService: ...
 func NewUserService(repo interfaces.UserRepository) *UserService {
 	return &UserService{repo: repo}
 }
 
+// RegisterUser ...
+//
+// Parameters:
+//   - request: ...
+//
+// Returns:
+//   - error: ...
 func (service *UserService) RegisterUser(request *models.UserRegisterRequest) error {
 	if service.repo.HasUser("username", request.Username) {
-		return fmt.Errorf("username '%s' already exists", request.Username)
+		return utils.NewErrUserExists(request.Username)
 	}
 	if service.repo.HasUser("email", request.Email) {
-		return fmt.Errorf("email '%s' already exists", request.Email)
+		return utils.NewErrEmailExists(request.Email)
 	}
 	hashedPassword, err := utils.HashPassword(request.Password)
 	if err != nil {
@@ -41,6 +60,13 @@ func (service *UserService) RegisterUser(request *models.UserRegisterRequest) er
 	return nil
 }
 
+// RemoveUser ...
+//
+// Parameters:
+//   - username: ...
+//
+// Returns:
+//   - error: ...
 func (service *UserService) RemoveUser(username string) error {
 	target, err := service.repo.GetUser("username", username)
 	if err != nil {
@@ -56,6 +82,13 @@ func (service *UserService) RemoveUser(username string) error {
 	return nil
 }
 
+// ShowUsers ...
+//
+// Parameters:
+//   - none
+//
+// Returns:
+//   - error: ...
 func (service *UserService) ShowUsers() error {
 	users, err := service.repo.GetAllUsers()
 	if err != nil {

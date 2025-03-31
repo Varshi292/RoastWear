@@ -1,3 +1,4 @@
+// Package session ... (Add package-level description here)
 package session
 
 import (
@@ -7,8 +8,13 @@ import (
 	"time"
 )
 
+// Store ... (Add description for the Store variable)
 var Store *session.Store
 
+// InitializeSessionStore ... (Add function-level description)
+//
+// Parameters:
+//   - config: ... (Describe the config parameter)
 func InitializeSessionStore(config config.SessionConfig) {
 	Store = session.New(session.Config{
 		KeyLookup:         config.Key,
