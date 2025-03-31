@@ -13,6 +13,8 @@ import (
 	"log"
 )
 
+import "github.com/gofiber/fiber/v2/middleware/cors"
+
 // @title RoastWear API
 // @version 1.0
 // @description This is the backend API for the RoastWear application.
@@ -37,6 +39,13 @@ func main() {
 
 	// Initialize Fiber
 	app := fiber.New()
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://127.0.0.1:7777, http://localhost:7777",
+		AllowMethods: "GET,POST,OPTIONS",
+		AllowHeaders: "Content-Type,Authorization",
+	}))
+	
 
 	// Retrieve frontend build for deployment
 	app.Static("/", cfg.StaticFilesPath)
