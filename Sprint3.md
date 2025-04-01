@@ -80,6 +80,7 @@
 - More organized user data organization and retrieval (to set us up for shopping carts, past designs, and past purchases).
 - Add validation of empty input outside of backend.
 - Implement session management.
+- Combine cart with backend
 
   ## List of unit tests
   ## Frontend
@@ -110,16 +111,27 @@
   - Login No Password
   - Login Empty
   - Login Invalid Request
+ 
+  ##Backend for Media Management
+  -Post Proper Image
+  -Post Improper Image
+  -Recieve all of the images a past user uploaded
+  -Recieve an error for trying to recieve images from a user that doesn't exist or has no media
+
+   ##Backend for Session Management (Steps for each test)
+  - Login -> Generate Session ID -> Verify ID
+  - Login -> Generate Session ID -> Verify ID -> Delete Session -> Confirm Session Deleted
+  - Login -> Generate Session ID -> Verify ID -> Modify Session Token -> Verify Session Token Doesn't Work
   
 
   
 ## Backend Video
 
-https://uflorida-my.sharepoint.com/:v:/g/personal/nboussarhane_ufl_edu/EZyJHX0ERWJLn3tEyrh0AQ8BbhIWlItUi2XFmhw6vWYXHw
+https://youtu.be/PFCtahJQkfg
 
 ## Backend API Documentation
 
-https://uflorida-my.sharepoint.com/:b:/g/personal/nboussarhane_ufl_edu/EU_xZJHhMkJFsk8FoFmdHdQBh6eUnTwUD3ZbPC1HVRgyHA?e=LQnkfn
+https://drive.google.com/file/d/1YmjcxXG4b_tW9HGEoV3FlPjdADqeLdOz/view?usp=sharing
 
 ## Frontend Video
 
