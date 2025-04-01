@@ -1,4 +1,4 @@
-# Sprint 2 Report
+# Sprint 3 Report
 
 ## User Stories
 
@@ -12,8 +12,6 @@
 
 ## Issues Planned to Address
 
-- Integration of Go in backend.
-- Improving error handling in user authentication.
 - Enhancing an the cart Layout.
 - Implementing WishList feature.
 - Improving the UI/UX of the website.
@@ -23,6 +21,20 @@
 - Implementing unit Testing on Cart functionalities
 - Implementing unit Testing on Wishlist functionalities
 - Implementing unit Testing on all the upgrades small functions.
+
+- Integration of Go in backend.
+- Create API documentation
+- Create general documentation for backend
+- Improving error handling in user authentication.
+- Create backend unit tests for handlers
+- Implement the T-shirt customization feature.
+- Improve UI design based on feedback.
+- Enhance authentication validation and error handling.
+- More organized user data organization and retrieval (to set us up for shopping carts, past 
+  designs, and past purchases).
+- Fully remake backend with Go.
+- Add validation of empty input outside of backend.
+- Implement session management.
 
 ---
 
@@ -38,21 +50,24 @@
 8. Improved error handling in user authentication.
 9. Updating the About page.
 
-10. Restricted username and email address as unique keys in database.
-11. Created error handling for more invalid user account input.
-12. Product pages added, which can be used to display more information about each product.
-13. Upgraded codes to props for state Management.
-14. Successfully done Cypress Component Testing on Login/Register components.
-15. Partially implemented Wishlist functionality.
-16. Retrieval of previous meme uploads
+10. Retrieval of previous meme uploads
+11. Partially implemented session management.
+12. Partially implemented server-side user authentication
+13. Implemented bcrypt password hashing and verification
+14. Created API documentation using Swagger
+15. Designed unit tests for the API using Postman
+16. Fully* recreated backend functionality in Go
+17. Partially implemented image file storage
+18. Implemented environment variables and further customizability of application
+19. Improvement of User model through additional layers of abstraction
 
 ---
 
 ## Issues Not Completed and Reasons
 
-- **Error handling and validation** was partially implemented for Users, but the authentication process require further testing and refinement.
+- **User authentication**  was partially implemented due to time constraints alongside full Go integration.
 - **The T-shirt customization feature** was not completed due to prioritization of authentication and UI setup.
-- **Go integration** was partially completed, but could not be completed in time due to wide specification.
+- **Image uploading** was partially completed, but could not be completed in time due to wide specification.
 - **Tokenized sessions** was put on hold due to the need to remake certain backend processes.
 
 ---
@@ -63,17 +78,19 @@
 - Improve UI design based on feedback.
 - Enhance authentication validation and error handling.
 - More organized user data organization and retrieval (to set us up for shopping carts, past designs, and past purchases).
-- Fully remake backend with Go.
 - Add validation of empty input outside of backend.
 - Implement session management.
-- Implement wishlist and favoriting products.
+  
 
+  
 ## Backend Video
 
 https://uflorida-my.sharepoint.com/:v:/g/personal/nboussarhane_ufl_edu/EZyJHX0ERWJLn3tEyrh0AQ8BbhIWlItUi2XFmhw6vWYXHw
 
-https://youtu.be/zDFAH9irk0I
+## Backend API Documentation
+
+https://uflorida-my.sharepoint.com/:b:/g/personal/nboussarhane_ufl_edu/EU_xZJHhMkJFsk8FoFmdHdQBh6eUnTwUD3ZbPC1HVRgyHA?e=LQnkfn
 
 ## Frontend Video
 
-https://drive.google.com/file/d/1tAPfAphZXtvw6bGnFKY_fODphHd9YXqi/view?usp=drive_link
+https://1drv.ms/v/c/1a653b0f309d6b9d/EdNC0FtABj1CgkAlfPIIjnoBdbJi-NLP-45QWegxyawfqQ
