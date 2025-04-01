@@ -20,6 +20,7 @@ const Detail = () => {
   }, [slug]);
 
   const handleMinusQuantity = () => {
+    console.print("Print");
     setQuantity(quantity - 1 < 1 ? 1 : quantity - 1);
   };
 

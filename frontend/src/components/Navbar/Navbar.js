@@ -25,6 +25,7 @@ const Navbar = () => {
   };
 
   const handleOpenTabCart = () => {
+    console.log("Print");
     dispatch(toggleStatusTab()); // Dispatch Redux action to toggle cart tab visibility
   };
 

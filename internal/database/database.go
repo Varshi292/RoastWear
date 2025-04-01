@@ -2,11 +2,12 @@
 package database
 
 import (
+	"log"
+
 	"github.com/Varshi292/RoastWear/internal/models"
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"log"
 )
 
 // Open ...
@@ -36,13 +37,19 @@ func Open(dsn string) (*gorm.DB, error) {
 //
 // Returns:
 //   - error: ...
+//
 // Migrate ...
 //
 // Parameters:
 //   - db: ...
 //
+// Migrate ...
+//
+// Parameters:
+//   - db: *gorm.DB - the database connection
+//
 // Returns:
-//   - error: ...
+//   - error: error if any migration fails
 func Migrate(db *gorm.DB) error {
 	// Migrate the 'users' table
 	if err := db.AutoMigrate(&models.User{}); err != nil {
@@ -59,12 +66,20 @@ func Migrate(db *gorm.DB) error {
 		return err
 	}
 
-	// ✅ Migrate the 'user_uploads' table
+	// Migrate the 'user_uploads' table
 	if err := db.AutoMigrate(&models.UserUpload{}); err != nil {
+		return err
+	}
+
+	// ✅ Migrate the 'sessions' table
+	if err := db.AutoMigrate(&models.Session{}); err != nil {
+		return err
+	}
+
+	if err := db.AutoMigrate(&models.Purchase{}); err != nil {
 		return err
 	}
 
 	log.Println("✅ Migrated database successfully")
 	return nil
 }
-

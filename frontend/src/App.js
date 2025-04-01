@@ -11,6 +11,8 @@ import Contact from "./components/Contact";
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
 import Detail from "./components/Home/detail";
+import CartTab from "./components/Carts/CartTab";
+
 
 function App() {
   return (
@@ -27,8 +29,12 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/:slug" element={<Detail />} />
       </Routes>
+
+      {/* ✅ Always render the cart tab globally */}
+      <CartTab />
     </Router>
   );
 }
+
 
 export default App;

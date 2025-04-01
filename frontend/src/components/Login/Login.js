@@ -15,11 +15,21 @@ const Login = () => {
       const response = await fetch("http://localhost:7777/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include", // ✅ Send and receive cookies
         body: JSON.stringify({ username, password }),
       });
+      
+      
 
       const result = await response.json();
       setMessage(result.message);
+  
+      if (result.session_id) {
+        console.log("Session ID:", result.session_id); // ✅ Print it
+      }
+      else{
+        console.log("No session id");
+      }
 
       if (result.success) {
         navigate("/"); // Redirect to dashboard
