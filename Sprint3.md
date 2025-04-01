@@ -94,7 +94,7 @@
   - ProductDetail.cy.js
   - wishlist.cy.js
 
-  ##Backend
+  ## Backend
   - Register New User
   - Register Existing Username
   - Register Existing Email
@@ -112,13 +112,13 @@
   - Login Empty
   - Login Invalid Request
  
-  ##Backend for Media Management
+  ## Backend for Media Management
   -Post Proper Image
   -Post Improper Image
   -Recieve all of the images a past user uploaded
   -Recieve an error for trying to recieve images from a user that doesn't exist or has no media
 
-   ##Backend for Session Management (Steps for each test)
+   ## Backend for Session Management (Steps for each test)
   - Login -> Generate Session ID -> Verify ID
   - Login -> Generate Session ID -> Verify ID -> Delete Session -> Confirm Session Deleted
   - Login -> Generate Session ID -> Verify ID -> Modify Session Token -> Verify Session Token Doesn't Work
