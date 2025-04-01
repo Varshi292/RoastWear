@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/Varshi292/RoastWear/internal/models"
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
 )
@@ -14,25 +15,28 @@ func GetImagesHandler(db *gorm.DB) fiber.Handler {
 			})
 		}
 
-		var images []string
-		err := db.Table("user_uploads").
-			Where("username = ?", username).
-			Pluck("filepath", &images).Error
-
+		var uploads []models.UserUpload
+		err := db.Where("username = ?", username).Find(&uploads).Error
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"error": "Failed to retrieve image data.",
 			})
 		}
 
-		if len(images) == 0 {
+		if len(uploads) == 0 {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
 				"message": "No images found for this user.",
 			})
 		}
 
+		// Extract only the filepaths
+		var filepaths []string
+		for _, upload := range uploads {
+			filepaths = append(filepaths, upload.Filepath)
+		}
+
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
-			"images": images,
+			"images": filepaths,
 		})
 	}
 }

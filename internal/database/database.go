@@ -36,13 +36,35 @@ func Open(dsn string) (*gorm.DB, error) {
 //
 // Returns:
 //   - error: ...
+// Migrate ...
+//
+// Parameters:
+//   - db: ...
+//
+// Returns:
+//   - error: ...
 func Migrate(db *gorm.DB) error {
+	// Migrate the 'users' table
 	if err := db.AutoMigrate(&models.User{}); err != nil {
 		return err
 	}
+
+	// Migrate the 'deleted_users' table (manually set name)
 	if err := db.Table("deleted_users").AutoMigrate(&models.User{}); err != nil {
 		return err
 	}
+
+	// Migrate the 'images' table
+	if err := db.AutoMigrate(&models.Image{}); err != nil {
+		return err
+	}
+
+	// ✅ Migrate the 'user_uploads' table
+	if err := db.AutoMigrate(&models.UserUpload{}); err != nil {
+		return err
+	}
+
 	log.Println("✅ Migrated database successfully")
 	return nil
 }
+
