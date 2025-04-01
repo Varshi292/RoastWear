@@ -80,6 +80,18 @@
 - More organized user data organization and retrieval (to set us up for shopping carts, past designs, and past purchases).
 - Add validation of empty input outside of backend.
 - Implement session management.
+
+  ## List of unit tests
+  ## Frontend
+  - Register.test.js
+  - Home.test.js
+  - Navbar.test.js
+  - CartItem.test.js
+  - CartTab.test.js
+  - login.cy.js
+  - navbar.cy.js
+  - ProductDetail.cy.js
+  - wishlist.cy.js
   
 
   
