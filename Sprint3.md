@@ -92,6 +92,24 @@
   - navbar.cy.js
   - ProductDetail.cy.js
   - wishlist.cy.js
+
+  ##Backend
+  - Register New User
+  - Register Existing Username
+  - Register Existing Email
+  - Register Existing Password
+  - Register Empty
+  - Register No Username
+  - Register No Email
+  - Register No Password
+  - Register invalid Request
+  - Login User
+  - Login Wrong Username
+  - Login Wrong Password
+  - Login No Username
+  - Login No Password
+  - Login Empty
+  - Login Invalid Request
   
 
   
