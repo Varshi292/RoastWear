@@ -13,11 +13,15 @@ const WishlistButton = ({ productId }) => {
   };
 
   return (
-    <button onClick={handleToggle} aria-label="Toggle wishlist">
+    <button
+      onClick={handleToggle}
+      aria-label="Toggle wishlist"
+      className="transition-all hover:scale-110"
+    >
       {isInWishlist ? (
-        <FaHeart className="text-red-500 text-xl" />
+        <FaHeart className="text-pink-500 text-2xl drop-shadow-[0_0_5px_#ff2e63]" />
       ) : (
-        <FaRegHeart className="text-gray-400 hover:text-red-500 text-xl transition-all" />
+        <FaRegHeart className="text-gray-500 hover:text-pink-400 text-2xl transition-colors duration-200" />
       )}
     </button>
   );

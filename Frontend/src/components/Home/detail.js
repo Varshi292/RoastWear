@@ -1,4 +1,3 @@
-// src/components/Home/detail.js
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { products } from "./Product";
@@ -17,7 +16,7 @@ const Detail = () => {
     if (match) {
       setProduct(match);
     } else {
-      navigate("/"); // Redirect if slug is invalid
+      navigate("/");
     }
   }, [slug, navigate]);
 
@@ -43,14 +42,11 @@ const Detail = () => {
   if (!product) return null;
 
   return (
-    <div className="flex justify-center items-center min-h-screen px-4 bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-6xl w-full">
-        <h2 className="text-3xl font-semibold text-center mb-12">
-          PRODUCT DETAIL
-        </h2>
+    <div className="flex justify-center items-center min-h-screen px-4 bg-[#0b0c0f] text-gray-200 pb-4">
+      <div className="bg-[#1e1e1e] p-10 rounded-xl shadow-xl max-w-6xl w-full border border-[#2c2c2c] min-h-[500px]">
+        
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          {/* Image */}
           <div className="flex justify-center">
             <img
               src={product.image}
@@ -59,29 +55,27 @@ const Detail = () => {
             />
           </div>
 
-          {/* Details */}
           <div className="flex flex-col gap-5 justify-center">
-            <h1 className="text-2xl font-bold">{product.name}</h1>
-            <p className="text-xl text-red-500 font-semibold">
+            <h1 className="text-3xl font-bold text-white">{product.name}</h1>
+            <p className="text-xl text-[#ff2e63] font-semibold">
               ${product.price.toFixed(2)}
             </p>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-gray-400">
               {product.description || "No description provided."}
             </p>
 
-            {/* Quantity + Add to Cart */}
             <div className="flex gap-6 items-center mt-6">
-              <div className="flex items-center border rounded overflow-hidden">
+              <div className="flex items-center border border-[#2c2c2c] rounded overflow-hidden">
                 <button
                   onClick={handleMinusQuantity}
-                  className="bg-gray-100 px-4 py-2 text-lg font-bold"
+                  className="bg-[#2c2c2c] px-4 py-2 text-lg font-bold text-white hover:bg-[#3b3b3b]"
                 >
                   −
                 </button>
-                <span className="px-5 py-2 bg-gray-200">{quantity}</span>
+                <span className="px-5 py-2 bg-[#3b3b3b] text-white">{quantity}</span>
                 <button
                   onClick={handlePlusQuantity}
-                  className="bg-gray-100 px-4 py-2 text-lg font-bold"
+                  className="bg-[#2c2c2c] px-4 py-2 text-lg font-bold text-white hover:bg-[#3b3b3b]"
                 >
                   +
                 </button>
@@ -89,7 +83,7 @@ const Detail = () => {
 
               <button
                 onClick={handleAddToCart}
-                className="bg-slate-900 text-white px-6 py-2 rounded shadow-md hover:bg-slate-700 transition duration-300"
+                className="bg-[#22a7e0] text-white px-6 py-2 rounded hover:bg-[#1a9fd5] shadow-md transition duration-300"
               >
                 Add to Cart
               </button>

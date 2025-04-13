@@ -11,7 +11,7 @@ const ProductCart = ({ data }) => {
 
   const wishlistItems = useSelector(
     (state) => state.wishlist?.items || []
-  ); // Fallback to empty array
+  );
 
   const {
     id,
@@ -41,42 +41,39 @@ const ProductCart = ({ data }) => {
   };
 
   return (
-    <div className="bg-white p-5 rounded-xl shadow-sm relative">
+    <div className="bg-[#1e1e1e] p-5 rounded-xl shadow-[0_0_10px_rgba(255,255,255,0.05)] relative text-gray-300 border border-[#2c2c2c]">
       <Link to={`/product/${slug}`}>
-
         <img
           src={image}
           alt={name}
-          className="product-image w-full h-64 object-cover transform transition duration-300 group-hover:scale-110"
+          className="product-image w-full h-64 object-cover transform transition duration-300 rounded-lg hover:scale-105"
         />
       </Link>
 
       {/* Wishlist Button */}
       <div className="absolute top-2 right-2">
         <button
-          className="bg-white m-2 p-2 rounded-full shadow-md hover:bg-red-100 transition duration-300"
+          className="bg-[#1e1e1e] m-2 p-2 rounded-full shadow-md hover:bg-[#2a2a2a] transition duration-300"
           onClick={handleToggleWishlist}
           aria-label="Toggle Wishlist"
         >
           {isWishlisted ? (
             <FaHeart className="text-red-500 w-6 h-6" />
           ) : (
-            <FaRegHeart className="text-gray-400 hover:text-red-500 w-6 h-6" />
+            <FaRegHeart className="text-gray-500 hover:text-red-500 w-6 h-6" />
           )}
         </button>
       </div>
 
-      <h3 className="text-lg sm:text-xl md:text-2xl font-semibold truncate">
-  <Link to={`/product/${slug}`} className="hover:text-blue-500 transition-colors">
-    {name}
-  </Link>
-</h3>
+      <h3 className="text-lg sm:text-xl md:text-2xl font-semibold truncate text-gray-300">
+        {name}
+      </h3>
 
-      <p className="text-gray-600 text-xs sm:text-sm">{designer}</p>
+      <p className="text-gray-500 text-xs sm:text-sm">{designer}</p>
 
       <div className="flex justify-between items-center mt-2">
-        <p className="price text-base sm:text-lg md:text-xl text-red-500">
-          ${price.toFixed(2)}{" "}
+        <p className="price text-base sm:text-lg md:text-xl text-[#ff2e63]">
+          ${price.toFixed(2)}{' '}
           {discount && (
             <span className="text-gray-500 text-xs sm:text-sm">
               ({discount} off)
@@ -84,11 +81,10 @@ const ProductCart = ({ data }) => {
           )}
         </p>
         <button
-          className="bg-blue-400 text-white p-2 rounded-md text-sm hover:bg-gray-400 flex items-center gap-2"
+          className="bg-[#25aae1] text-white p-2 rounded-md text-sm hover:bg-[#1f8fcb] flex items-center gap-2 shadow hover:shadow-md"
           onClick={handleAddToCart}
         >
           <img src={iconCart} alt="Cart Icon" className="w-5" />
-          Add To Cart
         </button>
       </div>
     </div>

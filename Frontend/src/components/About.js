@@ -1,4 +1,3 @@
-// src/components/About/About.js
 import React from "react";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -23,23 +22,20 @@ const features = [
 
 const About = () => {
   return (
-    <div className="bg-white text-zinc-900 px-6 py-12 max-w-6xl mx-auto space-y-20">
-      {/* Hero */}
+    <div className="bg-[#0b0c0f] text-gray-300 px-6 py-12 w-full min-h-screen space-y-20">
+
+      {/* Top Quote */}
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        className="text-center"
+        className="text-center max-w-3xl mx-auto text-xl font-semibold"
       >
-        <h1 className="text-4xl md:text-5xl font-bold">About RoastWear</h1>
-        <p className="mt-4 text-lg text-zinc-600 max-w-2xl mx-auto">
-          RoastWear is where creativity meets craftsmanship. We help you bring
-          your style to life on fabric.
-        </p>
+        <p>“Wearing a funny T-shirt is cheaper than therapy… and way more stylish.”</p>
       </motion.div>
 
-      {/* Features Section (Cards) */}
+      {/* Features Section */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -50,15 +46,37 @@ const About = () => {
         {features.map((item, idx) => (
           <div
             key={idx}
-            className="bg-white shadow-lg rounded-xl p-6 border border-zinc-200 hover:shadow-xl transition duration-300"
+            className="bg-[#121417] shadow-lg rounded-xl p-6 border border-[#1f2937] hover:shadow-xl transition duration-300"
           >
-            <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-            <p className="text-zinc-500">{item.desc}</p>
+            <h3 className="text-xl font-semibold mb-2 text-white">{item.title}</h3>
+            <p className="text-[#9ca3af]">{item.desc}</p>
           </div>
         ))}
       </motion.div>
 
-      {/* Image Slider Section */}
+      {/* Tharun Bhascker Quote Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        viewport={{ once: true }}
+        className="flex flex-col items-center text-center space-y-4"
+      >
+        <img
+          src="/Assets/tharun.jpg"
+          alt="Tharun Bhascker"
+          className="w-full max-w-md h-auto object-cover rounded-xl shadow-[0_0_50px_#ffd369]"
+        />
+
+        <blockquote className="bg-[#121417]/90 text-[#25aae1] px-4 py-3 rounded-xl shadow-[0_0_10px_#25aae155] max-w-xl text-lg font-semibold relative backdrop-blur">
+          “Rey Karthik... vaallaki size L cheppu! Custom print lu kooda cheppu ra veskundam!”
+          <span className="block mt-2 text-sm text-[#9ca3af] italic">
+            – Not really Tharun Bhascker… but sounds like him.
+          </span>
+        </blockquote>
+      </motion.div>
+
+      {/* Image Slider */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -66,7 +84,7 @@ const About = () => {
         viewport={{ once: true }}
         className="max-w-4xl mx-auto"
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">🖼️ Our Journey</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center text-white">🖼️ Our Journey</h2>
         <Swiper
           spaceBetween={30}
           effect={"fade"}
@@ -107,16 +125,14 @@ const About = () => {
         viewport={{ once: true }}
         className="text-center"
       >
-        <h2 className="text-2xl font-semibold mb-2">
+        <h2 className="text-2xl font-semibold mb-2 text-white">
           Ready to design your own?
         </h2>
-        <p className="text-zinc-600 mb-4">
-          Your story deserves to be seen. Let’s print it.
-        </p>
-        <button className="bg-black text-white px-6 py-2 rounded-lg hover:bg-zinc-800 transition">
+        <button className="bg-[#25aae1] text-white px-6 py-2 rounded-lg hover:bg-[#1f8fcb] transition shadow-[0_0_10px_#25aae1]">
           Start Designing
         </button>
       </motion.div>
+
     </div>
   );
 };

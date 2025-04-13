@@ -24,22 +24,36 @@ const Navbar = () => {
   const handleOpenTabCart = () => dispatch(toggleStatusTab());
 
   return (
-    <nav className="bg-gray-800 text-white sticky top-0 z-50">
+    <nav className="bg-[#0b0c0f] text-gray-300 sticky top-0 z-50 shadow-md">
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Logo */}
-        <div className="text-2xl font-bold">
-          <Link to="/" className="text-white">
-            T-Shirt Customizer
-          </Link>
-        </div>
+        
+        <div className="text-6xl font-extrabold tracking-wide relative">
+  <Link to="/" className="text-[#25aae1] hover:text-[#1f8fcb] transition flex items-center group">
+    R
+    <span className="relative inline-block">
+      oa
+      <img
+        src="/Assets/meme-glasses.png"
+        alt="meme specs"
+        className="absolute top-[-14px] left-[0px] w-120 pointer-events-none z-10 transform transition-all duration-500 ease-in-out group-hover:-translate-y-7 group-hover:rotate-[8deg]"
+      />
+    </span>
+    stWear
+  </Link>
+</div>
+
+
+
+
 
         {/* Navigation Links (Desktop) */}
         <div className="hidden md:flex items-center space-x-6 ml-6">
-          <Link to="/" className="hover:text-gray-400">Home</Link>
-          <Link to="/shop" className="hover:text-gray-400">Shop</Link>
-          <Link to="/customize" className="hover:text-gray-400">Customize</Link>
-          <Link to="/about" className="hover:text-gray-400">About</Link>
-          <Link to="/login" className="hover:text-gray-400">Login</Link>
+          <Link to="/" className="hover:text-[#ff2e63]">Home</Link>
+          <Link to="/shop" className="hover:text-[#ff2e63]">Shop</Link>
+          <Link to="/customize" className="hover:text-[#ff2e63]">Customize</Link>
+          <Link to="/about" className="hover:text-[#ff2e63]">About</Link>
+          <Link to="/login" className="hover:text-[#ff2e63]">Login</Link>
         </div>
 
         {/* Search */}
@@ -47,23 +61,23 @@ const Navbar = () => {
           <input
             type="text"
             placeholder="Search T-shirts..."
-            className="p-2 rounded-md bg-gray-700 text-white"
+            className="p-2 rounded-md bg-[#1f2937] text-white placeholder:text-gray-400 focus:outline-none"
           />
-          <i className="fas fa-search"></i>
+          <i className="fas fa-search text-[#25aae1]" />
         </div>
 
         {/* Wishlist + Cart (Desktop) */}
         <div className="hidden md:flex items-center space-x-4">
-        <Link to="/wishlist" className="hover:text-red-500">
-  <i className="fas fa-heart mr-1"></i> Wishlist
-</Link>
+          <Link to="/wishlist" className="hover:text-[#ff2e63]">
+            <i className="fas fa-heart mr-1"></i> Wishlist
+          </Link>
 
           <div
-            className="w-10 h-10 bg-gray-100 rounded-full flex justify-center items-center relative"
+            className="w-10 h-10 bg-[#f3efe9] rounded-full flex justify-center items-center relative cursor-pointer"
             onClick={handleOpenTabCart}
           >
             <img src={iconCart} alt="Cart" className="w-6" />
-            <span className="absolute top-2/3 right-1/2 bg-red-500 text-white text-sm w-5 h-5 rounded-full flex justify-center items-center">
+            <span className="absolute top-2/3 right-1/2 bg-[#ff2e63] text-white text-sm w-5 h-5 rounded-full flex justify-center items-center">
               {totalQuantity}
             </span>
           </div>
@@ -82,7 +96,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <div
         className={`${
-          menuOpen ? "fixed inset-0 bg-gray-900 bg-opacity-95 z-50" : "hidden"
+          menuOpen ? "fixed inset-0 bg-[#121417] bg-opacity-95 z-50" : "hidden"
         } flex flex-col items-center justify-center space-y-8 text-2xl`}
       >
         {/* Close button */}
@@ -95,15 +109,15 @@ const Navbar = () => {
         </button>
 
         {/* Mobile Links */}
-        <Link to="/" onClick={toggleMenu} className="hover:text-gray-400">Home</Link>
-        <Link to="/shop" onClick={toggleMenu} className="hover:text-gray-400">Shop</Link>
-        <Link to="/customize" onClick={toggleMenu} className="hover:text-gray-400">Customize</Link>
-        <Link to="/about" onClick={toggleMenu} className="hover:text-gray-400">About</Link>
-        <Link to="/login" onClick={toggleMenu} className="hover:text-gray-400">Login</Link>
-        <Link to="/wishlist" onClick={toggleMenu} className="hover:text-gray-400">
+        <Link to="/" onClick={toggleMenu} className="hover:text-[#25aae1]">Home</Link>
+        <Link to="/shop" onClick={toggleMenu} className="hover:text-[#25aae1]">Shop</Link>
+        <Link to="/customize" onClick={toggleMenu} className="hover:text-[#25aae1]">Customize</Link>
+        <Link to="/about" onClick={toggleMenu} className="hover:text-[#25aae1]">About</Link>
+        <Link to="/login" onClick={toggleMenu} className="hover:text-[#25aae1]">Login</Link>
+        <Link to="/wishlist" onClick={toggleMenu} className="hover:text-[#ff2e63]">
           <i className="far fa-heart"></i> Wishlist
         </Link>
-        <Link to="/cart" onClick={toggleMenu} className="hover:text-gray-400">
+        <Link to="/cart" onClick={toggleMenu} className="hover:text-[#ff2e63]">
           <i className="fas fa-shopping-bag"></i> Cart
         </Link>
       </div>

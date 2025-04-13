@@ -12,8 +12,10 @@ const WishlistPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4 md:p-8">
-      <h1 className="text-3xl font-bold mb-6 text-center">Your Wishlist ❤️</h1>
+    <div className="min-h-screen bg-[#0b0c0f] text-gray-300 p-4 md:p-8">
+      <h1 className="text-3xl font-bold mb-6 text-center text-pink-500 drop-shadow-[0_0_5px_#ff2e63]">
+        Your Wishlist 
+      </h1>
 
       {wishlistProducts.length === 0 ? (
         <p className="text-center text-gray-500 text-lg">
