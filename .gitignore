@@ -1,5 +1,14 @@
 # Ignore node_modules directory
-Backend/node_modules/
+frontend/node_modules/
+
+# Ignore Frontend build directory
+frontend/build/
 
 # Ignore package-lock.json
-Backend/package-lock.json
+package-lock.json
+
+# Ignore .env files
+.env
+
+# Ignore build directory
+build/
