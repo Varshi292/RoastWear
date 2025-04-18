@@ -1,13 +1,21 @@
 package main
 
 import (
-	_ "github.com/Varshi292/RoastWear/docs"
-	"github.com/Varshi292/RoastWear/internal/config"
-	"github.com/Varshi292/RoastWear/internal/database"
-	"github.com/Varshi292/RoastWear/internal/handlers"
-	"github.com/Varshi292/RoastWear/internal/repository"
-	"github.com/Varshi292/RoastWear/internal/services"
-	"github.com/Varshi292/RoastWear/internal/session"
+	"RoastWear/internal/admin/models"
+	"RoastWear/internal/admin/pages"
+	"RoastWear/internal/config"
+	"RoastWear/internal/database"
+	"RoastWear/internal/handlers"
+	"RoastWear/internal/repositories"
+	"RoastWear/internal/services"
+	"RoastWear/internal/session"
+	_ "github.com/GoAdminGroup/go-admin/adapter/gofiber"
+	"github.com/GoAdminGroup/go-admin/engine"
+	_ "github.com/GoAdminGroup/go-admin/modules/db/drivers/sqlite"
+	"github.com/GoAdminGroup/go-admin/template"
+	"github.com/GoAdminGroup/go-admin/template/chartjs"
+	"github.com/GoAdminGroup/go-admin/tests/tables"
+	_ "github.com/GoAdminGroup/themes/adminlte"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
 	"log"
@@ -38,20 +46,36 @@ func main() {
 	// Initialize Fiber
 	app := fiber.New()
 
+	template.AddComp(chartjs.NewChart())
+	eng := engine.Default()
+	if err := eng.AddConfigFromYAML("./internal/admin/config.yml").
+		AddGenerators(tables.Generators).
+		Use(app); err != nil {
+		panic(err)
+	}
+
+	eng.HTML("GET", "/admin", pages.GetDashBoard)
+	eng.HTMLFile("GET", "/admin/hello", "./html/hello.tmpl", map[string]interface{}{
+		"msg": "Hello world",
+	})
+	models.Init(eng.SqliteConnection())
+	app.Static("/uploads", "./uploads")
+
 	// Retrieve frontend build for deployment
 	app.Static("/", cfg.StaticFilesPath)
 
 	// Initialize and migrate the database
-	db, err := database.Open(cfg.DBPath)
+	s := database.NewSqliteDatabase(cfg.DBPath)
+	db, err := s.Connect()
 	if err != nil {
-		log.Fatalf("Failed to open database: %s", err)
+		log.Fatalf("Failed to connect to database: %s", err)
 	}
-	if err := database.Migrate(db); err != nil {
+	if err := s.Migrate(); err != nil {
 		log.Fatalf("Failed to migrate database: %s", err)
 	}
 
 	// Set up user repository
-	userRepo := &repository.UserRepository{Db: db}
+	userRepo := &repositories.UserRepository{Db: db}
 	// Set up user service
 	userService := services.NewUserService(userRepo)
 	// Set up authentication service
@@ -71,4 +95,5 @@ func main() {
 	if err := app.Listen(":" + cfg.Port); err != nil {
 		log.Fatalf("Failed to start server: %s", err)
 	}
+	eng.SqliteConnection().Close()
 }

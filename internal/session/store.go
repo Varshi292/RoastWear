@@ -2,7 +2,7 @@
 package session
 
 import (
-	"github.com/Varshi292/RoastWear/internal/config"
+	"RoastWear/internal/config"
 	"github.com/gofiber/fiber/v2/middleware/session"
 	"log"
 	"time"

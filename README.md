@@ -1,48 +1,40 @@
-# **RoastWear**
 
-## **Project Description**
-RoastWear is a web application that brings humor, creativity, and customization into one exciting platform. Users can:
-- **Browse and Purchase** pre-designed T-shirts featuring funny memes.
-- **Create Custom Designs** using an intuitive design tool.
-- **Import Trending Memes** directly from **Tenor** for a seamless experience.
-- **Add Personalized Text and Images** to their creations.
-- **Preview in Real-Time** before placing an order.
+# GoAdmin Instruction
 
----
+GoAdmin is a golang framework help gopher quickly build a data visualization platform. 
 
-## **Project Members**
-- **Brandon Grill**
-- **Yasasri Sabbineni**
-- **Varshitha Rayala**
-- **Nasim Boussarhane**
+- [github](https://github.com/GoAdminGroup/go-admin)
+- [forum](http://discuss.go-admin.com)
+- [document](https://book.go-admin.cn)
 
----
+## Directories Introduction
 
-## **Setup and Installation**
+```
+.
+├── Makefile            Makefile
+├── adm.ini             adm config
+├── build               binary build target folder
+├── config.yml          config file
+├── go.mod              go.mod
+├── go.sum              go.sum
+├── html                frontend html files
+├── logs                logs
+├── main.go             program entrance file
+├── main_test.go        test file
+├── pages               page controllers
+├── tables              table models
+└── uploads             upload directory
+```
 
-### **Steps**
+## Generate Table Model
 
-1. **Clone the Repository:**
-    ```bash
-    git clone https://github.com/Varshi292/RoastWear.git
-    cd RoastWear
-    ```
+### online tool
 
-2. **Install Frontend Dependencies and Build:**
-    ```bash
-    cd frontend
-    npm install
-    npm run build
-    cd ../
-    ```
+visit: http://127.0.0.1:7777/admin/info/generate/new
 
-3. **Run the Application:**
-    ```bash
-    go run cmd/main.go
-    ```
+### use adm
 
-4. **Access the App:**
-    - Open your browser and go to `http://localhost:7777`.
+```
+adm generate
+```
 
-5. **View Documentation:**
-   - Go to `http://localhost:7777/docs` to view the Swagger API documentation for the app.

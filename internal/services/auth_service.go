@@ -2,12 +2,11 @@
 package services
 
 import (
+	"RoastWear/internal/interfaces"
+	"RoastWear/internal/models"
+	"RoastWear/internal/session"
+	"RoastWear/internal/utils"
 	"errors"
-	"github.com/Varshi292/RoastWear/internal/models"
-	"github.com/Varshi292/RoastWear/internal/repository/interfaces"
-	"github.com/Varshi292/RoastWear/internal/session"
-	_ "github.com/Varshi292/RoastWear/internal/session"
-	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
 	"time"
 )

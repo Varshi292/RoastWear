@@ -1,0 +1,39 @@
+2025-04-18T19:45:38.982Z	[34mINFO[0m	engine/engine.go:407	Initialize database connections
+2025-04-18T19:45:38.984Z	[34mINFO[0m	engine/engine.go:407	Initialize configuration
+2025-04-18T19:45:39.175Z	[34mINFO[0m	engine/engine.go:407	Initialize navigation buttons
+2025-04-18T19:45:39.175Z	[34mINFO[0m	engine/engine.go:407	Initialize plugins
+2025-04-18T19:45:39.175Z	[34mINFO[0m	engine/engine.go:407	Initialize success🍺🍺
+2025-04-18T19:45:51.049Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055510480001", "statuscode": "200", "method": "GET", "path": "/admin/login"}
+2025-04-18T19:45:51.153Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055511360002", "statuscode": "200", "method": "GET", "path": "/admin/assets/login/dist/all.min.css"}
+2025-04-18T19:45:51.156Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055511420003", "statuscode": "200", "method": "GET", "path": "/admin/assets/login/dist/all.min.js"}
+2025-04-18T19:45:58.488Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055583460004", "statuscode": "200", "method": "POST", "path": "/admin/signin"}
+2025-04-18T19:45:58.605Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055586020005", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/js/all.min.506636f003.js"}
+2025-04-18T19:45:58.609Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055586090006", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/js/treeview.min.3095cd8c12.js"}
+2025-04-18T19:45:58.633Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055586330009", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/js/tree.min.b68a8b6689.js"}
+2025-04-18T19:45:58.636Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055586260008", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/js/datatable.min.43c12443cf.js"}
+2025-04-18T19:45:58.648Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055586480012", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/js/all_2.min.1cd3070239.js"}
+2025-04-18T19:45:58.651Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055586340010", "statuscode": "200", "method": "GET", "path": "/admin/assets/chart.min.js"}
+2025-04-18T19:45:58.638Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055586150007", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/js/form.min.4022a41f70.js"}
+2025-04-18T19:45:58.645Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055586380011", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/css/all.min.165468e1df.css"}
+2025-04-18T19:45:58.743Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055587430013", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/img/avatar04.png"}
+2025-04-18T19:45:59.029Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055590290014", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/css/fonts/6xK3dSBYKcSV-LCoeQqfX1RYOo3qOK7g.ttf"}
+2025-04-18T19:45:59.031Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055590310015", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/fonts/fontawesome-webfont.woff2"}
+2025-04-18T19:45:59.290Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055592900016", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/css/fonts/6xKydSBYKcSV-LCoeQqfX1RYOo3ik4zwlxdr.ttf"}
+2025-04-18T19:45:59.297Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055592970017", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/css/fonts/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vwlxdr.ttf"}
+2025-04-18T19:45:59.307Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055593050018", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/fonts/ionicons.ttf"}
+2025-04-18T19:45:59.408Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055594080019", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/css/fonts/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwlxdr.ttf"}
+2025-04-18T19:46:07.419Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055673930020", "statuscode": "200", "method": "GET", "path": "/admin/info/roles"}
+2025-04-18T19:46:07.490Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055674890021", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/css/blue.png"}
+2025-04-18T19:46:08.946Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055688830022", "statuscode": "200", "method": "GET", "path": "/admin/info/permission"}
+2025-04-18T19:46:10.120Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055700840023", "statuscode": "200", "method": "GET", "path": "/admin/info/op"}
+2025-04-18T19:46:15.415Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450055753810024", "statuscode": "200", "method": "GET", "path": "/admin/info/manager"}
+2025-04-18T19:55:36.955Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450061368660025", "statuscode": "200", "method": "GET", "path": "/admin/info/generate/new"}
+2025-04-18T19:55:37.568Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450061375680026", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/img/avatar04.png"}
+2025-04-18T19:55:37.575Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450061375750027", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/js/all_2.min.1cd3070239.js"}
+2025-04-18T19:55:37.575Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450061375750028", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/js/tree.min.b68a8b6689.js"}
+2025-04-18T19:55:37.601Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450061375750029", "statuscode": "200", "method": "GET", "path": "/admin/assets/chart.min.js"}
+2025-04-18T19:55:38.300Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450061383000030", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/css/fonts/6xK3dSBYKcSV-LCoeQqfX1RYOo3qOK7g.ttf"}
+2025-04-18T19:55:38.400Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450061384000031", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/css/fonts/6xKydSBYKcSV-LCoeQqfX1RYOo3ik4zwlxdr.ttf"}
+2025-04-18T19:55:39.038Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450061390380032", "statuscode": "200", "method": "GET", "path": "/admin/login"}
+2025-04-18T19:55:39.285Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450061392840033", "statuscode": "200", "method": "GET", "path": "/admin/assets/login/dist/all.min.js"}
+2025-04-18T19:55:39.286Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1060817450061392850034", "statuscode": "200", "method": "GET", "path": "/admin/assets/login/dist/all.min.css"}

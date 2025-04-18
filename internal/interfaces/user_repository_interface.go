@@ -1,7 +1,7 @@
 // Package interfaces ...
 package interfaces
 
-import "github.com/Varshi292/RoastWear/internal/models"
+import "RoastWear/internal/models"
 
 // UserRepository ...
 //
