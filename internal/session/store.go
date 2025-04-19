@@ -15,9 +15,9 @@ var Store *session.Store
 //
 // Parameters:
 //   - config: ... (Describe the config parameter)
-func InitializeSessionStore(config config.SessionConfig) {
+func InitializeSessionStore(config *config.SessionConfig) {
 	Store = session.New(session.Config{
-		KeyLookup:         config.Key,
+		KeyLookup:         "cookie:" + config.Key,
 		CookiePath:        config.Path,
 		Expiration:        time.Duration(config.MaxAge),
 		CookieDomain:      config.Domain,

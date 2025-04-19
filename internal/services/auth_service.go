@@ -3,29 +3,16 @@ package services
 
 import (
 	"errors"
-	"log"
-	"time"
-
+	"github.com/Varshi292/RoastWear/internal/interfaces"
 	"github.com/Varshi292/RoastWear/internal/models"
-	"github.com/Varshi292/RoastWear/internal/repository/interfaces"
 	"github.com/Varshi292/RoastWear/internal/session"
 	_ "github.com/Varshi292/RoastWear/internal/session"
 	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
+	"log"
+	"time"
 )
 
-// AuthService ...
-//
-// Fields:
-//   - repo: ...
-
-// NewAuthService ...
-//
-// Parameters:
-//   - repo: ...
-//
-// Returns:
-//   - *AuthService: ...
 type AuthService struct {
 	repo           interfaces.UserRepository
 	sessionService *SessionService
@@ -38,14 +25,6 @@ func NewAuthService(repo interfaces.UserRepository, sessionService *SessionServi
 	}
 }
 
-// LoginUser ...
-//
-// Parameters:
-//   - request: ...
-//   - c: ...
-//
-// Returns:
-//   - error: ...
 func (service *AuthService) LoginUser(request *models.UserLoginRequest, c *fiber.Ctx) error {
 	user, err := service.repo.GetUser("username", request.Username)
 	if err != nil || !utils.VerifyPassword(request.Password, user.Password) {
@@ -61,7 +40,7 @@ func (service *AuthService) LoginUser(request *models.UserLoginRequest, c *fiber
 	// Optionally destroy the old session first (clears existing cookie)
 	_ = sess.Destroy()
 
-	// Create a brand new session
+	// Create a new session
 	newSess, err := session.Store.Get(c)
 	if err != nil {
 		return utils.ErrSessionNotFound
