@@ -57,11 +57,11 @@ debug: true
 env: local
 
 # Local storage path of info log.
-info_log: /home/nboussarhane/RoastWear/logs/info.log
+info_log: ./internal/admin/logs/info.log
 # Local storage path of error log.
-error_log: /home/nboussarhane/RoastWear/logs/error.log
+error_log: ./internal/admin/logs/error.log
 # Local storage path of access log.
-access_log: /home/nboussarhane/RoastWear/logs/access.log
+access_log: ./internal/admin/logs/access.log
 
 # Whether to close the assets access log.
 # access_assets_log_off: false
@@ -137,9 +137,9 @@ file_upload_engine:
 # - ""
 
 # The local path of the boot file
-bootstrap_file_path: /home/nboussarhane/RoastWear/bootstrap.go
+bootstrap_file_path: ./internal/admin/bootstrap.go
 # The local path of the go.mod file
-go_mod_file_path: /home/nboussarhane/RoastWear/go.mod
+go_mod_file_path: ./go.mod
 
 # Whether to allow deletion of operation log.
 allow_del_operation_log: false
