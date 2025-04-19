@@ -2,11 +2,11 @@
 package services
 
 import (
-	"RoastWear/internal/interfaces"
-	"RoastWear/internal/models"
-	"RoastWear/internal/utils"
 	"errors"
 	"fmt"
+	"github.com/Varshi292/RoastWear/internal/interfaces"
+	"github.com/Varshi292/RoastWear/internal/models"
+	"github.com/Varshi292/RoastWear/internal/utils"
 	"gorm.io/gorm"
 	"log"
 )

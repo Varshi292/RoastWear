@@ -2,8 +2,8 @@
 package repositories
 
 import (
-	"RoastWear/internal/models"
 	"fmt"
+	"github.com/Varshi292/RoastWear/internal/models"
 	"gorm.io/gorm"
 )
 

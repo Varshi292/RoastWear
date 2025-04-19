@@ -38,3 +38,12 @@
 2025-04-18T20:21:05.777Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1368117450076657770023", "statuscode": "200", "method": "GET", "path": "/admin/assets/dist/img/loading.gif"}
 2025-04-18T20:21:09.029Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1368117450076690120024", "statuscode": "200", "method": "POST", "path": "/admin/edit/normal_manager"}
 2025-04-18T20:21:19.391Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f1368117450076793530025", "statuscode": "200", "method": "GET", "path": "/admin/info/generate/new"}
+2025-04-19T00:43:08.360Z	[34mINFO[0m	engine/engine.go:407	Initialize database connections
+2025-04-19T00:43:08.365Z	[34mINFO[0m	engine/engine.go:407	Initialize configuration
+2025-04-19T00:43:08.371Z	[34mINFO[0m	engine/engine.go:407	Initialize navigation buttons
+2025-04-19T00:43:08.371Z	[34mINFO[0m	engine/engine.go:407	Initialize plugins
+2025-04-19T00:43:08.373Z	[34mINFO[0m	engine/engine.go:407	Initialize success🍺🍺
+2025-04-19T00:43:26.752Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f2489217450234067500001", "statuscode": "200", "method": "GET", "path": "/admin/login"}
+2025-04-19T00:43:26.847Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f2489217450234068310003", "statuscode": "200", "method": "GET", "path": "/admin/assets/login/dist/all.min.js"}
+2025-04-19T00:43:26.850Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f2489217450234068210002", "statuscode": "200", "method": "GET", "path": "/admin/assets/login/dist/all.min.css"}
+2025-04-19T00:43:43.310Z	[34mINFO[0m	controller/handler.go:25	[GoAdmin] access log	{"traceID": "0a00020f2489217450234233100004", "statuscode": "200", "method": "GET", "path": "/admin/login"}

@@ -2,7 +2,7 @@
 package database
 
 import (
-	"RoastWear/internal/models"
+	"github.com/Varshi292/RoastWear/internal/models"
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

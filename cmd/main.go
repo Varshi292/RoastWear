@@ -1,14 +1,6 @@
 package main
 
 import (
-	"RoastWear/internal/admin/models"
-	"RoastWear/internal/admin/pages"
-	"RoastWear/internal/config"
-	"RoastWear/internal/database"
-	"RoastWear/internal/handlers"
-	"RoastWear/internal/repositories"
-	"RoastWear/internal/services"
-	"RoastWear/internal/session"
 	_ "github.com/GoAdminGroup/go-admin/adapter/gofiber"
 	"github.com/GoAdminGroup/go-admin/engine"
 	_ "github.com/GoAdminGroup/go-admin/modules/db/drivers/sqlite"
@@ -16,13 +8,12 @@ import (
 	"github.com/GoAdminGroup/go-admin/template/chartjs"
 	"github.com/GoAdminGroup/go-admin/tests/tables"
 	_ "github.com/GoAdminGroup/themes/adminlte"
-	"log"
-
-	_ "github.com/Varshi292/RoastWear/docs"
+	"github.com/Varshi292/RoastWear/internal/admin/models"
+	"github.com/Varshi292/RoastWear/internal/admin/pages"
 	"github.com/Varshi292/RoastWear/internal/config"
 	"github.com/Varshi292/RoastWear/internal/database"
 	"github.com/Varshi292/RoastWear/internal/handlers"
-	"github.com/Varshi292/RoastWear/internal/repository"
+	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/Varshi292/RoastWear/internal/services"
 	"github.com/Varshi292/RoastWear/internal/session"
 	"github.com/gofiber/fiber/v2"
@@ -92,7 +83,7 @@ func main() {
 	}
 
 	// Repositories
-	userRepo := &repository.UserRepository{Db: db}
+	userRepo := &repositories.UserRepository{Db: db}
 
 	// Services
 	userService := services.NewUserService(userRepo)
