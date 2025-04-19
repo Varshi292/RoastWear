@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"errors"
-
 	"github.com/Varshi292/RoastWear/internal/models"
 	"github.com/Varshi292/RoastWear/internal/services"
 	"github.com/Varshi292/RoastWear/internal/utils"
@@ -29,14 +28,14 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 	var request models.UserLoginRequest
 	if err := c.BodyParser(&request); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error":   "invalid request format",
+			"message": "Invalid request format!",
 			"details": err.Error(),
 		})
 	}
 
 	if request.Username == "" || request.Password == "" {
 		return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
-			"error":   "validation error",
+			"message": "All fields are required!",
 			"details": "username and password are required",
 		})
 	}
@@ -44,12 +43,12 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 	if err := handler.authService.LoginUser(&request, c); err != nil {
 		if errors.Is(utils.ErrInvalidCredentials, err) {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"error":   "invalid credentials",
+				"message": "Invalid credentials. Please ensure you have provided the correct username and password.",
 				"details": err.Error(),
 			})
 		}
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error":   "internal server error",
+			"message": "Internal server error has occurred. Please contact support.",
 			"details": err.Error(),
 		})
 	}
@@ -63,13 +62,14 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 
 	if err := handler.sessionService.CreateSession(session); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error":   "failed to create session",
+			"message": "Failed to create session",
 			"details": err.Error(),
 		})
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message":    "login successful",
+		"message":    "Login successful!",
+		"success":    true,
 		"session_id": sessionID,
 	})
 }

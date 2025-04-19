@@ -73,8 +73,7 @@ func (handler *RegisterHandler) UserRegister(c *fiber.Ctx) error {
 		})
 	}
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"message":  "User registered successfully!",
-		"success":  true,
-		"redirect": "/",
+		"message": "User registered successfully!",
+		"success": true,
 	})
 }

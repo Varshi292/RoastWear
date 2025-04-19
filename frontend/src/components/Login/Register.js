@@ -28,7 +28,7 @@ const Register = () => {
       setMessage(result.message);
 
       if (result.success) {
-        setTimeout(() => navigate("/"), 2000); // Redirect to home after 2s
+        setTimeout(() => navigate("/"), 2000); // Redirect to dashboard after 2s
       }
     } catch (error) {
       setMessage("Registration failed. Please try again.");
