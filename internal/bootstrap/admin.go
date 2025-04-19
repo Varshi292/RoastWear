@@ -1,4 +1,4 @@
-package admin
+package bootstrap
 
 import (
 	_ "github.com/GoAdminGroup/go-admin/adapter/gofiber"
@@ -13,7 +13,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func InitializeAdmin(app *fiber.App) {
+func initializeAdmin(app *fiber.App) {
 	template.AddComp(chartjs.NewChart())
 	eng := engine.Default()
 	if err := eng.AddConfigFromYAML("./internal/admin/config.yml").

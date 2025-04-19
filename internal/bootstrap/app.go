@@ -1,7 +1,6 @@
 package bootstrap
 
 import (
-	"github.com/Varshi292/RoastWear/internal/admin"
 	"github.com/Varshi292/RoastWear/internal/database"
 	"github.com/Varshi292/RoastWear/internal/handlers"
 	"github.com/Varshi292/RoastWear/internal/repositories"
@@ -9,25 +8,24 @@ import (
 	"github.com/Varshi292/RoastWear/internal/session"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
-	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/swagger"
 )
 
 func InitializeApp() (*fiber.App, string) {
 	// Load .env
-	cfg, err := LoadConfig()
+	cfg, err := loadConfig()
 	if err != nil {
 		log.Fatalf("Failed to load app config: %s", err)
 	}
 
 	// Load app config
-	appCfg, err := LoadAppConfig(cfg)
+	appCfg, err := loadAppConfig(cfg)
 	if err != nil {
 		log.Fatalf("Failed to load app config: %s", err)
 	}
 
 	// Load session config
-	sessCfg, err := LoadSessionConfig(cfg)
+	sessCfg, err := loadSessionConfig(cfg)
 	if err != nil {
 		log.Fatalf("Failed to load session config: %s", err)
 	}
@@ -35,19 +33,12 @@ func InitializeApp() (*fiber.App, string) {
 	session.InitializeSessionStore(sessCfg)
 
 	// Fiber setup
-	app := fiber.New()
-	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:7777, http://127.0.0.1:7777",
-		AllowCredentials: true,
-		AllowMethods:     "GET,POST,OPTIONS",
-		AllowHeaders:     "Content-Type,Authorization",
-	}))
+	app := initializeFiber()
 
 	// Static files
-	app.Static("/", appCfg.StaticFilesPath)
 	app.Static("/uploads", "./uploads")
 
-	admin.InitializeAdmin(app)
+	initializeAdmin(app)
 
 	// Database
 	s := database.NewSqliteDatabase(appCfg.DBPath)
@@ -85,5 +76,5 @@ func InitializeApp() (*fiber.App, string) {
 
 	app.Get("/docs/*", swagger.HandlerDefault)
 
-	return app, ":" + appCfg.Port
+	return app, ":" + appCfg.BackendPort
 }

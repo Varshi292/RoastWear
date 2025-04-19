@@ -9,13 +9,28 @@ import (
 
 var validate = validator.New()
 
-func LoadAppConfig(v *viper.Viper) (*config.AppConfig, error) {
+func loadAppConfig(v *viper.Viper) (*config.AppConfig, error) {
 	// Default values
-	v.SetDefault("PORT", "7777")
+	v.SetDefault("BACKEND_PORT", "7777")
+	v.SetDefault("FRONTEND_PORT", "3000")
+	v.SetDefault("MODE", "development")
+	v.SetDefault("DEVELOPMENT_DOMAIN", "http://localhost")
+	v.SetDefault("PRODUCTION_DOMAIN", "https://www.roastwear.com")
 	v.SetDefault("DB_PATH", "./db/users.db")
 	v.SetDefault("STATIC_FILES_PATH", "./frontend/build")
 
 	var cfg config.AppConfig
+
+	// Determine mode
+	mode := v.GetString("MODE")
+	switch mode {
+	case "development":
+		cfg.Domain = v.GetString("DEVELOPMENT_DOMAIN")
+	case "production":
+		cfg.Domain = v.GetString("PRODUCTION_DOMAIN")
+	default:
+		return nil, fmt.Errorf("unrecognized mode '%s'", mode)
+	}
 
 	// Unmarshal configuration
 	if err := v.Unmarshal(&cfg); err != nil {
@@ -26,5 +41,6 @@ func LoadAppConfig(v *viper.Viper) (*config.AppConfig, error) {
 	if err := validate.Struct(cfg); err != nil {
 		return nil, fmt.Errorf("failed to validate config: %w", err)
 	}
+
 	return &cfg, nil
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func LoadSessionConfig(v *viper.Viper) (*config.SessionConfig, error) {
+func loadSessionConfig(v *viper.Viper) (*config.SessionConfig, error) {
 	// Default values
 	v.SetDefault("SESSION_KEY", "secret-key")
 	v.SetDefault("SESSION_PATH", "/")

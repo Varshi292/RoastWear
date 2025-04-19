@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func LoadConfig() (*viper.Viper, error) {
+func loadConfig() (*viper.Viper, error) {
 	v := viper.New()
 
 	// Load .env
