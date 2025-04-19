@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/Varshi292/RoastWear/internal/bootstrap"
-	"github.com/gofiber/fiber/v2/log"
+	"log"
 )
 
 // @title RoastWear API

@@ -33,9 +33,10 @@ func InitializeApp() (*fiber.App, string) {
 	session.InitializeSessionStore(sessCfg)
 
 	// Fiber setup
-	app := initializeFiber()
+	app := initializeFiber(appCfg)
 
 	// Static files
+	app.Static("/", "./frontend/build")
 	app.Static("/uploads", "./uploads")
 
 	initializeAdmin(app)

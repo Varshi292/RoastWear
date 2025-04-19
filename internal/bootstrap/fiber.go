@@ -1,17 +1,21 @@
 package bootstrap
 
 import (
+	"github.com/Varshi292/RoastWear/internal/config"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"log"
 )
 
-func initializeFiber() *fiber.App {
+func initializeFiber(config *config.AppConfig) *fiber.App {
 	app := fiber.New()
-	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:7777, http://127.0.0.1:7777",
+	x := cors.Config{
+		AllowOrigins:     config.Domain + ":" + config.FrontendPort,
 		AllowCredentials: true,
 		AllowMethods:     "GET,POST,OPTIONS",
 		AllowHeaders:     "Content-Type,Authorization",
-	}))
+	}
+	app.Use(cors.New(x))
+	log.Print(x.AllowOrigins)
 	return app
 }
