@@ -3,8 +3,8 @@ package services
 
 import (
 	"errors"
+	"github.com/Varshi292/RoastWear/internal/interfaces"
 	"github.com/Varshi292/RoastWear/internal/models"
-	"github.com/Varshi292/RoastWear/internal/repository/interfaces"
 	"github.com/Varshi292/RoastWear/internal/session"
 	_ "github.com/Varshi292/RoastWear/internal/session"
 	"github.com/Varshi292/RoastWear/internal/utils"

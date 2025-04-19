@@ -1,14 +1,10 @@
-// Package config ...
 package config
 
-// AppConfig ...
-//
-// Fields:
-//   - Port: ...
-//   - StaticFilesPath: ...
-//   - DBPath: ...
 type AppConfig struct {
-	Port            string `mapstructure:"PORT" validate:"required"`
+	BackendPort     string `mapstructure:"BACKEND_PORT" validate:"required"`
+	FrontendPort    string `mapstructure:"FRONTEND_PORT" validate:"required"`
+	Mode            string `mapstructure:"MODE" validate:"required"`
+	Domain          string `validate:"required"`
 	StaticFilesPath string `mapstructure:"STATIC_FILES_PATH" validate:"required"`
 	DBPath          string `mapstructure:"DB_PATH" validate:"required"`
 }

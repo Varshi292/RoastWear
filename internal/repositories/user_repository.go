@@ -1,5 +1,5 @@
 // Package repository ...
-package repository
+package repositories
 
 import (
 	"fmt"
