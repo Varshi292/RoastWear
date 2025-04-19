@@ -2,9 +2,9 @@
 package handlers
 
 import (
-	"RoastWear/internal/models"
-	"RoastWear/internal/services"
-	"RoastWear/internal/utils"
+	"github.com/Varshi292/RoastWear/internal/models"
+	"github.com/Varshi292/RoastWear/internal/services"
+	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
 )
 

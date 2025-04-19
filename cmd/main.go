@@ -16,7 +16,17 @@ import (
 	"github.com/GoAdminGroup/go-admin/template/chartjs"
 	"github.com/GoAdminGroup/go-admin/tests/tables"
 	_ "github.com/GoAdminGroup/themes/adminlte"
+	"log"
+
+	_ "github.com/Varshi292/RoastWear/docs"
+	"github.com/Varshi292/RoastWear/internal/config"
+	"github.com/Varshi292/RoastWear/internal/database"
+	"github.com/Varshi292/RoastWear/internal/handlers"
+	"github.com/Varshi292/RoastWear/internal/repository"
+	"github.com/Varshi292/RoastWear/internal/services"
+	"github.com/Varshi292/RoastWear/internal/session"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/swagger"
 	"log"
 )
@@ -61,6 +71,13 @@ func main() {
 	models.Init(eng.SqliteConnection())
 	app.Static("/uploads", "./uploads")
 
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "http://localhost:7777, http://127.0.0.1:7777",
+		AllowCredentials: true,
+		AllowMethods:     "GET,POST,OPTIONS",
+		AllowHeaders:     "Content-Type,Authorization",
+	}))
+
 	// Retrieve frontend build for deployment
 	app.Static("/", cfg.StaticFilesPath)
 
@@ -74,20 +91,34 @@ func main() {
 		log.Fatalf("Failed to migrate database: %s", err)
 	}
 
-	// Set up user repository
-	userRepo := &repositories.UserRepository{Db: db}
-	// Set up user service
-	userService := services.NewUserService(userRepo)
-	// Set up authentication service
-	authService := services.NewAuthService(userRepo)
+	// Repositories
+	userRepo := &repository.UserRepository{Db: db}
 
-	// Set up register and login handlers
+	// Services
+	userService := services.NewUserService(userRepo)
+	sessionService := services.NewSessionService(db)
+	authService := services.NewAuthService(userRepo, sessionService)
+
+	// Handlers
 	registerHandler := handlers.NewRegisterHandler(userService)
+	loginHandler := handlers.NewLoginHandler(authService, sessionService)
+	sessionHandler := handlers.NewSessionHandler(sessionService)
+	checkoutHandler := handlers.NewCheckoutHandler(sessionService, db) // ✅ NEW
+
+	// Routes
 	app.Post("/register", registerHandler.UserRegister)
-	loginHandler := handlers.NewLoginHandler(authService)
 	app.Post("/login", loginHandler.UserLogin)
 
-	// Serve docs at /docs
+	app.Post("/session/create", sessionHandler.CreateSession)
+	app.Post("/session/verify", sessionHandler.VerifySession)
+	app.Delete("/session/delete", sessionHandler.DeleteSession)
+
+	app.Post("/checkout", checkoutHandler.CheckoutCart) // ✅ NEW: handles cart submission
+
+	app.Post("/post_user_image", handlers.UploadImageHandler(db))
+	app.Get("/get_user_images", handlers.GetImagesHandler(db))
+
+	// Docs
 	app.Get("/docs/*", swagger.HandlerDefault)
 
 	// Start the server at configured port
