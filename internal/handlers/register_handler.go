@@ -44,31 +44,37 @@ func (handler *RegisterHandler) UserRegister(c *fiber.Ctx) error {
 	var request models.UserRegisterRequest
 	if err := c.BodyParser(&request); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error":   "invalid request format",
+			"message": "Invalid request format!",
 			"details": err.Error(),
 		})
 	}
 	if request.Username == "" || request.Email == "" || request.Password == "" {
 		return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
-			"error":   "validation error",
+			"message": "All fields are required!",
 			"details": "username, email, and password are required",
 		})
 	}
 	if err := handler.service.RegisterUser(&request); err != nil {
-		if utils.NewErrUserExists(request.Username).Error() == err.Error() || utils.NewErrEmailExists(request.Email).
-			Error() == err.Error() {
+		if utils.NewErrUserExists(request.Username).Error() == err.Error() {
 			return c.Status(fiber.StatusConflict).JSON(fiber.Map{
-				"error":   "conflict error",
+				"message": "Username '" + request.Username + "' is already taken.",
+				"details": err.Error(),
+			})
+		}
+		if utils.NewErrEmailExists(request.Email).Error() == err.Error() {
+			return c.Status(fiber.StatusConflict).JSON(fiber.Map{
+				"message": "Email address '" + request.Email + "' is registered to an account.",
 				"details": err.Error(),
 			})
 		}
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error":   "internal server error",
+			"message": "Internal server error has occurred. Please contact support.",
 			"details": err.Error(),
 		})
 	}
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"message": "user registered successfully",
-		"user":    request.Username,
+		"message":  "User registered successfully!",
+		"success":  true,
+		"redirect": "/",
 	})
 }
