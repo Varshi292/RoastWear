@@ -1,28 +1,19 @@
-// Package handlers ...
 package handlers
 
 import (
 	"github.com/Varshi292/RoastWear/internal/models"
 	"github.com/Varshi292/RoastWear/internal/services"
 	"github.com/Varshi292/RoastWear/internal/utils"
+	"github.com/go-playground/validator"
 	"github.com/gofiber/fiber/v2"
 )
 
-// RegisterHandler ...
-//
-// Fields:
-//   - service: ...
+var validate = validator.New()
+
 type RegisterHandler struct {
 	service *services.UserService
 }
 
-// NewRegisterHandler ...
-//
-// Parameters:
-//   - service: ...
-//
-// Returns:
-//   - *RegisterHandler: ...
 func NewRegisterHandler(service *services.UserService) *RegisterHandler {
 	return &RegisterHandler{service: service}
 }
@@ -48,12 +39,56 @@ func (handler *RegisterHandler) UserRegister(c *fiber.Ctx) error {
 			"details": err.Error(),
 		})
 	}
-	if request.Username == "" || request.Email == "" || request.Password == "" {
-		return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
-			"message": "All fields are required!",
-			"details": "username, email, and password are required",
-		})
+	err := validate.Struct(request)
+	if err != nil {
+		validationErrors := err.(validator.ValidationErrors)
+		for _, err := range validationErrors {
+			field := err.Field()
+			tag := err.Tag()
+			switch field {
+			case "Username":
+				switch tag {
+				case "required":
+					return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
+						"message": "Username is required!",
+						"details": err,
+					})
+				case "min", "max":
+					return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
+						"message": "Username must be between 3 and 20 characters.",
+						"details": err,
+					})
+				}
+			case "Email":
+				switch tag {
+				case "required":
+					return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
+						"message": "Email is required!",
+						"details": err,
+					})
+				case "email":
+					return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
+						"message": "Invalid email address format.",
+						"details": err,
+					})
+				}
+			case "Password":
+				switch tag {
+				case "required":
+					return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
+						"message": "Password is required!",
+						"details": err,
+					})
+				case "min", "max":
+					return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
+						"message": "Password must be between 8 and 128 characters.",
+						"details": err,
+					})
+				}
+			}
+		}
 	}
+
 	if err := handler.service.RegisterUser(&request); err != nil {
 		if utils.NewErrUserExists(request.Username).Error() == err.Error() {
 			return c.Status(fiber.StatusConflict).JSON(fiber.Map{
