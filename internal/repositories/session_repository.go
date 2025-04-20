@@ -17,20 +17,20 @@ func NewSessionRepository(db *gorm.DB) *SessionRepository {
 }
 
 // CreateSession saves a new session to the database.
-func (s *SessionRepository) CreateSession(session *models.Session) error {
-	return s.db.Create(session).Error
+func (repo *SessionRepository) CreateSession(session *models.Session) error {
+	return repo.db.Create(session).Error
 }
 
-// GetSession checks if a session with the given username and session ID exists.
-func (s *SessionRepository) GetSession(sessionID string) error {
+// GetSession checks if a session with the session ID exists.
+func (repo *SessionRepository) GetSession(sessionID string) error {
 	sess := &models.Session{}
-	if err := s.db.Where("session_key = ?", sessionID).First(sess).Error; err != nil {
+	if err := repo.db.Where("session_key = ?", sessionID).First(sess).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
-// DeleteSession removes a session by username and session ID.
-func (s *SessionRepository) DeleteSession(username, sessionID string) error {
-	return s.db.Where("username = ? AND session_id = ?", username, sessionID).Delete(&models.Session{}).Error
+// DeleteSession removes a session by session ID.
+func (repo *SessionRepository) DeleteSession(session *models.Session) error {
+	return repo.db.Delete(session).Error
 }

@@ -6,20 +6,23 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [isSessionChecked, checkSession] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkSession = async () => {
+    const verifySession = async () => {
       const response = await fetch("http://localhost:7777/session/verify", {
         method: "GET", // switch from POST to GET
         credentials: "include",
       });
       const result = await response.json();
       if (result.success) {
-        navigate("/");
+        navigate("/"); // Redirect to dashboard if already logged in
+      } else {
+        checkSession(true); // Session is not valid, enable form
       }
     };
-    checkSession();
+    verifySession();
   }, [navigate]);
 
   const handleSubmit = async (event) => {
@@ -44,6 +47,10 @@ const Login = () => {
       console.error(error);
     }
   };
+
+  if (!isSessionChecked) {
+    return null;
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
