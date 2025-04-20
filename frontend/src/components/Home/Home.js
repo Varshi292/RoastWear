@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { products } from "./Product";
 import ProductCart from "../Carts/productCart";
-import Contact from "../Contact.js";
+import Contact from "../Contact/Contact.js";
 
 const Home = () => {
   return (
