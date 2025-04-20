@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"github.com/Varshi292/RoastWear/internal/models"
+	"github.com/gofiber/fiber/v2/middleware/session"
 	"gorm.io/gorm"
 )
 
@@ -30,6 +31,6 @@ func (repo *SessionRepository) GetSession(sessionID string) error {
 }
 
 // DeleteSession removes a session by session ID.
-func (repo *SessionRepository) DeleteSession(session *models.Session) error {
-	return repo.db.Delete(session).Error
+func (repo *SessionRepository) DeleteSession(sessionID string) error {
+	return repo.db.Where("session_key = ?", sessionID).Delete(&session.Session{}).Error
 }

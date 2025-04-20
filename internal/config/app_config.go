@@ -9,4 +9,5 @@ type AppConfig struct {
 	UserDBPath      string `mapstructure:"USER_DB_PATH" validate:"required"`
 	SessionDBPath   string `mapstructure:"SESSION_DB_PATH" validate:"required"`
 	UploadDBPath    string `mapstructure:"UPLOAD_DB_PATH" validate:"required"`
+	CartDBPath      string `mapstructure:"CART_DB_PATH" validate:"required"`
 }

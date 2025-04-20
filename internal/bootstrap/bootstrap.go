@@ -59,11 +59,13 @@ func InitializeApp() (*fiber.App, string) {
 	registerHandler := handlers.NewRegisterHandler(userService)
 	loginHandler := handlers.NewLoginHandler(authService, sessionRepo)
 	sessionHandler := handlers.NewSessionHandler(sessionRepo)
+	logoutHandler := handlers.NewLogoutHandler(sessionRepo)
 	checkoutHandler := handlers.NewCheckoutHandler(sessionRepo, sessionDB)
 
 	// Routes
 	app.Post("/register", registerHandler.UserRegister)
 	app.Post("/login", loginHandler.UserLogin)
+	app.Delete("/logout", logoutHandler.UserLogout)
 
 	app.Post("/session/create", sessionHandler.CreateSession)
 	app.Get("/session/verify", sessionHandler.VerifySession)

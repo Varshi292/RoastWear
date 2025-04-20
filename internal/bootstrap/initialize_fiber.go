@@ -11,7 +11,7 @@ func initializeFiber(config *config.AppConfig) *fiber.App {
 	x := cors.Config{
 		AllowOrigins:     config.Domain + ":" + config.FrontendPort,
 		AllowCredentials: true,
-		AllowMethods:     "GET,POST,OPTIONS",
+		AllowMethods:     "GET,POST,OPTIONS,DELETE",
 		AllowHeaders:     "Content-Type,Authorization",
 	}
 	app.Use(cors.New(x))

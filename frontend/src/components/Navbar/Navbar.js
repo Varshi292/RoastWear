@@ -10,6 +10,7 @@ import { useSearch } from "../Context/SearchContext";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [totalQuantity, setTotalQuantity] = useState(0);
+  const [isAuthenticated, setAuthentication] = useState(false);
   const [search, setSearch] = useState("");
   const { searchTerm, setSearchTerm } = useSearch();
 
@@ -24,6 +25,22 @@ const Navbar = () => {
     setTotalQuantity(total);
   }, [carts]);
 
+  useEffect(() => {
+    const checkSession = async () => {
+      const response = await fetch("http://localhost:7777/session/verify", {
+        method: "GET", // switch from POST to GET
+        credentials: "include",
+      });
+      const result = await response.json();
+      if (result.success) {
+        setAuthentication(true)
+      } else {
+        setAuthentication(false);
+      }
+    };
+    checkSession();
+  }, [navigate]);
+
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   const handleOpenTabCart = () => dispatch(toggleStatusTab());
@@ -33,6 +50,18 @@ const Navbar = () => {
     if (search.trim()) {
       navigate(`/shop?search=${encodeURIComponent(search.trim())}`);
       setSearch("");
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch("http://localhost:7777/logout", {
+        method: "DELETE",
+        credentials: "include",
+      });
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
     }
   };
 
@@ -61,7 +90,11 @@ const Navbar = () => {
           <Link to="/shop" className="hover:text-[#ff2e63]">Shop</Link>
           <Link to="/customize" className="hover:text-[#ff2e63]">Customize</Link>
           <Link to="/about" className="hover:text-[#ff2e63]">About</Link>
-          <Link to="/login" className="hover:text-[#ff2e63]">Login</Link>
+          {isAuthenticated ? (
+              <button onClick={handleLogout} className="hover:text-[#ff2e63]">Logout</button>
+          ) : (
+              <Link to="/login" className="hover:text-[#ff2e63]">Login</Link>
+          )}
         </div>
 
         {/* Search */}
@@ -126,7 +159,11 @@ const Navbar = () => {
         <Link to="/shop" onClick={toggleMenu} className="hover:text-[#25aae1]">Shop</Link>
         <Link to="/customize" onClick={toggleMenu} className="hover:text-[#25aae1]">Customize</Link>
         <Link to="/about" onClick={toggleMenu} className="hover:text-[#25aae1]">About</Link>
-        <Link to="/login" onClick={toggleMenu} className="hover:text-[#25aae1]">Login</Link>
+        {isAuthenticated ? (
+            <button onClick={handleLogout} className="hover:text-[#ff2e63]">Logout</button>
+        ) : (
+            <Link to="/login" className="hover:text-[#ff2e63]">Login</Link>
+        )}
         <Link to="/wishlist" onClick={toggleMenu} className="hover:text-[#ff2e63]">
           <i className="far fa-heart"></i> Wishlist
         </Link>

@@ -92,7 +92,7 @@ func (h *SessionHandler) DeleteSession(c *fiber.Ctx) error {
 			"details": err,
 		})
 	}
-	if err := h.repo.DeleteSession(&sess); err != nil {
+	if err := h.repo.DeleteSession(sess.SessionKey); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": "Failed to delete session!",
 			"details": err,
