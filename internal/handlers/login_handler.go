@@ -8,7 +8,6 @@ import (
 	"github.com/Varshi292/RoastWear/internal/sessions"
 	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
-	"log"
 	"time"
 )
 
@@ -68,7 +67,7 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 	sess.Set("loginTime", time.Now().Unix())
 
 	// Wraps session in session model for GORM management and persistent storage
-	modelSession := &models.Session{Session: sess}
+	modelSession := &models.Session{Session: sess, SessionKey: sess.ID()}
 
 	// Stores session in database
 	if err := handler.sessionRepo.CreateSession(modelSession); err != nil {
@@ -78,8 +77,7 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 		})
 	}
 
-	id := sess.ID()
-	log.Println(sessions.Store.CookiePath)
+	// Saves session as client-side cookie
 	if err := sess.Save(); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": "Failed to save session",
@@ -90,6 +88,6 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"message":    "Login successful!",
 		"success":    true,
-		"session_id": id,
+		"session_id": modelSession.SessionKey,
 	})
 }

@@ -7,5 +7,6 @@ import (
 
 type Session struct {
 	gorm.Model
-	*session.Session
+	*session.Session `gorm:"-"`
+	SessionKey       string `gorm:"uniqueIndex;not null"`
 }

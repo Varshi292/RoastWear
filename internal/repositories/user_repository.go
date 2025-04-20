@@ -30,8 +30,7 @@ func (repo *UserRepository) HasUser(field string, value interface{}) bool {
 
 func (repo *UserRepository) GetUser(field string, value interface{}) (*models.User, error) {
 	target := &models.User{}
-	err := repo.Db.Where(fmt.Sprintf("%s = ?", field), value).First(&target).Error
-	if err != nil {
+	if err := repo.Db.Where(fmt.Sprintf("%s = ?", field), value).First(&target).Error; err != nil {
 		return nil, err
 	}
 	return target, nil

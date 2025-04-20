@@ -1,5 +1,5 @@
 // src/components/Login/Login.js
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -7,6 +7,20 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const response = await fetch("http://localhost:7777/session/verify", {
+        method: "GET", // switch from POST to GET
+        credentials: "include",
+      });
+      const result = await response.json();
+      if (result.success) {
+        navigate("/");
+      }
+    };
+    checkSession();
+  }, [navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

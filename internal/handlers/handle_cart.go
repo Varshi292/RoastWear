@@ -28,8 +28,8 @@ func (h *CheckoutHandler) CheckoutCart(c *fiber.Ctx) error {
 		})
 	}
 
-	valid, err := h.sessionRepository.VerifySession(req.Username, req.SessionID)
-	if err != nil || !valid {
+	err := h.sessionRepository.GetSession(req.SessionID)
+	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 			"error": "invalid session",
 		})
@@ -37,7 +37,7 @@ func (h *CheckoutHandler) CheckoutCart(c *fiber.Ctx) error {
 
 	for _, item := range req.Items {
 		purchase := models.Purchase{
-			Username:  req.Username,
+			Username:  "",
 			ProductID: item.ProductID,
 			Quantity:  item.Quantity,
 		}

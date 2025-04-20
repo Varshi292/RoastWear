@@ -4,7 +4,9 @@ package handlers
 import (
 	"github.com/Varshi292/RoastWear/internal/models"
 	"github.com/Varshi292/RoastWear/internal/repositories"
+	"github.com/Varshi292/RoastWear/internal/sessions"
 	"github.com/gofiber/fiber/v2"
+	"log"
 )
 
 type SessionHandler struct {
@@ -48,15 +50,20 @@ func (h *SessionHandler) CreateSession(c *fiber.Ctx) error {
 // @Failure 401 {object} map[string]string
 // @Router /session/verify [post]
 func (h *SessionHandler) VerifySession(c *fiber.Ctx) error {
-	var sess models.Session
-	if err := c.BodyParser(&sess); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "invalid session data"})
+	sess, err := sessions.Store.Get(c)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Invalid session data",
+			"details": err.Error()})
 	}
-	valid, err := h.repo.VerifySession(sess.Get("username").(string), sess.Session.ID())
-	if err != nil || !valid {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "invalid session"})
+	sessID := sess.ID()
+	log.Println("ID: " + sessID)
+	if err := h.repo.GetSession(sessID); err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"message": "Invalid session data",
+			"details": err.Error()})
 	}
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "session valid"})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"success": true})
 }
 
 // DeleteSession ...

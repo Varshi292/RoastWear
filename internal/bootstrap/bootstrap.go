@@ -39,6 +39,7 @@ func InitializeApp() (*fiber.App, string) {
 	app := initializeFiber(appCfg)
 
 	// Static files
+
 	app.Static("/", "./frontend/build")
 	app.Static("/uploads", "./uploads")
 
@@ -93,7 +94,7 @@ func InitializeApp() (*fiber.App, string) {
 	app.Post("/login", loginHandler.UserLogin)
 
 	app.Post("/session/create", sessionHandler.CreateSession)
-	app.Post("/session/verify", sessionHandler.VerifySession)
+	app.Get("/session/verify", sessionHandler.VerifySession)
 	app.Delete("/session/delete", sessionHandler.DeleteSession)
 
 	app.Post("/checkout", checkoutHandler.CheckoutCart)
