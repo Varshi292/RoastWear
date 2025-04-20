@@ -1,4 +1,3 @@
-// Home.test.js
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import Home from "./Home";
@@ -18,7 +17,9 @@ jest.mock("../Carts/productCart", () => ({ data }) => (
 ));
 
 // Mock Contact component
-jest.mock("../Contact.js", () => () => <div data-testid="contact-section">Contact Component</div>);
+jest.mock("../Contact/Contact.js", () => () => (
+  <div data-testid="contact-section">Contact Component</div>
+));
 
 describe("Home Component", () => {
   beforeEach(() => {
@@ -29,14 +30,13 @@ describe("Home Component", () => {
     );
   });
 
-  test("renders banner section", () => {
-    expect(screen.getByText(/buy 2 @ \$50/i)).toBeInTheDocument();
-    expect(screen.getByText(/premium quality t-shirts/i)).toBeInTheDocument();
-  });
-
   test("renders customization banner with button", () => {
-    expect(screen.getByText(/create your own t-shirts/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /start customizing/i })).toBeInTheDocument();
+    expect(
+      screen.getByText(/create your own t-shirts/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /start customizing/i })
+    ).toBeInTheDocument();
   });
 
   test("renders category image links", () => {

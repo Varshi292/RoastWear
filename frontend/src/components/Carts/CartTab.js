@@ -49,15 +49,17 @@ const CartTab = () => {
 
       {/* Footer */}
       <footer className="bg-[#1f1f1f] border-t border-gray-700 shadow-inner px-6 flex items-center justify-between">
-        <span className="text-xl font-bold text-gray-100">
-          Total: ${getTotalPrice().toFixed(2)}
-        </span>
-        <button
-          className="bg-[#25aae1] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#1f8fcb] transition"
-        >
-          Proceed to Checkout
-        </button>
-      </footer>
+  <span className="text-xl font-bold text-gray-100">
+    Total: ${getTotalPrice().toFixed(2)}
+  </span>
+  <button
+    className="bg-[#25aae1] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#1f8fcb] transition"
+    onClick={() => console.log("Hello World")}
+  >
+    Proceed to Checkout
+  </button>
+</footer>
+
     </div>
   );
 };

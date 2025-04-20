@@ -14,7 +14,6 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
   const { searchTerm, setSearchTerm } = useSearch();
 
-
   const carts = useSelector((store) => store.cart.items);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -42,14 +41,13 @@ const Navbar = () => {
   }, [navigate]);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
-
   const handleOpenTabCart = () => dispatch(toggleStatusTab());
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (search.trim()) {
-      navigate(`/shop?search=${encodeURIComponent(search.trim())}`);
-      setSearch("");
+    const query = searchTerm.trim();
+    if (query) {
+      navigate(`/shop?search=${encodeURIComponent(query)}`);
     }
   };
 
@@ -70,7 +68,10 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Logo */}
         <div className="text-6xl font-extrabold tracking-wide relative">
-          <Link to="/" className="text-[#25aae1] hover:text-[#1f8fcb] transition flex items-center group">
+          <Link
+            to="/"
+            className="text-[#25aae1] hover:text-[#1f8fcb] transition flex items-center group"
+          >
             R
             <span className="relative inline-block">
               oa
@@ -84,7 +85,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Navigation Links (Desktop) */}
+        {/* Navigation Links */}
         <div className="hidden md:flex items-center space-x-6 ml-6">
           <Link to="/" className="hover:text-[#ff2e63]">Home</Link>
           <Link to="/shop" className="hover:text-[#ff2e63]">Shop</Link>
@@ -97,22 +98,25 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Search */}
-        <form onSubmit={handleSearch} className="hidden md:flex items-center space-x-2">
-        <input
-  type="text"
-  placeholder="Search T-shirts..."
-  className="p-2 rounded-md bg-[#1f2937] text-white placeholder:text-gray-400 focus:outline-none"
-  value={searchTerm}
-  onChange={(e) => setSearchTerm(e.target.value)}
-/>
-
-          <button type="submit">
+        {/* Search Bar */}
+        <form
+          onSubmit={handleSearch}
+          className="hidden md:flex items-center space-x-2"
+        >
+          <input
+            data-testid="search-input"
+            type="text"
+            placeholder="Search T-shirts..."
+            className="p-2 rounded-md bg-[#1f2937] text-white placeholder:text-gray-400 focus:outline-none"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button type="submit" aria-label="Search">
             <i className="fas fa-search text-[#25aae1]" />
           </button>
         </form>
 
-        {/* Wishlist + Cart (Desktop) */}
+        {/* Cart + Wishlist */}
         <div className="hidden md:flex items-center space-x-4">
           <Link to="/wishlist" className="hover:text-[#ff2e63]">
             <i className="fas fa-heart mr-1"></i> Wishlist
@@ -132,7 +136,6 @@ const Navbar = () => {
         {/* Hamburger Menu (Mobile) */}
         <button
           className="md:hidden text-2xl focus:outline-none"
-          aria-label="open menu"
           onClick={toggleMenu}
         >
           <i className="fas fa-bars" />
@@ -145,16 +148,13 @@ const Navbar = () => {
           menuOpen ? "fixed inset-0 bg-[#121417] bg-opacity-95 z-50" : "hidden"
         } flex flex-col items-center justify-center space-y-8 text-2xl`}
       >
-        {/* Close button */}
         <button
           className="absolute top-4 right-4 text-3xl text-white"
-          aria-label="close menu"
           onClick={toggleMenu}
         >
           <i className="fas fa-times" />
         </button>
 
-        {/* Mobile Links */}
         <Link to="/" onClick={toggleMenu} className="hover:text-[#25aae1]">Home</Link>
         <Link to="/shop" onClick={toggleMenu} className="hover:text-[#25aae1]">Shop</Link>
         <Link to="/customize" onClick={toggleMenu} className="hover:text-[#25aae1]">Customize</Link>
@@ -172,7 +172,7 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* Cart Tab */}
+      {/* Cart Overlay Tab */}
       <CartTab />
     </nav>
   );
