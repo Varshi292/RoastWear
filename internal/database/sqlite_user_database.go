@@ -9,6 +9,7 @@ import (
 
 type SqliteUserDatabase struct {
 	dsn string
+	db  *gorm.DB
 }
 
 func NewSqliteUserDatabase(dsn string) *SqliteUserDatabase {
@@ -23,18 +24,15 @@ func (s *SqliteUserDatabase) Connect() (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
+	s.db = db
 	return db, nil
 }
 
 func (s *SqliteUserDatabase) Migrate() error {
-	db, err := s.Connect()
-	if err != nil {
+	if err := s.db.AutoMigrate(&models.User{}); err != nil {
 		return err
 	}
-	if err := db.AutoMigrate(&models.User{}); err != nil {
-		return err
-	}
-	if err := db.Table("archived_users").AutoMigrate(&models.User{}); err != nil {
+	if err := s.db.Table("archived_users").AutoMigrate(&models.User{}); err != nil {
 		return err
 	}
 	return nil

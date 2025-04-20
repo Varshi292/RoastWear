@@ -9,6 +9,7 @@ import (
 
 type SqliteUploadDatabase struct {
 	dsn string
+	db  *gorm.DB
 }
 
 func NewSqliteUploadDatabase(dsn string) *SqliteUploadDatabase {
@@ -23,15 +24,12 @@ func (s *SqliteUploadDatabase) Connect() (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
+	s.db = db
 	return db, nil
 }
 
 func (s *SqliteUploadDatabase) Migrate() error {
-	db, err := s.Connect()
-	if err != nil {
-		return err
-	}
-	if err := db.AutoMigrate(&models.UserUpload{}); err != nil {
+	if err := s.db.AutoMigrate(&models.UserUpload{}); err != nil {
 		return err
 	}
 	return nil
