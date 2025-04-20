@@ -66,7 +66,10 @@ const Customize = () => {
   const previewImg = staticGifImage || uploadedImg;
 
   return (
-    <div className="min-h-screen bg-[#0b0c0f] text-gray-300 px-6 py-10 space-y-10">
+    <div
+      className="min-h-screen bg-[#0b0c0f] text-gray-300 px-6 py-10 space-y-10"
+      data-testid="customize-root"
+    >
       <h2 className="text-3xl font-bold text-center text-[#25aae1] drop-shadow-[0_0_8px_#25aae1]">
         Customize Your T-Shirts
       </h2>
@@ -123,6 +126,7 @@ const Customize = () => {
         <div>
           <label className="font-semibold block mb-1">Tenor GIF URL:</label>
           <input
+            id="tenor-url"
             type="text"
             value={tenorLink}
             onChange={handleTenorLinkChange}
@@ -144,6 +148,7 @@ const Customize = () => {
         <div>
           <label className="font-semibold block mb-1">Overlay Text:</label>
           <input
+            id="overlay-text"
             type="text"
             value={overlayText}
             onChange={handleTextChange}
@@ -155,6 +160,7 @@ const Customize = () => {
         <div>
           <label className="font-semibold block mb-1">Text Color:</label>
           <input
+            id="text-color"
             type="color"
             value={textColor}
             onChange={(e) => setTextColor(e.target.value)}

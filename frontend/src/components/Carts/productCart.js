@@ -9,19 +9,9 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 const ProductCart = ({ data }) => {
   const dispatch = useDispatch();
 
-  const wishlistItems = useSelector(
-    (state) => state.wishlist?.items || []
-  );
+  const wishlistItems = useSelector((state) => state.wishlist?.items || []);
 
-  const {
-    id,
-    name,
-    price,
-    designer,
-    discount,
-    image,
-    slug
-  } = data;
+  const { id, name, price, designer, discount, image, slug } = data;
 
   const isWishlisted = Array.isArray(wishlistItems)
     ? wishlistItems.includes(id)
@@ -41,7 +31,10 @@ const ProductCart = ({ data }) => {
   };
 
   return (
-    <div className="bg-[#1e1e1e] p-5 rounded-xl shadow-[0_0_10px_rgba(255,255,255,0.05)] relative text-gray-300 border border-[#2c2c2c]">
+    <div
+      data-testid="product-card"
+      className="bg-[#1e1e1e] p-5 rounded-xl shadow-[0_0_10px_rgba(255,255,255,0.05)] relative text-gray-300 border border-[#2c2c2c]"
+    >
       <Link to={`/product/${slug}`}>
         <img
           src={image}
@@ -56,6 +49,7 @@ const ProductCart = ({ data }) => {
           className="bg-[#1e1e1e] m-2 p-2 rounded-full shadow-md hover:bg-[#2a2a2a] transition duration-300"
           onClick={handleToggleWishlist}
           aria-label="Toggle Wishlist"
+          data-testid={`wishlist-toggle-${id}`}
         >
           {isWishlisted ? (
             <FaHeart className="text-red-500 w-6 h-6" />
@@ -73,7 +67,7 @@ const ProductCart = ({ data }) => {
 
       <div className="flex justify-between items-center mt-2">
         <p className="price text-base sm:text-lg md:text-xl text-[#ff2e63]">
-          ${price.toFixed(2)}{' '}
+          ${price.toFixed(2)}{" "}
           {discount && (
             <span className="text-gray-500 text-xs sm:text-sm">
               ({discount} off)
@@ -83,10 +77,21 @@ const ProductCart = ({ data }) => {
         <button
           className="bg-[#25aae1] text-white p-2 rounded-md text-sm hover:bg-[#1f8fcb] flex items-center gap-2 shadow hover:shadow-md"
           onClick={handleAddToCart}
+          aria-label="Add to Cart"
+          data-testid={`add-to-cart-${id}`}
         >
           <img src={iconCart} alt="Cart Icon" className="w-5" />
         </button>
       </div>
+
+      <Link to={`/product/${slug}`}>
+        <button
+          className="mt-4 w-full bg-[#25aae1] hover:bg-[#1f8fcb] text-black font-semibold py-2 rounded"
+          data-testid="view-button"
+        >
+          View Product
+        </button>
+      </Link>
     </div>
   );
 };
