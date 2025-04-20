@@ -17,18 +17,21 @@ func InitializeApp() (*fiber.App, string) {
 	if err != nil {
 		log.Fatalf("Failed to load app config: %s", err)
 	}
+	log.Printf("✅ .env configuration loaded successfully.")
 
 	// Load app config
 	appCfg, err := loadAppConfig(cfg)
 	if err != nil {
 		log.Fatalf("Failed to load app config: %s", err)
 	}
+	log.Printf("✅ App configuration loaded successfully.")
 
 	// Load session config
 	sessCfg, err := loadSessionConfig(cfg)
 	if err != nil {
 		log.Fatalf("Failed to load session config: %s", err)
 	}
+	log.Printf("✅ Session configuration loaded successfully.")
 
 	sessions.InitializeSessionStore(sessCfg)
 

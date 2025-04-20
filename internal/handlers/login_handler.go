@@ -5,21 +5,24 @@ import (
 	"github.com/Varshi292/RoastWear/internal/models"
 	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/Varshi292/RoastWear/internal/services"
+	"github.com/Varshi292/RoastWear/internal/sessions"
 	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
+	"log"
+	"time"
 )
 
 // LoginHandler ...
 type LoginHandler struct {
-	authService    *services.AuthService
-	sessionService *repositories.SessionRepository
+	authService *services.AuthService
+	sessionRepo *repositories.SessionRepository
 }
 
 // NewLoginHandler ...
-func NewLoginHandler(auth *services.AuthService, session *repositories.SessionRepository) *LoginHandler {
+func NewLoginHandler(auth *services.AuthService, sessionRepo *repositories.SessionRepository) *LoginHandler {
 	return &LoginHandler{
-		authService:    auth,
-		sessionService: session,
+		authService: auth,
+		sessionRepo: sessionRepo,
 	}
 }
 
@@ -39,11 +42,11 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 			"details": "username and password are required",
 		})
 	}
-	sess, err := handler.authService.LoginUser(&request, c)
-	if err != nil {
+
+	if err := handler.authService.AuthenticateUser(&request); err != nil {
 		if errors.Is(utils.ErrInvalidCredentials, err) {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"message": "Invalid credentials. Please ensure you have provided the correct username and password.",
+				"message": "Invalid credentials. Please check that you have provided the correct username and password.",
 				"details": err.Error(),
 			})
 		}
@@ -53,7 +56,30 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 		})
 	}
 
-	id := sess.Session.ID()
+	// Create a new session
+	sess, err := sessions.Store.Get(c)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Failed to create session.",
+			"details": err.Error(),
+		})
+	}
+	sess.Set("username", request.Username)
+	sess.Set("loginTime", time.Now().Unix())
+
+	// Wraps session in session model for GORM management and persistent storage
+	modelSession := &models.Session{Session: sess}
+
+	// Stores session in database
+	if err := handler.sessionRepo.CreateSession(modelSession); err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Failed to store session",
+			"details": err.Error(),
+		})
+	}
+
+	id := sess.ID()
+	log.Println(sessions.Store.CookiePath)
 	if err := sess.Save(); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": "Failed to save session",

@@ -14,6 +14,7 @@ const Login = () => {
     try {
       const response = await fetch("http://localhost:7777/login", {
         method: "POST",
+        credentials : "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
