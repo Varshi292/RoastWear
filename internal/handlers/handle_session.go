@@ -6,7 +6,6 @@ import (
 	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/Varshi292/RoastWear/internal/sessions"
 	"github.com/gofiber/fiber/v2"
-	"log"
 )
 
 type SessionHandler struct {
@@ -33,17 +32,20 @@ func (h *SessionHandler) CreateSession(c *fiber.Ctx) error {
 	var sess models.Session
 	if err := c.BodyParser(&sess); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": "invalid session data",
+			"message": "Invalid request format!",
 			"details": err,
 		})
 	}
 	if err := h.repo.CreateSession(&sess); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "failed to create session",
+			"message": "Failed to create session!",
 			"details": err,
 		})
 	}
-	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"message": "session created"})
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"message": "Session created successfully!",
+		"success": true,
+	})
 }
 
 // VerifySession ...
@@ -59,17 +61,18 @@ func (h *SessionHandler) VerifySession(c *fiber.Ctx) error {
 	sess, err := sessions.Store.Get(c)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": "Invalid session data",
+			"message": "Invalid request format!",
 			"details": err.Error()})
 	}
-	sessID := sess.ID()
-	log.Println("ID: " + sessID)
-	if err := h.repo.GetSession(sessID); err != nil {
+	if err := h.repo.GetSession(sess.ID()); err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"message": "Invalid session data",
+			"message": "Session not found!",
 			"details": err.Error()})
 	}
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"success": true})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message": "Session found!",
+		"success": true,
+	})
 }
 
 // DeleteSession ...
@@ -85,12 +88,18 @@ func (h *SessionHandler) DeleteSession(c *fiber.Ctx) error {
 	var sess models.Session
 	if err := c.BodyParser(&sess); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": "invalid session data",
+			"message": "Invalid request format!",
 			"details": err,
 		})
 	}
 	if err := h.repo.DeleteSession(&sess); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to delete session"})
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Failed to delete session!",
+			"details": err,
+		})
 	}
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "session deleted"})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message": "Session successfully deleted!",
+		"success": true,
+	})
 }

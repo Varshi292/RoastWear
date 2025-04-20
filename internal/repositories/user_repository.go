@@ -1,4 +1,3 @@
-// Package repository ...
 package repositories
 
 import (
@@ -7,10 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// UserRepository ...
-//
-// Fields:
-//   - Db: ...
 type UserRepository struct {
 	Db *gorm.DB
 }

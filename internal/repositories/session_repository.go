@@ -1,4 +1,3 @@
-// Package services ...
 package repositories
 
 import (
