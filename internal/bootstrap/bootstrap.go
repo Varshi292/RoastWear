@@ -43,35 +43,35 @@ func InitializeApp() (*fiber.App, string) {
 	userSqliteDB := database.NewSqliteUserDatabase(appCfg.UserDBPath)
 	userDB, err := userSqliteDB.Connect()
 	if err != nil {
-		log.Fatalf("DB connection error: %s", err)
+		log.Fatalf("User database connection error: %s", err)
 	}
 	log.Println("✅ Connected to user database successfully")
 	if err := userSqliteDB.Migrate(); err != nil {
-		log.Fatalf("DB migration error: %s", err)
+		log.Fatalf("User database migration error: %s", err)
 	}
 	log.Println("✅ Migrated user database successfully")
 
-	sessionSqliteDB := database.NewSqliteUserDatabase(appCfg.SessionDBPath)
+	sessionSqliteDB := database.NewSqliteSessionDatabase(appCfg.SessionDBPath)
 	sessionDB, err := sessionSqliteDB.Connect()
 	if err != nil {
-		log.Fatalf("DB connection error: %s", err)
+		log.Fatalf("Session database connection error: %s", err)
 	}
 	log.Println("✅ Connected to session database successfully")
 	if err := sessionSqliteDB.Migrate(); err != nil {
-		log.Fatalf("DB migration error: %s", err)
+		log.Fatalf("Session database migration error: %s", err)
 	}
 	log.Println("✅ Migrated session database successfully")
 
 	uploadSqliteDB := database.NewSqliteUploadDatabase(appCfg.UploadDBPath)
-	_, err = uploadSqliteDB.Connect()
+	uploadDB, err := uploadSqliteDB.Connect()
 	if err != nil {
-		log.Fatalf("DB connection error: %s", err)
+		log.Fatalf("Upload database connection error: %s", err)
 	}
-	log.Println("✅ Connected to session database successfully")
+	log.Println("✅ Connected to upload database successfully")
 	if err := uploadSqliteDB.Migrate(); err != nil {
-		log.Fatalf("DB migration error: %s", err)
+		log.Fatalf("Upload database migration error: %s", err)
 	}
-	log.Println("✅ Migrated session database successfully")
+	log.Println("✅ Migrated upload database successfully")
 
 	// Dependencies
 	userRepo := &repositories.UserRepository{Db: userDB}
@@ -94,8 +94,8 @@ func InitializeApp() (*fiber.App, string) {
 	app.Delete("/session/delete", sessionHandler.DeleteSession)
 
 	app.Post("/checkout", checkoutHandler.CheckoutCart)
-	//app.Post("/post_user_image", handlers.UploadImageHandler(db))
-	//app.Get("/get_user_images", handlers.GetImagesHandler(db))
+	app.Post("/post_user_image", handlers.UploadImageHandler(uploadDB))
+	app.Get("/get_user_images", handlers.GetImagesHandler(uploadDB))
 
 	app.Get("/docs/*", swagger.HandlerDefault)
 

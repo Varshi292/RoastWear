@@ -53,7 +53,7 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 		})
 	}
 
-	id := sess.ID()
+	id := sess.Session.ID()
 	if err := sess.Save(); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": "Failed to save session",

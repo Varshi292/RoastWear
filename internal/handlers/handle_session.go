@@ -5,7 +5,6 @@ import (
 	"github.com/Varshi292/RoastWear/internal/models"
 	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/session"
 )
 
 type SessionHandler struct {
@@ -16,16 +15,18 @@ func NewSessionHandler(repo *repositories.SessionRepository) *SessionHandler {
 	return &SessionHandler{repo: repo}
 }
 
-// CreateSession ...
-// @Summary Create a session
-// @Description Stores a new session for a user
+// CreateSession godoc
+// @Summary Create a new user session
+// @Description Stores a session in the database (used for login/session tracking)
+// @Tags Session
 // @Accept json
 // @Produce json
-// @Param session body models.Session true "Session details (username, sessionID)"
-// @Success 201 {object} map[string]string
-// @Failure 400 {object} map[string]string
-// @Failure 500 {object} map[string]string
+// @Param session body models.Session true "Session data"
+// @Success 201 {object} fiber.Map "Session successfully created"
+// @Failure 400 {object} fiber.Map "Invalid session data"
+// @Failure 500 {object} fiber.Map "Failed to create session"
 // @Router /session/create [post]
+
 func (h *SessionHandler) CreateSession(c *fiber.Ctx) error {
 	var sess models.Session
 	if err := c.BodyParser(&sess); err != nil {
@@ -47,11 +48,11 @@ func (h *SessionHandler) CreateSession(c *fiber.Ctx) error {
 // @Failure 401 {object} map[string]string
 // @Router /session/verify [post]
 func (h *SessionHandler) VerifySession(c *fiber.Ctx) error {
-	var sess session.Session
+	var sess models.Session
 	if err := c.BodyParser(&sess); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "invalid session data"})
 	}
-	valid, err := h.repo.VerifySession(sess.Get("username").(string), sess.ID())
+	valid, err := h.repo.VerifySession(sess.Get("username").(string), sess.Session.ID())
 	if err != nil || !valid {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "invalid session"})
 	}
@@ -68,11 +69,11 @@ func (h *SessionHandler) VerifySession(c *fiber.Ctx) error {
 // @Failure 500 {object} map[string]string
 // @Router /session/delete [delete]
 func (h *SessionHandler) DeleteSession(c *fiber.Ctx) error {
-	var sess session.Session
+	var sess models.Session
 	if err := c.BodyParser(&sess); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "invalid session data"})
 	}
-	if err := h.repo.DeleteSession(sess.Get("username").(string), sess.ID()); err != nil {
+	if err := h.repo.DeleteSession(sess.Get("username").(string), sess.Session.ID()); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "failed to delete session"})
 	}
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "session deleted"})

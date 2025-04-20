@@ -8,7 +8,6 @@ import (
 	"github.com/Varshi292/RoastWear/internal/sessions"
 	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/session"
 	"time"
 )
 
@@ -24,7 +23,7 @@ func NewAuthService(repo interfaces.UserRepository, sessionService *repositories
 	}
 }
 
-func (service *AuthService) LoginUser(request *models.UserLoginRequest, c *fiber.Ctx) (*session.Session, error) {
+func (service *AuthService) LoginUser(request *models.UserLoginRequest, c *fiber.Ctx) (*models.Session, error) {
 	user, err := service.userRepo.GetUser("username", request.Username)
 	if err != nil || !utils.VerifyPassword(request.Password, user.Password) {
 		return nil, utils.ErrInvalidCredentials
@@ -46,5 +45,5 @@ func (service *AuthService) LoginUser(request *models.UserLoginRequest, c *fiber
 	newSess.Set("userID", user.ID)
 	newSess.Set("username", user.Username)
 	newSess.Set("loginTime", time.Now().Unix())
-	return newSess, nil
+	return &models.Session{Session: newSess}, nil
 }
