@@ -1,4 +1,3 @@
-// Package models ...
 package models
 
 import (

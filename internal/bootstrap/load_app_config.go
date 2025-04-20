@@ -16,7 +16,10 @@ func loadAppConfig(v *viper.Viper) (*config.AppConfig, error) {
 	v.SetDefault("MODE", "development")
 	v.SetDefault("DEVELOPMENT_DOMAIN", "http://localhost")
 	v.SetDefault("PRODUCTION_DOMAIN", "https://www.roastwear.com")
-	v.SetDefault("DB_PATH", "./db/users.db")
+	v.SetDefault("USER_DB_PATH", "./db/users.db")
+	v.SetDefault("SESSION_DB_PATH", "./db/sessions.db")
+	v.SetDefault("UPLOAD_DB_PATH", "./db/uploads.db")
+
 	v.SetDefault("STATIC_FILES_PATH", "./frontend/build")
 
 	var cfg config.AppConfig

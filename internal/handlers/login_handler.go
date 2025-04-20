@@ -3,20 +3,20 @@ package handlers
 import (
 	"errors"
 	"github.com/Varshi292/RoastWear/internal/models"
+	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/Varshi292/RoastWear/internal/services"
 	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
 )
 
 // LoginHandler ...
 type LoginHandler struct {
 	authService    *services.AuthService
-	sessionService *services.SessionService
+	sessionService *repositories.SessionRepository
 }
 
 // NewLoginHandler ...
-func NewLoginHandler(auth *services.AuthService, session *services.SessionService) *LoginHandler {
+func NewLoginHandler(auth *services.AuthService, session *repositories.SessionRepository) *LoginHandler {
 	return &LoginHandler{
 		authService:    auth,
 		sessionService: session,
@@ -39,8 +39,8 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 			"details": "username and password are required",
 		})
 	}
-
-	if err := handler.authService.LoginUser(&request, c); err != nil {
+	sess, err := handler.authService.LoginUser(&request, c)
+	if err != nil {
 		if errors.Is(utils.ErrInvalidCredentials, err) {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 				"message": "Invalid credentials. Please ensure you have provided the correct username and password.",
@@ -53,16 +53,10 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 		})
 	}
 
-	// ✅ Generate session ID and store it
-	sessionID := uuid.New().String()
-	session := &models.Session{
-		Username:  request.Username,
-		SessionID: sessionID,
-	}
-
-	if err := handler.sessionService.CreateSession(session); err != nil {
+	id := sess.ID()
+	if err := sess.Save(); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Failed to create session",
+			"message": "Failed to save session",
 			"details": err.Error(),
 		})
 	}
@@ -70,6 +64,6 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"message":    "Login successful!",
 		"success":    true,
-		"session_id": sessionID,
+		"session_id": id,
 	})
 }

@@ -2,60 +2,49 @@
 package services
 
 import (
-	"errors"
 	"github.com/Varshi292/RoastWear/internal/interfaces"
 	"github.com/Varshi292/RoastWear/internal/models"
-	"github.com/Varshi292/RoastWear/internal/session"
-	_ "github.com/Varshi292/RoastWear/internal/session"
+	"github.com/Varshi292/RoastWear/internal/repositories"
+	"github.com/Varshi292/RoastWear/internal/sessions"
 	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
-	"log"
+	"github.com/gofiber/fiber/v2/middleware/session"
 	"time"
 )
 
 type AuthService struct {
-	repo           interfaces.UserRepository
-	sessionService *SessionService
+	userRepo    interfaces.UserRepository
+	sessionRepo *repositories.SessionRepository
 }
 
-func NewAuthService(repo interfaces.UserRepository, sessionService *SessionService) *AuthService {
+func NewAuthService(repo interfaces.UserRepository, sessionService *repositories.SessionRepository) *AuthService {
 	return &AuthService{
-		repo:           repo,
-		sessionService: sessionService,
+		userRepo:    repo,
+		sessionRepo: sessionService,
 	}
 }
 
-func (service *AuthService) LoginUser(request *models.UserLoginRequest, c *fiber.Ctx) error {
-	user, err := service.repo.GetUser("username", request.Username)
+func (service *AuthService) LoginUser(request *models.UserLoginRequest, c *fiber.Ctx) (*session.Session, error) {
+	user, err := service.userRepo.GetUser("username", request.Username)
 	if err != nil || !utils.VerifyPassword(request.Password, user.Password) {
-		return utils.ErrInvalidCredentials
+		return nil, utils.ErrInvalidCredentials
 	}
 
 	// Always create a new session
-	sess, err := session.Store.Get(c)
+	sess, err := sessions.Store.Get(c)
 	if err != nil {
-		return utils.ErrSessionNotFound
+		return nil, utils.ErrSessionNotFound
 	}
 
 	// Optionally destroy the old session first (clears existing cookie)
 	_ = sess.Destroy()
-
 	// Create a new session
-	newSess, err := session.Store.Get(c)
+	newSess, err := sessions.Store.Get(c)
 	if err != nil {
-		return utils.ErrSessionNotFound
+		return nil, utils.ErrSessionNotFound
 	}
-
 	newSess.Set("userID", user.ID)
 	newSess.Set("username", user.Username)
 	newSess.Set("loginTime", time.Now().Unix())
-
-	if err := newSess.Save(); err != nil {
-		return errors.New("failed saving session")
-	}
-
-	// ✅ Print login log
-	log.Printf("✅ User '%s' logged in with session ID: %s", user.Username, newSess.ID())
-
-	return nil
+	return newSess, nil
 }

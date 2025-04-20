@@ -1,5 +1,5 @@
 // Package session ... (Add package-level description here)
-package session
+package sessions
 
 import (
 	"github.com/Varshi292/RoastWear/internal/config"

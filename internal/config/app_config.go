@@ -6,5 +6,7 @@ type AppConfig struct {
 	Mode            string `mapstructure:"MODE" validate:"required"`
 	Domain          string `validate:"required"`
 	StaticFilesPath string `mapstructure:"STATIC_FILES_PATH" validate:"required"`
-	DBPath          string `mapstructure:"DB_PATH" validate:"required"`
+	UserDBPath      string `mapstructure:"USER_DB_PATH" validate:"required"`
+	SessionDBPath   string `mapstructure:"SESSION_DB_PATH" validate:"required"`
+	UploadDBPath    string `mapstructure:"UPLOAD_DB_PATH" validate:"required"`
 }

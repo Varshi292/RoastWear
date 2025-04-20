@@ -2,18 +2,18 @@ package handlers
 
 import (
 	"github.com/Varshi292/RoastWear/internal/models"
-	"github.com/Varshi292/RoastWear/internal/services"
+	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
 )
 
 type CheckoutHandler struct {
-	sessionService *services.SessionService
-	db             *gorm.DB
+	sessionRepository *repositories.SessionRepository
+	db                *gorm.DB
 }
 
-func NewCheckoutHandler(s *services.SessionService, db *gorm.DB) *CheckoutHandler {
-	return &CheckoutHandler{sessionService: s, db: db}
+func NewCheckoutHandler(s *repositories.SessionRepository, db *gorm.DB) *CheckoutHandler {
+	return &CheckoutHandler{sessionRepository: s, db: db}
 }
 
 func (h *CheckoutHandler) CheckoutCart(c *fiber.Ctx) error {
@@ -28,7 +28,7 @@ func (h *CheckoutHandler) CheckoutCart(c *fiber.Ctx) error {
 		})
 	}
 
-	valid, err := h.sessionService.VerifySession(req.Username, req.SessionID)
+	valid, err := h.sessionRepository.VerifySession(req.Username, req.SessionID)
 	if err != nil || !valid {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 			"error": "invalid session",

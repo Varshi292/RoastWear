@@ -4,7 +4,6 @@ import (
 	"github.com/Varshi292/RoastWear/internal/config"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"log"
 )
 
 func initializeFiber(config *config.AppConfig) *fiber.App {
@@ -16,6 +15,5 @@ func initializeFiber(config *config.AppConfig) *fiber.App {
 		AllowHeaders:     "Content-Type,Authorization",
 	}
 	app.Use(cors.New(x))
-	log.Print(x.AllowOrigins)
 	return app
 }

@@ -5,18 +5,17 @@ import (
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"log"
 )
 
-type SqliteDatabase struct {
+type SqliteUserDatabase struct {
 	dsn string
 }
 
-func NewSqliteDatabase(dsn string) *SqliteDatabase {
-	return &SqliteDatabase{dsn: dsn}
+func NewSqliteUserDatabase(dsn string) *SqliteUserDatabase {
+	return &SqliteUserDatabase{dsn: dsn}
 }
 
-func (s *SqliteDatabase) Connect() (*gorm.DB, error) {
+func (s *SqliteUserDatabase) Connect() (*gorm.DB, error) {
 	db, err := gorm.Open(sqlite.Open(s.dsn), &gorm.Config{
 		TranslateError: true,
 		Logger:         logger.Default.LogMode(logger.Silent),
@@ -24,11 +23,10 @@ func (s *SqliteDatabase) Connect() (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	log.Println("✅ Connected to database successfully")
 	return db, nil
 }
 
-func (s *SqliteDatabase) Migrate() error {
+func (s *SqliteUserDatabase) Migrate() error {
 	db, err := s.Connect()
 	if err != nil {
 		return err
@@ -39,6 +37,5 @@ func (s *SqliteDatabase) Migrate() error {
 	if err := db.Table("archived_users").AutoMigrate(&models.User{}); err != nil {
 		return err
 	}
-	log.Println("✅ Migrated database successfully")
 	return nil
 }

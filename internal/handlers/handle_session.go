@@ -3,26 +3,26 @@ package handlers
 
 import (
 	"github.com/Varshi292/RoastWear/internal/models"
-	"github.com/Varshi292/RoastWear/internal/services"
+	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/gofiber/fiber/v2"
 )
 
 // SessionHandler ...
 //
 // Fields:
-//   - service: SessionService for managing session records
+//   - service: SessionRepository for managing session records
 type SessionHandler struct {
-	service *services.SessionService
+	service *repositories.SessionRepository
 }
 
 // NewSessionHandler ...
 //
 // Parameters:
-//   - service: pointer to SessionService
+//   - service: pointer to SessionRepository
 //
 // Returns:
 //   - *SessionHandler: a new instance of SessionHandler
-func NewSessionHandler(service *services.SessionService) *SessionHandler {
+func NewSessionHandler(service *repositories.SessionRepository) *SessionHandler {
 	return &SessionHandler{service: service}
 }
 
