@@ -1,32 +1,12 @@
 import React, { useState } from "react";
 import Draggable from "react-draggable";
+import { convertGifToStatic } from "../../utils/convertGifToStatic";
 
 // Shirt Assets
 import whiteShirt from "../../assets/images/tshirt-white.jpg";
 import blackShirt from "../../assets/images/tshirt-black.webp";
 import redShirt from "../../assets/images/tshirt-red.webp";
 import blueShirt from "../../assets/images/tshirt-blue.webp";
-
-// Convert GIF to static image (first frame only)
-const convertGifToStatic = (gifUrl) => {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = gifUrl;
-
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0);
-      const staticURL = canvas.toDataURL("image/png");
-      resolve(staticURL);
-    };
-
-    img.onerror = (err) => reject(err);
-  });
-};
 
 const Customize = () => {
   const [tenorLink, setTenorLink] = useState("");
@@ -38,14 +18,10 @@ const Customize = () => {
 
   const getShirtImage = () => {
     switch (shirtColor) {
-      case "black":
-        return blackShirt;
-      case "red":
-        return redShirt;
-      case "blue":
-        return blueShirt;
-      default:
-        return whiteShirt;
+      case "black": return blackShirt;
+      case "red": return redShirt;
+      case "blue": return blueShirt;
+      default: return whiteShirt;
     }
   };
 
@@ -53,7 +29,7 @@ const Customize = () => {
     const url = e.target.value;
     setUploadedImg(null);
     setOverlayText("");
-    setTenorLink("");
+    setTenorLink(url);
     setStaticGifImage(null);
 
     if (!url) return;
@@ -61,7 +37,6 @@ const Customize = () => {
     try {
       const staticImg = await convertGifToStatic(url);
       setStaticGifImage(staticImg);
-      setTenorLink(url);
     } catch (err) {
       console.error("GIF conversion failed:", err);
     }
@@ -93,7 +68,7 @@ const Customize = () => {
   return (
     <div className="min-h-screen bg-[#0b0c0f] text-gray-300 px-6 py-10 space-y-10">
       <h2 className="text-3xl font-bold text-center text-[#25aae1] drop-shadow-[0_0_8px_#25aae1]">
-        Customize Your T-Shirts 
+        Customize Your T-Shirts
       </h2>
 
       {/* Shirt Color Picker */}
@@ -143,6 +118,7 @@ const Customize = () => {
         </div>
       </div>
 
+      {/* Input Fields */}
       <div className="max-w-2xl mx-auto space-y-6">
         <div>
           <label className="font-semibold block mb-1">Tenor GIF URL:</label>
