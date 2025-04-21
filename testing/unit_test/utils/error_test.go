@@ -29,10 +29,10 @@ func TestNewErrUserExists(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			err := utils.NewErrUserExists(tc.username)
 			if tc.errorExpected && err == nil {
-				t.Errorf("Test %q: expected error but got nil", tc.name)
+				t.Errorf("Test %q: expected instantiation of ErrUserExists to pass but got nil", tc.name)
 			}
 			if !tc.errorExpected && err != nil {
-				t.Errorf("Test %q: expected no error but got %v", tc.name, err)
+				t.Errorf("Test %q: expected instantiation of ErrUserExists to fail but got %v", tc.name, err)
 			}
 		})
 	}
@@ -62,10 +62,10 @@ func TestNewErrEmailExists(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			err := utils.NewErrEmailExists(tc.email)
 			if tc.errorExpected && err == nil {
-				t.Errorf("Test %q: expected instanciation of ErrEmailExist to pass but got nil", tc.name)
+				t.Errorf("Test %q: expected instantiation of ErrEmailExist to pass but got nil", tc.name)
 			}
 			if !tc.errorExpected && err != nil {
-				t.Errorf("Test %q: expected instanciation of ErrEmailExist to fail but got %v", tc.name, err)
+				t.Errorf("Test %q: expected instantiation of ErrEmailExist to fail but got %v", tc.name, err)
 			}
 		})
 	}
