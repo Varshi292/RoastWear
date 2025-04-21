@@ -6,13 +6,19 @@ import (
 	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/Varshi292/RoastWear/internal/services"
 	"github.com/Varshi292/RoastWear/internal/sessions"
+	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
 	"log"
 )
 
 func InitializeApp() (*fiber.App, string) {
-	// Load .env
+	// Initialize config validator
+	if err := utils.InitializeValidator(); err != nil {
+		log.Fatalf("Failed to initialize validator: %s", err)
+	}
+
+	// Load .env config
 	cfg, err := loadConfig()
 	if err != nil {
 		log.Fatalf("Failed to load app config: %s", err)
@@ -36,16 +42,16 @@ func InitializeApp() (*fiber.App, string) {
 	sessions.InitializeSessionStore(sessCfg)
 
 	// Fiber setup
-	app := initializeFiber(appCfg)
+	app := InitializeFiber(appCfg)
 
 	// Static files
 	app.Static("/", "./frontend/build")
 	app.Static("/uploads", "./uploads")
 
 	// Databases
-	userDB := initializeDatabase(database.NewSqliteUserDatabase(appCfg.UserDBPath))
-	sessionDB := initializeDatabase(database.NewSqliteSessionDatabase(appCfg.SessionDBPath))
-	uploadDB := initializeDatabase(database.NewSqliteUploadDatabase(appCfg.UploadDBPath))
+	userDB := InitializeDatabase(database.NewSqliteUserDatabase(appCfg.UserDBPath))
+	sessionDB := InitializeDatabase(database.NewSqliteSessionDatabase(appCfg.SessionDBPath))
+	uploadDB := InitializeDatabase(database.NewSqliteUploadDatabase(appCfg.UploadDBPath))
 	log.Println("✅ Databases initialized successfully")
 
 	// Dependencies

@@ -6,7 +6,7 @@ import (
 
 type SessionConfig struct {
 	Key         string        `mapstructure:"SESSION_KEY" validate:"required"`
-	Path        string        `mapstructure:"SESSION_PATH" validate:"required"`
+	Path        string        `mapstructure:"SESSION_PATH" validate:"required,dir"`
 	MaxAge      time.Duration `mapstructure:"SESSION_MAX_AGE" validate:"required"`
 	Domain      string        `mapstructure:"SESSION_DOMAIN"`
 	Secure      bool          `mapstructure:"SESSION_SECURE"`

@@ -3,11 +3,9 @@ package bootstrap
 import (
 	"fmt"
 	"github.com/Varshi292/RoastWear/internal/config"
-	"github.com/go-playground/validator"
+	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/spf13/viper"
 )
-
-var validate = validator.New()
 
 func loadAppConfig(v *viper.Viper) (*config.AppConfig, error) {
 	// Default values
@@ -42,7 +40,7 @@ func loadAppConfig(v *viper.Viper) (*config.AppConfig, error) {
 	}
 
 	// Validate configuration
-	if err := validate.Struct(cfg); err != nil {
+	if err := utils.Validate.Struct(cfg); err != nil {
 		return nil, fmt.Errorf("failed to validate config: %w", err)
 	}
 
