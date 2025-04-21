@@ -1,4 +1,3 @@
-// src/components/Login/Register.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -9,18 +8,12 @@ const Register = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
+  const handleRegister = async (event) => {
     event.preventDefault();
-
-    if (!username || !email || !password) {
-      setMessage("All fields are required!");
-      return;
-    }
 
     try {
       const response = await fetch("http://localhost:7777/register", {
         method: "POST",
-        credentials : "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
       });
@@ -29,21 +22,22 @@ const Register = () => {
       setMessage(result.message);
 
       if (result.success) {
-        setTimeout(() => navigate("/"), 2000); // Redirect to dashboard after 2s
+        // ✅ Registration successful, redirect to login
+        setTimeout(() => navigate("/login"), 1500);
       }
     } catch (error) {
-      setMessage("Registration failed. Please try again.");
-      console.error(error);
+      console.error("Registration error:", error);
+      setMessage("Registration failed. Try again.");
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <form
-        className="bg-white p-8 rounded-md shadow-md"
-        onSubmit={handleSubmit}
+        onSubmit={handleRegister}
+        className="bg-white p-8 rounded-md shadow-md w-full max-w-sm"
       >
-        <h2 className="text-2xl font-bold mb-4">Register</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
 
         <input
           type="text"
@@ -51,6 +45,7 @@ const Register = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="block w-full p-2 border border-gray-300 rounded mt-2"
+          required
         />
 
         <input
@@ -58,7 +53,8 @@ const Register = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="block w-full p-2 border border-gray-300 rounded mt-2"
+          className="block w-full p-2 border border-gray-300 rounded mt-4"
+          required
         />
 
         <input
@@ -66,7 +62,8 @@ const Register = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="block w-full p-2 border border-gray-300 rounded mt-2"
+          className="block w-full p-2 border border-gray-300 rounded mt-4"
+          required
         />
 
         <button
@@ -77,14 +74,18 @@ const Register = () => {
         </button>
 
         {message && (
-          <p
-            className={`mt-2 text-sm ${
-              message.includes("success") ? "text-green-600" : "text-red-600"
-            }`}
-          >
-            {message}
-          </p>
+          <p className="text-sm mt-3 text-center text-green-600">{message}</p>
         )}
+
+        <p className="text-sm mt-4 text-center">
+          Already have an account?{" "}
+          <span
+            onClick={() => navigate("/login")}
+            className="text-blue-500 underline cursor-pointer"
+          >
+            Login
+          </span>
+        </p>
       </form>
     </div>
   );

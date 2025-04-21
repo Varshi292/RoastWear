@@ -1,6 +1,7 @@
 // src/components/Login/Login.js
 import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../Context/UserContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -8,6 +9,7 @@ const Login = () => {
   const [message, setMessage] = useState("");
   const [isSessionChecked, checkSession] = useState(false);
   const navigate = useNavigate();
+  const { setUserName } = useUser(); 
 
   useEffect(() => {
     const verifySession = async () => {
@@ -17,7 +19,9 @@ const Login = () => {
       });
       const result = await response.json();
       if (result.success) {
-        navigate("/"); // Redirect to dashboard if already logged in
+        localStorage.setItem("userName", username);
+        setUserName(username); 
+        navigate("/");
       } else {
         checkSession(true); // Session is not valid, enable form
       }
@@ -40,8 +44,11 @@ const Login = () => {
       setMessage(result.message);
 
       if (result.success) {
-        navigate("/"); // Redirect to dashboard
+        localStorage.setItem("userName", username);
+        setUserName(username); 
+        navigate("/");
       }
+      
     } catch (error) {
       setMessage("Login failed. Please try again.");
       console.error(error);

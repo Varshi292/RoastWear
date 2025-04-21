@@ -1,3 +1,4 @@
+// src/components/Navbar/Navbar.js
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import iconCart from "../../assets/images/iconCart.png";
@@ -6,17 +7,18 @@ import { toggleStatusTab } from "../../stores/cart";
 import "@fortawesome/fontawesome-free/css/all.css";
 import CartTab from "../Carts/CartTab";
 import { useSearch } from "../Context/SearchContext";
+import { useUser } from "../Context/UserContext";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [totalQuantity, setTotalQuantity] = useState(0);
-  const [isAuthenticated, setAuthentication] = useState(false);
-  const [search, setSearch] = useState("");
-  const { searchTerm, setSearchTerm } = useSearch();
-
-  const carts = useSelector((store) => store.cart.items);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { searchTerm, setSearchTerm } = useSearch();
+  const { userName, setUserName } = useUser(); // 🔥 use global context
+
+  const carts = useSelector((store) => store.cart.items);
 
   useEffect(() => {
     let total = 0;
@@ -26,19 +28,43 @@ const Navbar = () => {
 
   useEffect(() => {
     const checkSession = async () => {
-      const response = await fetch("http://localhost:7777/session/verify", {
-        method: "GET", // switch from POST to GET
-        credentials: "include",
-      });
-      const result = await response.json();
-      if (result.success) {
-        setAuthentication(true)
-      } else {
-        setAuthentication(false);
+      try {
+        const response = await fetch("http://localhost:7777/session/verify", {
+          method: "GET",
+          credentials: "include",
+        });
+        const result = await response.json();
+
+        if (result.success) {
+          const storedName = localStorage.getItem("userName");
+          if (storedName) setUserName(storedName);
+        } else {
+          localStorage.removeItem("userName");
+          setUserName("");
+        }
+      } catch (err) {
+        console.error("Session check failed:", err);
+        localStorage.removeItem("userName");
+        setUserName("");
       }
     };
+
     checkSession();
-  }, [navigate]);
+  }, [setUserName]);
+
+  const handleLogout = async () => {
+    try {
+      await fetch("http://localhost:7777/logout", {
+        method: "DELETE",
+        credentials: "include",
+      });
+      localStorage.removeItem("userName");
+      setUserName(""); // 🔥 clear context
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const handleOpenTabCart = () => dispatch(toggleStatusTab());
@@ -48,18 +74,6 @@ const Navbar = () => {
     const query = searchTerm.trim();
     if (query) {
       navigate(`/shop?search=${encodeURIComponent(query)}`);
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await fetch("http://localhost:7777/logout", {
-        method: "DELETE",
-        credentials: "include",
-      });
-      navigate("/login");
-    } catch (error) {
-      console.error("Logout failed:", error);
     }
   };
 
@@ -85,16 +99,18 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Navigation Links */}
+        {/* Navigation Links (Desktop) */}
         <div className="hidden md:flex items-center space-x-6 ml-6">
           <Link to="/" className="hover:text-[#ff2e63]">Home</Link>
           <Link to="/shop" className="hover:text-[#ff2e63]">Shop</Link>
           <Link to="/customize" className="hover:text-[#ff2e63]">Customize</Link>
           <Link to="/about" className="hover:text-[#ff2e63]">About</Link>
-          {isAuthenticated ? (
-              <button onClick={handleLogout} className="hover:text-[#ff2e63]">Logout</button>
+          {userName ? (
+            <button onClick={handleLogout} className="hover:text-[#ff2e63]">
+              Logout
+            </button>
           ) : (
-              <Link to="/login" className="hover:text-[#ff2e63]">Login</Link>
+            <Link to="/login" className="hover:text-[#ff2e63]">Login</Link>
           )}
         </div>
 
@@ -116,7 +132,7 @@ const Navbar = () => {
           </button>
         </form>
 
-        {/* Cart + Wishlist */}
+        {/* Wishlist & Cart */}
         <div className="hidden md:flex items-center space-x-4">
           <Link to="/wishlist" className="hover:text-[#ff2e63]">
             <i className="fas fa-heart mr-1"></i> Wishlist
@@ -133,7 +149,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Hamburger Menu (Mobile) */}
+        {/* Mobile Hamburger */}
         <button
           className="md:hidden text-2xl focus:outline-none"
           onClick={toggleMenu}
@@ -159,10 +175,10 @@ const Navbar = () => {
         <Link to="/shop" onClick={toggleMenu} className="hover:text-[#25aae1]">Shop</Link>
         <Link to="/customize" onClick={toggleMenu} className="hover:text-[#25aae1]">Customize</Link>
         <Link to="/about" onClick={toggleMenu} className="hover:text-[#25aae1]">About</Link>
-        {isAuthenticated ? (
-            <button onClick={handleLogout} className="hover:text-[#ff2e63]">Logout</button>
+        {userName ? (
+          <button onClick={handleLogout} className="hover:text-[#ff2e63]">Logout</button>
         ) : (
-            <Link to="/login" className="hover:text-[#ff2e63]">Login</Link>
+          <Link to="/login" className="hover:text-[#ff2e63]">Login</Link>
         )}
         <Link to="/wishlist" onClick={toggleMenu} className="hover:text-[#ff2e63]">
           <i className="far fa-heart"></i> Wishlist
@@ -172,7 +188,7 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* Cart Overlay Tab */}
+      {/* Cart Overlay */}
       <CartTab />
     </nav>
   );

@@ -77,61 +77,74 @@ const About = () => {
       </motion.div>
 
       {/* Image Slider */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="max-w-4xl mx-auto"
-      >
-        <h2 className="text-2xl font-bold mb-4 text-center text-white">🖼️ Our Journey</h2>
-        <Swiper
-          spaceBetween={30}
-          effect={"fade"}
-          modules={[EffectFade, Autoplay]}
-          autoplay={{ delay: 3500 }}
-          loop={true}
-          className="rounded-lg overflow-hidden shadow-lg"
-        >
-          <SwiperSlide>
-            <img
-              src="https://source.unsplash.com/featured/?teamwork"
-              alt="Team"
-              className="w-full h-[300px] object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://source.unsplash.com/featured/?fashion"
-              alt="Design Studio"
-              className="w-full h-[300px] object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://source.unsplash.com/featured/?printing"
-              alt="Printing Process"
-              className="w-full h-[300px] object-cover"
-            />
-          </SwiperSlide>
-        </Swiper>
-      </motion.div>
+  {/* Frontend Section */}
+<motion.div
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  transition={{ duration: 0.8 }}
+  viewport={{ once: true }}
+  className="max-w-4xl mx-auto"
+>
+  <h2 className="text-2xl font-bold mb-2 text-center text-white">Frontend Team</h2>
+  <Swiper
+    spaceBetween={30}
+    effect={"fade"}
+    modules={[EffectFade, Autoplay]}
+    autoplay={{ delay: 3000 }}
+    loop={true}
+    className="rounded-lg overflow-hidden shadow-lg mb-10"
+  >
+    <SwiperSlide>
+      <img
+        src="https://source.unsplash.com/featured/?frontend,developer"
+        alt="Frontend Developer"
+        className="w-full h-[300px] object-cover"
+      />
+    </SwiperSlide>
+    <SwiperSlide>
+      <img
+        src="https://source.unsplash.com/featured/?ui,ux"
+        alt="UI UX Designer"
+        className="w-full h-[300px] object-cover"
+      />
+    </SwiperSlide>
+  </Swiper>
+</motion.div>
 
-      {/* CTA Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-        className="text-center"
-      >
-        <h2 className="text-2xl font-semibold mb-2 text-white">
-          Ready to design your own?
-        </h2>
-        <button className="bg-[#25aae1] text-white px-6 py-2 rounded-lg hover:bg-[#1f8fcb] transition shadow-[0_0_10px_#25aae1]">
-          Start Designing
-        </button>
-      </motion.div>
+{/* Backend Section */}
+<motion.div
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  transition={{ duration: 0.8 }}
+  viewport={{ once: true }}
+  className="max-w-4xl mx-auto"
+>
+  <h2 className="text-2xl font-bold mb-2 text-center text-white"> Backend Team</h2>
+  <Swiper
+    spaceBetween={30}
+    effect={"fade"}
+    modules={[EffectFade, Autoplay]}
+    autoplay={{ delay: 3000 }}
+    loop={true}
+    className="rounded-lg overflow-hidden shadow-lg"
+  >
+    <SwiperSlide>
+      <img
+        src="https://source.unsplash.com/featured/?backend,developer"
+        alt="Backend Developer"
+        className="w-full h-[300px] object-cover"
+      />
+    </SwiperSlide>
+    <SwiperSlide>
+      <img
+        src="https://source.unsplash.com/featured/?api,code"
+        alt="API Developer"
+        className="w-full h-[300px] object-cover"
+      />
+    </SwiperSlide>
+  </Swiper>
+</motion.div>
+
 
     </div>
   );

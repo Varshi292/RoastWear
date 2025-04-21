@@ -44,6 +44,7 @@ func (handler *RegisterHandler) UserRegister(c *fiber.Ctx) error {
 			"details": err.Error(),
 		})
 	}
+
 	err := validate.Struct(request)
 	if err != nil {
 		validationErrors := err.(validator.ValidationErrors)
@@ -94,6 +95,7 @@ func (handler *RegisterHandler) UserRegister(c *fiber.Ctx) error {
 		}
 	}
 
+	// 💾 Proceed with user creation
 	if err := handler.userService.RegisterUser(&request); err != nil {
 		if utils.NewErrUserExists(request.Username).Error() == err.Error() {
 			return c.Status(fiber.StatusConflict).JSON(fiber.Map{
@@ -113,17 +115,9 @@ func (handler *RegisterHandler) UserRegister(c *fiber.Ctx) error {
 		})
 	}
 
-	sessionKey, err := utils.StartSession(c, handler.sessionRepo, request.Username)
-	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Internal server error has occurred. Please contact support.",
-			"details": err.Error(),
-		})
-	}
-
+	// ❌ No auto-login → just registration success
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"message":    "User registered successfully!",
-		"success":    true,
-		"session_id": sessionKey,
+		"message": "User registered successfully! Please log in to continue.",
+		"success": true,
 	})
 }

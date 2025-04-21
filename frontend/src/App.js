@@ -1,9 +1,8 @@
 // src/App.js
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./index.css";
 
-// Components
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import Shop from "./components/Shop/Shop";
@@ -14,16 +13,27 @@ import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
 import Detail from "./components/Home/detail";
 import WishlistPage from "./Pages/WishlistPage";
+import WelcomeBanner from "./components/Banners/WelcomeBanner";
+import { useUser } from "./components/Context/UserContext";
 
 function App() {
+  const { userName } = useUser();
+  const location = useLocation(); 
+
+  const isHomeRoute = location.pathname === "/" || location.pathname === "/home";
+
   return (
     <>
       <Navbar />
+
+   
+      {userName && isHomeRoute && <WelcomeBanner />}
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
-        <Route path="/customize" element={<Customize/>} />
+        <Route path="/customize" element={<Customize />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
