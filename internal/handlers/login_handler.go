@@ -5,10 +5,8 @@ import (
 	"github.com/Varshi292/RoastWear/internal/models"
 	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/Varshi292/RoastWear/internal/services"
-	"github.com/Varshi292/RoastWear/internal/sessions"
 	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
-	"time"
 )
 
 // LoginHandler ...
@@ -56,31 +54,10 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 	}
 
 	// Create a new session
-	sess, err := sessions.Store.Get(c)
+	sessionKey, err := utils.StartSession(c, handler.sessionRepo, request.Username)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Failed to create session.",
-			"details": err.Error(),
-		})
-	}
-	sess.Set("username", request.Username)
-	sess.Set("loginTime", time.Now().Unix())
-
-	// Wraps session in session model for GORM management and persistent storage
-	modelSession := &models.Session{Session: sess, SessionKey: sess.ID()}
-
-	// Stores session in database
-	if err := handler.sessionRepo.CreateSession(modelSession); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Failed to store session",
-			"details": err.Error(),
-		})
-	}
-
-	// Saves session as client-side cookie
-	if err := sess.Save(); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Failed to save session",
+			"message": "Internal server error has occurred. Please contact support.",
 			"details": err.Error(),
 		})
 	}
@@ -88,6 +65,6 @@ func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"message":    "Login successful!",
 		"success":    true,
-		"session_id": modelSession.SessionKey,
+		"session_id": sessionKey,
 	})
 }

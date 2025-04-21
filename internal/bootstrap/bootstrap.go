@@ -56,7 +56,7 @@ func InitializeApp() (*fiber.App, string) {
 	log.Println("✅ Dependencies initialized successfully")
 
 	// Handlers
-	registerHandler := handlers.NewRegisterHandler(userService)
+	registerHandler := handlers.NewRegisterHandler(userService, sessionRepo)
 	loginHandler := handlers.NewLoginHandler(authService, sessionRepo)
 	sessionHandler := handlers.NewSessionHandler(sessionRepo)
 	logoutHandler := handlers.NewLogoutHandler(sessionRepo)

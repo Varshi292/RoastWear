@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"github.com/Varshi292/RoastWear/internal/models"
+	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/Varshi292/RoastWear/internal/services"
 	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/go-playground/validator"
@@ -11,11 +12,15 @@ import (
 var validate = validator.New()
 
 type RegisterHandler struct {
-	service *services.UserService
+	userService *services.UserService
+	sessionRepo *repositories.SessionRepository
 }
 
-func NewRegisterHandler(service *services.UserService) *RegisterHandler {
-	return &RegisterHandler{service: service}
+func NewRegisterHandler(userService *services.UserService, sessionRepo *repositories.SessionRepository) *RegisterHandler {
+	return &RegisterHandler{
+		userService: userService,
+		sessionRepo: sessionRepo,
+	}
 }
 
 // UserRegister handles the user registration process.
@@ -89,7 +94,7 @@ func (handler *RegisterHandler) UserRegister(c *fiber.Ctx) error {
 		}
 	}
 
-	if err := handler.service.RegisterUser(&request); err != nil {
+	if err := handler.userService.RegisterUser(&request); err != nil {
 		if utils.NewErrUserExists(request.Username).Error() == err.Error() {
 			return c.Status(fiber.StatusConflict).JSON(fiber.Map{
 				"message": "Username '" + request.Username + "' is already taken.",
@@ -107,8 +112,18 @@ func (handler *RegisterHandler) UserRegister(c *fiber.Ctx) error {
 			"details": err.Error(),
 		})
 	}
+
+	sessionKey, err := utils.StartSession(c, handler.sessionRepo, request.Username)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Internal server error has occurred. Please contact support.",
+			"details": err.Error(),
+		})
+	}
+
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"message": "User registered successfully!",
-		"success": true,
+		"message":    "User registered successfully!",
+		"success":    true,
+		"session_id": sessionKey,
 	})
 }
