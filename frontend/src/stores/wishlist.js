@@ -10,6 +10,7 @@ const wishlistSlice = createSlice({
   initialState,
   reducers: {
     toggleWishlist(state, action) {
+      console.log("Hello");
       const productId = action.payload;
       if (state.items.includes(productId)) {
         state.items = state.items.filter((id) => id !== productId);

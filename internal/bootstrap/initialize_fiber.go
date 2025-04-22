@@ -6,14 +6,15 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
-func initializeFiber(config *config.AppConfig) *fiber.App {
+func initializeFiber(cfg *config.AppConfig) *fiber.App {
 	app := fiber.New()
-	x := cors.Config{
-		AllowOrigins:     "http://127.0.0.1:7777", // must match browser origin exactly
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "http://localhost:7777, http://127.0.0.1:7777",
 		AllowCredentials: true,
 		AllowMethods:     "GET,POST,OPTIONS,DELETE",
 		AllowHeaders:     "Content-Type,Authorization",
-	}
-	app.Use(cors.New(x))
+	}))
+
 	return app
 }
