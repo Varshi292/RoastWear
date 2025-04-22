@@ -104,6 +104,20 @@ No major issues left incomplete during this sprint. All planned tasks were succe
 - Smooth interactions and transitions (e.g., logo hover effect).
 - Clear UI feedback for actions (error messages, button clicks, etc.).
 
+## Persistent Shopping Cart
+
+- Shopping cart data is stored in a table in cart_data_database.db
+- Logging in will automatically sync shopping cart data with that account
+- Logging in with items in the shopping cart will automatically populate the cart database in the backend + items you saved previously
+- Updates are immediate
+
+## Purchase Items
+
+- Preliminary purchase functionality
+- Press button and a transaction is stored in the backend with all items that were in the shopping cart
+- On purchase of items, proper removal of items are done in the cart and in the backend tables
+- Transaction recipts are saved in a table "purchases" in cart_data_database.db
+
 ## List of tests
 
 ### Frontend
