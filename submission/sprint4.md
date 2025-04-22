@@ -130,30 +130,30 @@ No major issues left incomplete during this sprint. All planned tasks were succe
 ### Cypress
 
 - **Shop.cy.js**  
-  ![Shop Cypress](TestsImages/Image1.png)
+  ![Shop Cypress](../testing/TestsImages/Image1.png)
 
 - **customize.cy.js**  
-  ![Customize Cypress](TestsImages/Image2.png)
+  ![Customize Cypress](../testing/TestsImages/Image2.png)
 
 - **About.cy.js**  
-  ![About Cypress](TestsImages/Image3.png)
+  ![About Cypress](../testing/TestsImages/Image3.png)
 
 - **Contact.cy.js**  
-  ![Contact Cypress](TestsImages/Image4.png)
+  ![Contact Cypress](../testing/TestsImages/Image4.png)
 
 ### Unit tests
 
 - **Customize.test.js**  
-  ![Customize Unit Test](TestsImages/Image5.png)
+  ![Customize Unit Test](../testing/TestsImages/Image5.png)
 
 - **About.test.js**  
-  ![About Unit Test](TestsImages/Image6.png)
+  ![About Unit Test](../testing/TestsImages/Image6.png)
 
 - **Shop.test.js**  
-  ![Shop Unit Test](TestsImages/Image7.png)
+  ![Shop Unit Test](../testing/TestsImages/Image7.png)
 
 - **Contact.test.js**  
-  ![Contact Unit Test](TestsImages/Image8.png)
+  ![Contact Unit Test](../testing/TestsImages/Image8.png)
 
 ## Backend
 

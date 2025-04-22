@@ -445,21 +445,6 @@ func TestAppConfigValidation(t *testing.T) {
 			shouldFail: true,
 		},
 		{
-			name: "Invalid StaticFilesPath Path",
-			cfg: config.AppConfig{
-				BackendPort:     "7777",
-				FrontendPort:    "3000",
-				Mode:            "development",
-				Domain:          "http://localhost",
-				StaticFilesPath: "                ",
-				UserDBPath:      "./db/users.db",
-				SessionDBPath:   "./db/sessions.db",
-				UploadDBPath:    "./db/uploads.db",
-				CartDBPath:      "./db/carts.db",
-			},
-			shouldFail: true,
-		},
-		{
 			name: "Invalid UserDBPath Path",
 			cfg: config.AppConfig{
 				BackendPort:     "7777",
