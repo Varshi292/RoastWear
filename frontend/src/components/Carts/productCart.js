@@ -17,14 +17,25 @@ const ProductCart = ({ data }) => {
     ? wishlistItems.includes(id)
     : false;
 
-  const handleAddToCart = () => {
-    dispatch(
-      addToCart({
-        productId: id,
-        quantity: 1,
-      })
-    );
-  };
+    const handleAddToCart = async () => {
+      const quantity = 1;
+      const username = localStorage.getItem("userName");
+      const sessionid = "placeholder"; // or use actual session ID logic if applicable
+    
+      // Update UI immediately
+      dispatch(
+        addToCart({
+          productId: id,
+          quantity,
+          price,
+          username,
+          sessionid,
+        })
+      );
+    };
+    
+    
+
 
   const handleToggleWishlist = () => {
     dispatch(toggleWishlist(id));

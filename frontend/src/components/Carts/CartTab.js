@@ -1,12 +1,15 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import CartItem from "./CartItem";
-import { toggleStatusTab } from "../../stores/cart";
+import { useNavigate } from "react-router-dom";
+import CartItem from "./CartItem"; // adjust path if needed
+import { toggleStatusTab, clearCart } from "../../stores/cart";
+
 
 const CartTab = () => {
   const carts = useSelector((store) => store.cart.items);
   const statusTab = useSelector((store) => store.cart.statusTab);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleCloseTabCart = () => {
     dispatch(toggleStatusTab());
@@ -19,6 +22,38 @@ const CartTab = () => {
       return total + (product ? product.price * item.quantity : 0);
     }, 0);
   };
+
+  const purchaseItems = async () => {
+    const username = localStorage.getItem("userName");
+  
+    if (!username) {
+      alert("You must be logged in to complete the purchase.");
+      return;
+    }
+  
+    try {
+      const response = await fetch("http://localhost:7777/checkout", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username }),
+      });
+  
+      const result = await response.json();
+      if (result.success) {
+        console.log("✅ Checkout successful:", result.message);
+        dispatch(clearCart()); // ← clear frontend cart
+      } else {
+        console.error("❌ Checkout failed:", result.error);
+      }
+    } catch (err) {
+      console.error("❌ Error during checkout:", err);
+    }
+  };
+  
+  
 
   if (!statusTab) return null;
 
@@ -49,17 +84,16 @@ const CartTab = () => {
 
       {/* Footer */}
       <footer className="bg-[#1f1f1f] border-t border-gray-700 shadow-inner px-6 flex items-center justify-between">
-  <span className="text-xl font-bold text-gray-100">
-    Total: ${getTotalPrice().toFixed(2)}
-  </span>
-  <button
-    className="bg-[#25aae1] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#1f8fcb] transition"
-    onClick={() => console.log("Hello World")}
-  >
-    Proceed to Checkout
-  </button>
-</footer>
-
+        <span className="text-xl font-bold text-gray-100">
+          Total: ${getTotalPrice().toFixed(2)}
+        </span>
+        <button
+          className="bg-[#25aae1] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#1f8fcb] transition"
+          onClick={purchaseItems}
+        >
+          Proceed to Checkout
+        </button>
+      </footer>
     </div>
   );
 };
