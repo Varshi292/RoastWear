@@ -173,6 +173,7 @@ No major issues left incomplete during this sprint. All planned tasks were succe
 - session_test.go
 
 ### Postman API Tests
+![Postman_API Tests](../testing/TestsImages/postman_api_tests.png)
 - RegisterHandler
   - Valid: Valid Request
   - Invalid: Existing Username
