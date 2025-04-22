@@ -9,7 +9,7 @@ import (
 func initializeFiber(config *config.AppConfig) *fiber.App {
 	app := fiber.New()
 	x := cors.Config{
-		AllowOrigins:     config.Domain + ":" + config.FrontendPort,
+		AllowOrigins:     "http://127.0.0.1:7777", // must match browser origin exactly
 		AllowCredentials: true,
 		AllowMethods:     "GET,POST,OPTIONS,DELETE",
 		AllowHeaders:     "Content-Type,Authorization",
