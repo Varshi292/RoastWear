@@ -30,10 +30,16 @@ const Detail = () => {
 
   const handleAddToCart = () => {
     if (product) {
+      const username = localStorage.getItem("userName");
+      const sessionid = "placeholder"; // Optional unless required
+
       dispatch(
         addToCart({
           productId: product.id,
           quantity,
+          price: product.price,
+          username,
+          sessionid,
         })
       );
     }
@@ -44,8 +50,6 @@ const Detail = () => {
   return (
     <div className="flex justify-center items-center min-h-screen px-4 bg-[#0b0c0f] text-gray-200 pb-4">
       <div className="bg-[#1e1e1e] p-10 rounded-xl shadow-xl max-w-6xl w-full border border-[#2c2c2c] min-h-[500px]">
-        
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div className="flex justify-center">
             <img

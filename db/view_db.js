@@ -1,7 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const readline = require('readline');
 
-const DB_PATH = './users.db'; // Change this to your database path
+const DB_PATH = './cart_data_database.db'; // Change this to your database path
 
 const db = new sqlite3.Database(DB_PATH, (err) => {
   if (err) {

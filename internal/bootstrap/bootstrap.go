@@ -1,6 +1,8 @@
 package bootstrap
 
 import (
+	"log"
+
 	_ "github.com/Varshi292/RoastWear/docs"
 	"github.com/Varshi292/RoastWear/internal/database"
 	"github.com/Varshi292/RoastWear/internal/handlers"
@@ -9,8 +11,7 @@ import (
 	"github.com/Varshi292/RoastWear/internal/sessions"
 	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
-	"github.com/swaggo/fiber-swagger"
-	"log"
+	swagger "github.com/swaggo/fiber-swagger"
 )
 
 // InitializeApp initializes and sets up the entire application, including configuration, services, routes, and databases.
@@ -31,54 +32,73 @@ func InitializeApp() (*fiber.App, string) {
 	// Load .env config
 	cfg, err := loadConfig()
 	if err != nil {
-		log.Fatalf("Failed to load app config: %s", err)
+		log.Fatalf("❌ Failed to load .env config: %s", err)
 	}
-	log.Printf("✅ .env configuration loaded successfully.")
+	log.Println("✅ .env configuration loaded successfully.")
 
-	// Load app config
 	appCfg, err := loadAppConfig(cfg)
 	if err != nil {
-		log.Fatalf("Failed to load app config: %s", err)
+		log.Fatalf("❌ Failed to load app config: %s", err)
 	}
-	log.Printf("✅ App configuration loaded successfully.")
+	log.Println("✅ App configuration loaded successfully.")
 
-	// Load session config
 	sessCfg, err := loadSessionConfig(cfg)
 	if err != nil {
-		log.Fatalf("Failed to load session config: %s", err)
+		log.Fatalf("❌ Failed to load session config: %s", err)
 	}
-	log.Printf("✅ Session configuration loaded successfully.")
-
+	log.Println("✅ Session configuration loaded successfully.")
 	sessions.InitializeSessionStore(sessCfg)
 
-	// Fiber setup
+	// Initialize Fiber
 	app := InitializeFiber(appCfg)
 
-	// Static files
+	// Serve static files
 	app.Static("/", "./frontend/build")
 	app.Static("/uploads", "./uploads")
+	app.Static("/static", "./frontend/build/static") // Serve /static for JS/CSS assets
 
-	// Databases
+	// Initialize databases
 	userDB := InitializeDatabase(database.NewSqliteUserDatabase(appCfg.UserDBPath))
 	sessionDB := InitializeDatabase(database.NewSqliteSessionDatabase(appCfg.SessionDBPath))
 	uploadDB := InitializeDatabase(database.NewSqliteUploadDatabase(appCfg.UploadDBPath))
-	log.Println("✅ Databases initialized successfully")
+	cartDB := database.NewSqliteCartDatabase(appCfg.CartDBPath)
+	purchaseDB := database.NewSqlitePurchaseDatabase(appCfg.CartDBPath) // temporarily reusing CartDBPath
 
-	// Dependencies
+	cartConn, err := cartDB.Connect()
+	if err != nil {
+		log.Fatalf("❌ Failed to connect to cart DB: %v", err)
+	}
+	if err := cartDB.Migrate(); err != nil {
+		log.Fatalf("❌ Failed to migrate cart DB: %v", err)
+	}
+
+	purchaseConn, err := purchaseDB.Connect()
+	if err != nil {
+		log.Fatalf("❌ Failed to connect to purchase DB: %v", err)
+	}
+	if err := purchaseDB.Migrate(); err != nil {
+		log.Fatalf("❌ Failed to migrate purchase DB: %v", err)
+	}
+
+	log.Println("✅ All databases initialized successfully.")
+
+	// Initialize repositories and services
 	userRepo := &repositories.UserRepository{Db: userDB}
-	userService := services.NewUserService(userRepo)
 	sessionRepo := repositories.NewSessionRepository(sessionDB)
 	authService := services.NewAuthService(userRepo, sessionRepo)
-	log.Println("✅ Dependencies initialized successfully")
+	userService := services.NewUserService(userRepo)
+	cartRepo := repositories.NewCartRepository(cartConn)
+	purchaseRepo := repositories.NewPurchaseRepository(purchaseConn)
 
-	// Handlers
+	// Initialize handlers
 	registerHandler := handlers.NewRegisterHandler(userService, sessionRepo)
 	loginHandler := handlers.NewLoginHandler(authService, sessionRepo)
 	sessionHandler := handlers.NewSessionHandler(sessionRepo)
 	logoutHandler := handlers.NewLogoutHandler(sessionRepo)
-	checkoutHandler := handlers.NewCheckoutHandler(sessionRepo, sessionDB)
+	cartHandler := handlers.NewCartHandler(cartRepo)
+	purchaseHandler := handlers.NewPurchaseHandler(cartRepo, purchaseRepo)
 
-	// Routes
+	// Register routes
 	app.Post("/register", registerHandler.UserRegister)
 	app.Post("/login", loginHandler.UserLogin)
 	app.Delete("/logout", logoutHandler.UserLogout)
@@ -87,11 +107,14 @@ func InitializeApp() (*fiber.App, string) {
 	app.Get("/session/verify", sessionHandler.VerifySession)
 	app.Delete("/session/delete", sessionHandler.DeleteSession)
 
-	app.Post("/checkout", checkoutHandler.CheckoutCart)
 	app.Post("/post_user_image", handlers.UploadImageHandler(uploadDB))
 	app.Get("/get_user_images", handlers.GetImagesHandler(uploadDB))
 
-	app.Get("/docs/*", fiberSwagger.WrapHandler)
+	app.Post("/cart/modify", cartHandler.ModifyCart)
+	app.Post("/checkout", purchaseHandler.Checkout)
+
+	app.Get("/docs/*", swagger.HandlerDefault)
+	app.Get("/cart/items", cartHandler.GetCartItems)
 
 	return app, ":" + appCfg.BackendPort
 }

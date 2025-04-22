@@ -14,18 +14,44 @@ const CartItem = ({ data }) => {
     setDetail(findDetail || {});
   }, [productId]);
 
+  const username = localStorage.getItem("userName");
+  const sessionid = "placeholder"; // optional, if you're using cookies
+
   const handleMinusQuantity = () => {
     if (quantity > 1) {
-      dispatch(changeQuantity({ productId, quantity: quantity - 1 }));
+      dispatch(
+        changeQuantity({
+          productId,
+          quantity: quantity - 1,
+          price: detail.price,
+          username,
+          sessionid,
+        })
+      );
     }
   };
 
   const handlePlusQuantity = () => {
-    dispatch(changeQuantity({ productId, quantity: quantity + 1 }));
+    dispatch(
+      changeQuantity({
+        productId,
+        quantity: quantity + 1,
+        price: detail.price,
+        username,
+        sessionid,
+      })
+    );
   };
 
   const handleRemove = () => {
-    dispatch(removeFromCart(productId));
+    dispatch(
+      removeFromCart({
+        productId,
+        username,
+        sessionid,
+        price: detail.price,
+      })
+    );
   };
 
   if (!detail) return null;
@@ -58,6 +84,7 @@ const CartItem = ({ data }) => {
           >
             <FaMinus />
           </button>
+
           <span className="px-2 font-medium text-white">{quantity}</span>
           <button
             onClick={handlePlusQuantity}
@@ -67,7 +94,8 @@ const CartItem = ({ data }) => {
             <FaPlus />
           </button>
         </div>
-        {/* Trash icon on the same row */}
+
+        {/* Trash icon */}
         <button
           onClick={handleRemove}
           className="text-gray-500 hover:text-rose-500 transition"

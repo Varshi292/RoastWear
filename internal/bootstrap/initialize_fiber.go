@@ -8,12 +8,13 @@ import (
 
 func InitializeFiber(config *config.AppConfig) *fiber.App {
 	app := fiber.New()
-	x := cors.Config{
-		AllowOrigins:     config.Domain + ":" + config.FrontendPort,
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "http://localhost:7777, http://127.0.0.1:7777",
 		AllowCredentials: true,
 		AllowMethods:     "GET,POST,OPTIONS,DELETE",
 		AllowHeaders:     "Content-Type,Authorization",
-	}
-	app.Use(cors.New(x))
+	}))
+
 	return app
 }
