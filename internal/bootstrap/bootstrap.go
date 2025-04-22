@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	_ "github.com/Varshi292/RoastWear/docs"
 	"github.com/Varshi292/RoastWear/internal/database"
 	"github.com/Varshi292/RoastWear/internal/handlers"
 	"github.com/Varshi292/RoastWear/internal/repositories"
@@ -40,6 +41,7 @@ func InitializeApp() (*fiber.App, string) {
 	}
 	log.Println("✅ App configuration loaded successfully.")
 
+	// Load session config
 	sessCfg, err := loadSessionConfig(cfg)
 	if err != nil {
 		log.Fatalf("❌ Failed to load session config: %s", err)
