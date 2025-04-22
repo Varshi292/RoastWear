@@ -24,6 +24,18 @@ func NewLoginHandler(auth *services.AuthService, sessionRepo *repositories.Sessi
 }
 
 // UserLogin handles the login process for a user.
+// @Summary User login
+// @Description This endpoint handles the login process for a user by verifying credentials and starting a session.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param userLoginRequest body models.UserLoginRequest true "User login details"
+// @Success 200 {object} map[string]interface{} {"message": "Login successful!", "success": true, "session_id": "string"}
+// @Failure 400 {object} map[string]string {"message": "Invalid request format!", "details": "string"}
+// @Failure 422 {object} map[string]string {"message": "All fields are required!", "details": "string"}
+// @Failure 401 {object} map[string]string {"message": "Invalid credentials. Please check that you have provided the correct username and password.", "details": "string"}
+// @Failure 500 {object} map[string]string {"message": "Internal server error has occurred. Please contact support.", "details": "string"}
+// @Router /login [post]
 func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 	var request models.UserLoginRequest
 	if err := c.BodyParser(&request); err != nil {

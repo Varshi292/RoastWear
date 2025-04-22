@@ -3,6 +3,7 @@ package bootstrap
 import (
 	"fmt"
 	"github.com/Varshi292/RoastWear/internal/config"
+	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/spf13/viper"
 )
 
@@ -20,7 +21,7 @@ func loadSessionConfig(v *viper.Viper) (*config.SessionConfig, error) {
 	}
 
 	// Validate configuration
-	if err := validate.Struct(cfg); err != nil {
+	if err := utils.Validate.Struct(cfg); err != nil {
 		return nil, fmt.Errorf("failed to validate config: %w", err)
 	}
 	return &cfg, nil

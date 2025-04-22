@@ -27,6 +27,9 @@
 - Updated the site’s template to a neon theme using neon blue and pink with a dark background, enhancing visual appeal.
 - Successfully implemented the Login and Register components to manage user authentication.
 - Added backend to prevent registration with existing usernames or email IDs, displaying appropriate error messages.
+- Implemented session tracking and storage on a persistent database.
+- Added stricter validation on user input with corrective error messages.
+- Added a Logout feature to log the user out, delete their session, and destroy their cookie.
 
 ## Issues Not Completed and Reasons
 
@@ -130,34 +133,97 @@ No major issues left incomplete during this sprint. All planned tasks were succe
 ### Cypress
 
 - **Shop.cy.js**  
-  ![Shop Cypress](TestsImages/Image1.png)
+  ![Shop Cypress](../testing/TestsImages/Image1.png)
 
 - **customize.cy.js**  
-  ![Customize Cypress](TestsImages/Image2.png)
+  ![Customize Cypress](../testing/TestsImages/Image2.png)
 
 - **About.cy.js**  
-  ![About Cypress](TestsImages/Image3.png)
+  ![About Cypress](../testing/TestsImages/Image3.png)
 
 - **Contact.cy.js**  
-  ![Contact Cypress](TestsImages/Image4.png)
+  ![Contact Cypress](../testing/TestsImages/Image4.png)
 
 ### Unit tests
 
 - **Customize.test.js**  
-  ![Customize Unit Test](TestsImages/Image5.png)
+  ![Customize Unit Test](../testing/TestsImages/Image5.png)
 
 - **About.test.js**  
-  ![About Unit Test](TestsImages/Image6.png)
+  ![About Unit Test](../testing/TestsImages/Image6.png)
 
 - **Shop.test.js**  
-  ![Shop Unit Test](TestsImages/Image7.png)
+  ![Shop Unit Test](../testing/TestsImages/Image7.png)
 
 - **Contact.test.js**  
-  ![Contact Unit Test](TestsImages/Image8.png)
+  ![Contact Unit Test](../testing/TestsImages/Image8.png)
 
 ## Backend
+### Unit Tests
+- app_config_test.go
+- session_config_test.go
+- session_repository_test.go
+- error_test.go
+- password_test.go
+- start_session_test.go
+- start_session_test.go
+- validator_test.go
+#### Previous Tests
+- media_test.go
+- session_test.go
 
-- Backend Video
-- Backend API Documentation
-- Frontend Video
-- Backend Video
+### Postman API Tests
+- RegisterHandler
+  - Valid: Valid Request
+  - Invalid: Existing Username
+  - Invalid: Existing Email
+  - Valid: Existing Password
+  - Invalid: Missing Username
+  - Invalid: Missing Email
+  - Invalid: Missing Password
+  - Invalid: Username Too Short
+  - Invalid: Username Too Long
+  - Invalid: Email Missing ‘@’ Symbol
+  - Invalid: Email Missing Domain
+  - Invalid: Email Missing User
+  - Invalid: Email Has Whitespace
+  - Invalid: Email Has Invalid Characters
+  - Invalid: Email Has Consecutive Dots
+  - Invalid: Email Has ‘.’ After ‘@’
+  - Valid: Minimum Password Length
+  - Valid: Maximum Password Length
+  - Invalid: Password Too Short
+  - Invalid: Password Too Long
+  - Invalid: Empty Request
+- LoginHandler
+  - Valid: Login Successfully
+  - Invalid: Incorrect Username
+  - Invalid: Incorrect Password
+  - Invalid: Missing Username
+  - Invalid: Missing Password
+  - Invalid: Empty Request
+- SessionHandler
+  - Valid: Create Session
+  - Invalid: Create Existing Session
+  - Valid: Verify Session
+  - Valid: Delete Session
+- LogoutHandler
+  - Valid: Logout Successfully
+
+#### Previous Tests
+- Register New User
+- Register Existing Username
+- Register Existing Email
+- Register Existing Password
+- Register Empty
+- Register No Username
+- Register No Email
+- Register No Password
+- Register invalid Request
+- Login User
+- Login Wrong Username
+- Login Wrong Password
+- Login No Username
+- Login No Password
+- Login Empty
+- Login Invalid Request

@@ -1,18 +1,34 @@
 package bootstrap
 
 import (
+	_ "github.com/Varshi292/RoastWear/docs"
 	"github.com/Varshi292/RoastWear/internal/database"
 	"github.com/Varshi292/RoastWear/internal/handlers"
 	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/Varshi292/RoastWear/internal/services"
 	"github.com/Varshi292/RoastWear/internal/sessions"
+	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/swagger"
+	"github.com/swaggo/fiber-swagger"
 	"log"
 )
 
+// InitializeApp initializes and sets up the entire application, including configuration, services, routes, and databases.
+// @Title RoastWear API
+// @Description This is the API for RoastWear, a system for user management, session handling, and image uploads.
+// @Version 1.0
+// @BasePath /
+// @Schemes http
+// @Consumes application/json
+// @Produces application/json
+// @Tags Auth, Cart, Session, Images
 func InitializeApp() (*fiber.App, string) {
-	// Load .env
+	// Initialize config validator
+	if err := utils.InitializeValidator(); err != nil {
+		log.Fatalf("Failed to initialize validator: %s", err)
+	}
+
+	// Load .env config
 	cfg, err := loadConfig()
 	if err != nil {
 		log.Fatalf("Failed to load app config: %s", err)
@@ -36,16 +52,16 @@ func InitializeApp() (*fiber.App, string) {
 	sessions.InitializeSessionStore(sessCfg)
 
 	// Fiber setup
-	app := initializeFiber(appCfg)
+	app := InitializeFiber(appCfg)
 
 	// Static files
 	app.Static("/", "./frontend/build")
 	app.Static("/uploads", "./uploads")
 
 	// Databases
-	userDB := initializeDatabase(database.NewSqliteUserDatabase(appCfg.UserDBPath))
-	sessionDB := initializeDatabase(database.NewSqliteSessionDatabase(appCfg.SessionDBPath))
-	uploadDB := initializeDatabase(database.NewSqliteUploadDatabase(appCfg.UploadDBPath))
+	userDB := InitializeDatabase(database.NewSqliteUserDatabase(appCfg.UserDBPath))
+	sessionDB := InitializeDatabase(database.NewSqliteSessionDatabase(appCfg.SessionDBPath))
+	uploadDB := InitializeDatabase(database.NewSqliteUploadDatabase(appCfg.UploadDBPath))
 	log.Println("✅ Databases initialized successfully")
 
 	// Dependencies
@@ -75,7 +91,7 @@ func InitializeApp() (*fiber.App, string) {
 	app.Post("/post_user_image", handlers.UploadImageHandler(uploadDB))
 	app.Get("/get_user_images", handlers.GetImagesHandler(uploadDB))
 
-	app.Get("/docs/*", swagger.HandlerDefault)
+	app.Get("/docs/*", fiberSwagger.WrapHandler)
 
 	return app, ":" + appCfg.BackendPort
 }

@@ -27,7 +27,6 @@ func NewSessionHandler(repo *repositories.SessionRepository) *SessionHandler {
 // @Failure 400 {object} fiber.Map "Invalid session data"
 // @Failure 500 {object} fiber.Map "Failed to create session"
 // @Router /session/create [post]
-
 func (h *SessionHandler) CreateSession(c *fiber.Ctx) error {
 	var sess models.Session
 	if err := c.BodyParser(&sess); err != nil {

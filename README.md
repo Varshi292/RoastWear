@@ -32,17 +32,25 @@ RoastWear is a web application that brings humor, creativity, and customization 
     ```bash
     cd frontend
     npm install
-    npm run build
+    ```
+
+3. **Run the Frontend Server:**
+    ```bash
+    npm start
+    ```
+
+3. **Navigate to Root Folder:**
+    ```bash
     cd ../
     ```
 
-3. **Run the Application:**
+5. **Run the Backend Server:**
     ```bash
     go run cmd/main.go
     ```
 
-4. **Access the App:**
-    - Open your browser and go to `http://localhost:7777`.
+6. **Access the App:**
+    - Open your browser and go to `http://localhost:3000`.
 
-5. **View Documentation:**
+7. **View Documentation:**
    - Go to `http://localhost:7777/docs` to view the Swagger API documentation for the app.

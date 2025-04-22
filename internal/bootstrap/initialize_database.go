@@ -3,16 +3,15 @@ package bootstrap
 import (
 	"github.com/Varshi292/RoastWear/internal/interfaces"
 	"gorm.io/gorm"
-	"log"
 )
 
-func initializeDatabase(db interfaces.Database) *gorm.DB {
+func InitializeDatabase(db interfaces.Database) *gorm.DB {
 	gormDB, err := db.Connect()
 	if err != nil {
-		log.Fatalf("Database connection error: %s", err)
+		panic("Database connection error: " + err.Error())
 	}
 	if err := db.Migrate(); err != nil {
-		log.Fatalf("Database migration error: %s", err)
+		panic("Database migration error: " + err.Error())
 	}
 	return gormDB
 }
