@@ -113,7 +113,8 @@ func InitializeApp() (*fiber.App, string) {
 	app.Post("/cart/modify", cartHandler.ModifyCart)
 	app.Post("/checkout", purchaseHandler.Checkout)
 
-	app.Get("/docs/*", swagger.HandlerDefault)
+	app.Get("/docs/*", swagger.WrapHandler)
+
 	app.Get("/cart/items", cartHandler.GetCartItems)
 
 	return app, ":" + appCfg.BackendPort
