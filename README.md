@@ -22,30 +22,30 @@ RoastWear is a web application that brings humor, creativity, and customization 
 
 ### **Steps - Development**
 
-1. **Clone the Repository:**
+1. **Clone the Repository:** Clone the project and navigate to the root folder 'Roastwear'  
     ```bash
     git clone https://github.com/Varshi292/RoastWear.git
     cd RoastWear
     ```
 
-2. **Install Frontend Dependencies and Build:**
+2. **Install Frontend Dependencies and Build:** 
     ```bash
     cd frontend
     npm install
     npm run build
     ```
 
-3. **Run the Frontend Server:**
+3. **Run the Frontend Server:**  Starts the Frontend server
     ```bash
     npm start
     ```
 
-3. **Navigate to Root Folder:**
+3. **Navigate to Root Folder in a new Terminal :** or simply navigate back to root folder 'Roastwear' [cd ../] 
     ```bash
-    cd ../
+    cd RoastWear
     ```
 
-5. **Run the Backend Server:**
+5. **Run the Backend Server:** Starts the Backend Go server 
     ```bash
     go run cmd/main.go
     ```
