@@ -6,8 +6,9 @@ import (
 	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/Varshi292/RoastWear/internal/services"
 	"github.com/Varshi292/RoastWear/internal/sessions"
+	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/swagger"
+	fiberSwagger "github.com/swaggo/fiber-swagger"
 	"log"
 )
 
@@ -47,7 +48,7 @@ func InitializeApp() (*fiber.App, string) {
 	sessions.InitializeSessionStore(sessCfg)
 
 	// Initialize Fiber
-	app := initializeFiber(appCfg)
+	app := InitializeFiber(appCfg)
 
 	// Serve static files
 	app.Static("/", "./frontend/build")

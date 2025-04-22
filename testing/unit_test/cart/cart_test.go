@@ -1,4 +1,4 @@
-package repositories_test
+package cart_test
 
 import (
 	"bytes"
