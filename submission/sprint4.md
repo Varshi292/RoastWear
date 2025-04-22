@@ -191,10 +191,10 @@ No major issues left incomplete during this sprint. All planned tasks were succe
 - validator_test.go  
   ![Validator Test](../testing/TestsImages/validator_test.png)
 - cart_test.go (encompasses the cart functionality and the purchasing functionality)
-  ![CartAndPurchase1 Test](../testing/TestsImages/cart1.png)
-  ![CartAndPurchase2 Test](../testing/TestsImages/cart2.png)
-  ![CartAndPurchase3 Test](../testing/TestsImages/cart3.png)
-  ![CartAndPurchase4 Test](../testing/TestsImages/cart4.png)
+  ![CartAndPurchase1 Test](../testing/TestsImages/cart1.PNG)
+  ![CartAndPurchase2 Test](../testing/TestsImages/cart2.PNG)
+  ![CartAndPurchase3 Test](../testing/TestsImages/cart3.PNG)
+  ![CartAndPurchase4 Test](../testing/TestsImages/cart4.PNG)
 #### Previous Tests
 - media_test.go  
   ![Media Test](../testing/TestsImages/media_test.png)
