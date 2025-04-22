@@ -7,6 +7,7 @@
 - As a user, I want a fun and visually engaging experience, such as an interactive logo and neon theme, so that the website feels modern and playful.
 - As a user, I want to securely log in or register so that my data and activity can be saved.
 - As a user, I want to be notified if my username or email is already registered, so I can avoid duplicate accounts and use valid credentials.
+- As a user, I want to be able to access my cart from anywhere.
 
 ## Issues Planned to Address
 
@@ -17,6 +18,7 @@
 - Redesign the website layout using a neon (blue and pink) theme on a dark background.
 - Build secure and functional Login and Register components.
 - Add validation to prevent users from registering with an already used username or email.
+- Persistent Shopping cart functionality
 
 ## Successfully Completed
 
@@ -30,6 +32,8 @@
 - Implemented session tracking and storage on a persistent database.
 - Added stricter validation on user input with corrective error messages.
 - Added a Logout feature to log the user out, delete their session, and destroy their cookie.
+- Purchase button triggers a transaction, everything in the cart gets cleared and an entry is stored in the purchases table in cart_data_database.db
+- Adding things to the shopping cart stores that information in the backend, thus signing in on another device will populate the cart again
 
 ## Issues Not Completed and Reasons
 
