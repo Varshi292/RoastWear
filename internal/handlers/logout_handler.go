@@ -19,6 +19,14 @@ func NewLogoutHandler(sessionRepo *repositories.SessionRepository) *LogoutHandle
 }
 
 // UserLogout handles the login process for a user.
+// @Summary      Logs out a user
+// @Description  Destroys the user session and logs the user out
+// @Tags         auth
+// @Accept       json
+// @Produce      json
+// @Success      200 {object} map[string]interface{} "Logged out successfully"
+// @Failure      500 {object} map[string]interface{} "Internal server error"
+// @Router       /logout [post]
 func (h *LogoutHandler) UserLogout(c *fiber.Ctx) error {
 	sess, err := sessions.Store.Get(c)
 	if err != nil {

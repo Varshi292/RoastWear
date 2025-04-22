@@ -14,6 +14,18 @@ import (
 
 var ImageDir = "./user_images"
 
+// UploadImageHandler handles image upload requests
+// @Summary Upload a PNG image
+// @Description Allows a user to upload a PNG image with a username. The image is stored on the server and the metadata is saved to the database.
+// @Tags Images
+// @Accept multipart/form-data
+// @Produce json
+// @Param username formData string true "Username of the user uploading the image"
+// @Param image formData file true "PNG image file"
+// @Success 200 {object} map[string]string {"message": "Image uploaded and data saved.", "filepath": "string"}
+// @Failure 400 {object} map[string]string {"error": "string"}
+// @Failure 500 {object} map[string]string {"error": "string"}
+// @Router /upload [post]
 func UploadImageHandler(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		username := c.FormValue("username")

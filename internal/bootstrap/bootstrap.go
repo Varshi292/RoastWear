@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	_ "github.com/Varshi292/RoastWear/docs"
 	"github.com/Varshi292/RoastWear/internal/database"
 	"github.com/Varshi292/RoastWear/internal/handlers"
 	"github.com/Varshi292/RoastWear/internal/repositories"
@@ -8,10 +9,19 @@ import (
 	"github.com/Varshi292/RoastWear/internal/sessions"
 	"github.com/Varshi292/RoastWear/internal/utils"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/swagger"
+	"github.com/swaggo/fiber-swagger"
 	"log"
 )
 
+// InitializeApp initializes and sets up the entire application, including configuration, services, routes, and databases.
+// @Title RoastWear API
+// @Description This is the API for RoastWear, a system for user management, session handling, and image uploads.
+// @Version 1.0
+// @BasePath /
+// @Schemes http
+// @Consumes application/json
+// @Produces application/json
+// @Tags Auth, Cart, Session, Images
 func InitializeApp() (*fiber.App, string) {
 	// Initialize config validator
 	if err := utils.InitializeValidator(); err != nil {
@@ -81,7 +91,7 @@ func InitializeApp() (*fiber.App, string) {
 	app.Post("/post_user_image", handlers.UploadImageHandler(uploadDB))
 	app.Get("/get_user_images", handlers.GetImagesHandler(uploadDB))
 
-	app.Get("/docs/*", swagger.HandlerDefault)
+	app.Get("/docs/*", fiberSwagger.WrapHandler)
 
 	return app, ":" + appCfg.BackendPort
 }

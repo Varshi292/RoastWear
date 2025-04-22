@@ -6,6 +6,18 @@ import (
 	"gorm.io/gorm"
 )
 
+// GetImagesHandler retrieves images uploaded by a user.
+// @Summary Get uploaded images for a user
+// @Description This endpoint allows retrieving a list of filepaths for the images uploaded by a user, based on the username.
+// @Tags Images
+// @Accept json
+// @Produce json
+// @Param username query string true "Username of the user"
+// @Success 200 {object} map[string][]string {"images": []string}
+// @Failure 400 {object} map[string]string {"error": "Username is required."}
+// @Failure 404 {object} map[string]string {"message": "No images found for this user."}
+// @Failure 500 {object} map[string]string {"error": "Failed to retrieve image data."}
+// @Router /images [get]
 func GetImagesHandler(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		username := c.Query("username")

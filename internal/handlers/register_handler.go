@@ -5,11 +5,9 @@ import (
 	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/Varshi292/RoastWear/internal/services"
 	"github.com/Varshi292/RoastWear/internal/utils"
-	"github.com/go-playground/validator"
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 )
-
-var validate = validator.New()
 
 type RegisterHandler struct {
 	userService *services.UserService
@@ -45,7 +43,7 @@ func (handler *RegisterHandler) UserRegister(c *fiber.Ctx) error {
 		})
 	}
 
-	err := validate.Struct(request)
+	err := utils.Validate.Struct(request)
 	if err != nil {
 		validationErrors := err.(validator.ValidationErrors)
 		for _, err := range validationErrors {
@@ -87,7 +85,7 @@ func (handler *RegisterHandler) UserRegister(c *fiber.Ctx) error {
 					})
 				case "min", "max":
 					return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
-						"message": "Password must be between 8 and 128 characters.",
+						"message": "Password must be between 8 and 72 characters.",
 						"details": err,
 					})
 				}

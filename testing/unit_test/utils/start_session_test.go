@@ -5,13 +5,12 @@ import (
 	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"testing"
 )
 
-var db *gorm.DB
-
-func createTestDB() (*gorm.DB, error) {
-	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
+func initializeMockDB() (*gorm.DB, error) {
+	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{Logger: logger.Default.LogMode(logger.Silent)})
 	if err != nil {
 		return nil, err
 	}
@@ -22,8 +21,7 @@ func createTestDB() (*gorm.DB, error) {
 }
 
 func TestCreateSession(t *testing.T) {
-	var err error
-	db, err = createTestDB()
+	db, err := initializeMockDB()
 	if err != nil {
 		t.Fatal("failed to create test database")
 	}
@@ -62,8 +60,7 @@ func TestCreateSession(t *testing.T) {
 }
 
 func TestGetSession(t *testing.T) {
-	var err error
-	db, err = createTestDB()
+	db, err := initializeMockDB()
 	if err != nil {
 		t.Fatal("failed to create test database")
 	}
@@ -115,12 +112,11 @@ func TestGetSession(t *testing.T) {
 }
 
 func TestDeleteSession(t *testing.T) {
-	var err error
-	db, err = createTestDB()
+	db, err := initializeMockDB()
 	if err != nil {
 		t.Fatal("failed to create test database")
 	}
-	db, err = createTestDB()
+	db, err = initializeMockDB()
 	type testCase struct {
 		name          string
 		sessionID     string
