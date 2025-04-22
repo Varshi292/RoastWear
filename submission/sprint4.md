@@ -262,7 +262,7 @@ No major issues left incomplete during this sprint. All planned tasks were succe
 - Login Empty
 - Login Invalid Request
 
-## Backend Documentation
+## Backend Documentation (made with swagger)
 [documentation](https://drive.google.com/file/d/1a2xLB0NRfVYNj1A-tClNUbTyPDDB79sH/view?usp=sharing)
 
 
