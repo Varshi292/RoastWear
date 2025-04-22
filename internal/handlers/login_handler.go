@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"errors"
+
 	"github.com/Varshi292/RoastWear/internal/models"
 	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/Varshi292/RoastWear/internal/services"
@@ -30,12 +31,13 @@ func NewLoginHandler(auth *services.AuthService, sessionRepo *repositories.Sessi
 // @Accept json
 // @Produce json
 // @Param userLoginRequest body models.UserLoginRequest true "User login details"
-// @Success 200 {object} map[string]interface{} {"message": "Login successful!", "success": true, "session_id": "string"}
-// @Failure 400 {object} map[string]string {"message": "Invalid request format!", "details": "string"}
-// @Failure 422 {object} map[string]string {"message": "All fields are required!", "details": "string"}
-// @Failure 401 {object} map[string]string {"message": "Invalid credentials. Please check that you have provided the correct username and password.", "details": "string"}
-// @Failure 500 {object} map[string]string {"message": "Internal server error has occurred. Please contact support.", "details": "string"}
+// @Success 200 {object} models.LoginSuccessResponse
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 422 {object} models.ErrorResponse
+// @Failure 401 {object} models.ErrorResponse
+// @Failure 500 {object} models.ErrorResponse
 // @Router /login [post]
+
 func (handler *LoginHandler) UserLogin(c *fiber.Ctx) error {
 	var request models.UserLoginRequest
 	if err := c.BodyParser(&request); err != nil {

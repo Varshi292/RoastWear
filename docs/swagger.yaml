@@ -1,21 +1,96 @@
 basePath: /
 definitions:
-  models.UserLoginRequest:
+  handlers.CheckoutRequest:
     properties:
-      password:
+      username:
+        type: string
+    type: object
+  handlers.ErrorResponse:
+    properties:
+      details:
+        type: string
+      error:
+        type: string
+    type: object
+  handlers.MessageResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  handlers.ModifyCartRequest:
+    properties:
+      productid:
+        type: integer
+      quantity:
+        type: integer
+      unitPrice:
+        type: number
+      username:
+        type: string
+    type: object
+  handlers.PurchaseResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  models.CartItem:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      productid:
+        type: integer
+      quantity:
+        type: integer
+      total_price:
+        type: string
+      updated_at:
         type: string
       username:
         type: string
-    required:
-    - password
-    - username
+    type: object
+  models.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  models.GenericResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  models.SessionDoc:
+    description: This is the session model used for Swagger documentation
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      session_key:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.UploadSuccessResponse:
+    properties:
+      filepath:
+        type: string
+      message:
+        type: string
     type: object
   models.UserRegisterRequest:
     properties:
       email:
         type: string
       password:
-        maxLength: 128
+        maxLength: 72
         minLength: 8
         type: string
       username:
@@ -34,41 +109,109 @@ info:
   title: RoastWear API
   version: "1.0"
 paths:
-  /login:
-    post:
+  /cart/items:
+    get:
       consumes:
       - application/json
-      description: Authenticates a user with their credentials (username and password).
-        Returns a session token on successful login. In case of errors, it provides
-        appropriate status codes and error messages for invalid credentials, missing
-        fields, or server issues.
+      description: Fetches all cart items associated with a username
       parameters:
-      - description: User login credentials (username and password)
-        in: body
-        name: credentials
+      - description: Username
+        in: query
+        name: username
         required: true
-        schema:
-          $ref: '#/definitions/models.UserLoginRequest'
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: Login successful, returns a success message
+          description: OK
           schema:
-            additionalProperties: true
-            type: object
+            items:
+              $ref: '#/definitions/models.CartItem'
+            type: array
         "400":
-          description: Bad request, invalid request format
+          description: Bad Request
           schema:
-            additionalProperties: true
-            type: object
-        "401":
-          description: Unauthorized, invalid username or password
+            $ref: '#/definitions/handlers.MessageResponse'
+        "500":
+          description: Internal Server Error
           schema:
-            additionalProperties: true
-            type: object
-        "422":
-          description: Validation error, missing required fields (username and password)
+            $ref: '#/definitions/handlers.MessageResponse'
+      summary: Get cart items
+      tags:
+      - cart
+  /cart/modify:
+    post:
+      consumes:
+      - application/json
+      description: Adds an item to the user's cart, updates quantity, or deletes it
+        if quantity is 0.
+      parameters:
+      - description: Cart item details
+        in: body
+        name: cartItem
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.ModifyCartRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.MessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.MessageResponse'
+      summary: Modify user's cart
+      tags:
+      - cart
+  /checkout:
+    post:
+      consumes:
+      - application/json
+      description: Processes the items in the user's cart, creates a purchase record,
+        and clears the cart.
+      parameters:
+      - description: Checkout request with username
+        in: body
+        name: checkoutRequest
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CheckoutRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Purchase completed and cart cleared
+          schema:
+            $ref: '#/definitions/handlers.PurchaseResponse'
+        "400":
+          description: Invalid input or empty cart
+          schema:
+            $ref: '#/definitions/handlers.ErrorResponse'
+        "500":
+          description: Internal server error during purchase processing
+          schema:
+            $ref: '#/definitions/handlers.ErrorResponse'
+      summary: Checkout and complete purchase
+      tags:
+      - purchase
+  /logout:
+    post:
+      consumes:
+      - application/json
+      description: Destroys the user session and logs the user out
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Logged out successfully
           schema:
             additionalProperties: true
             type: object
@@ -77,7 +220,7 @@ paths:
           schema:
             additionalProperties: true
             type: object
-      summary: User login
+      summary: Logs out a user
       tags:
       - auth
   /register:
@@ -127,4 +270,121 @@ paths:
       summary: User registration
       tags:
       - auth
+  /session/create:
+    post:
+      consumes:
+      - application/json
+      description: Stores a session in the database (used for login/session tracking)
+      parameters:
+      - description: Session data
+        in: body
+        name: session
+        required: true
+        schema:
+          $ref: '#/definitions/models.SessionDoc'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Session successfully created
+          schema:
+            $ref: '#/definitions/models.GenericResponse'
+        "400":
+          description: Invalid session data
+          schema:
+            $ref: '#/definitions/models.GenericResponse'
+        "500":
+          description: Failed to create session
+          schema:
+            $ref: '#/definitions/models.GenericResponse'
+      summary: Create a new user session
+      tags:
+      - Session
+  /session/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Removes a session from the database
+      parameters:
+      - description: Session details
+        in: body
+        name: session
+        required: true
+        schema:
+          $ref: '#/definitions/models.SessionDoc'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GenericResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GenericResponse'
+      summary: Delete session
+      tags:
+      - Session
+  /session/verify:
+    post:
+      consumes:
+      - application/json
+      description: Validates a session by username and session ID
+      parameters:
+      - description: Session details
+        in: body
+        name: session
+        required: true
+        schema:
+          $ref: '#/definitions/models.SessionDoc'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GenericResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.GenericResponse'
+      summary: Verify session
+      tags:
+      - Session
+  /upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Allows a user to upload a PNG image with a username. The image
+        is stored on the server and the metadata is saved to the database.
+      parameters:
+      - description: Username of the user uploading the image
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: PNG image file
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UploadSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Upload a PNG image
+      tags:
+      - Images
 swagger: "2.0"

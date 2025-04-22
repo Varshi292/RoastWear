@@ -22,83 +22,87 @@ func NewSessionHandler(repo *repositories.SessionRepository) *SessionHandler {
 // @Tags Session
 // @Accept json
 // @Produce json
-// @Param session body models.Session true "Session data"
-// @Success 201 {object} fiber.Map "Session successfully created"
-// @Failure 400 {object} fiber.Map "Invalid session data"
-// @Failure 500 {object} fiber.Map "Failed to create session"
+// @Param session body models.SessionDoc true "Session data"
+// @Success 201 {object} models.GenericResponse "Session successfully created"
+// @Failure 400 {object} models.GenericResponse "Invalid session data"
+// @Failure 500 {object} models.GenericResponse "Failed to create session"
 // @Router /session/create [post]
 func (h *SessionHandler) CreateSession(c *fiber.Ctx) error {
 	var sess models.Session
 	if err := c.BodyParser(&sess); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": "Invalid request format!",
-			"details": err,
+		return c.Status(fiber.StatusBadRequest).JSON(models.GenericResponse{
+			Message: "Invalid request format!",
+			Success: false,
 		})
 	}
 	if err := h.repo.CreateSession(&sess); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Failed to create session!",
-			"details": err,
+		return c.Status(fiber.StatusInternalServerError).JSON(models.GenericResponse{
+			Message: "Failed to create session!",
+			Success: false,
 		})
 	}
-	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"message": "Session created successfully!",
-		"success": true,
+	return c.Status(fiber.StatusCreated).JSON(models.GenericResponse{
+		Message: "Session created successfully!",
+		Success: true,
 	})
 }
 
-// VerifySession ...
+// VerifySession godoc
 // @Summary Verify session
 // @Description Validates a session by username and session ID
+// @Tags Session
 // @Accept json
 // @Produce json
-// @Param session body models.Session true "Session details"
-// @Success 200 {object} map[string]string
-// @Failure 401 {object} map[string]string
+// @Param session body models.SessionDoc true "Session details"
+// @Success 200 {object} models.GenericResponse
+// @Failure 401 {object} models.GenericResponse
 // @Router /session/verify [post]
 func (h *SessionHandler) VerifySession(c *fiber.Ctx) error {
 	sess, err := sessions.Store.Get(c)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": "Invalid request format!",
-			"details": err.Error()})
+		return c.Status(fiber.StatusBadRequest).JSON(models.GenericResponse{
+			Message: "Invalid request format!",
+			Success: false,
+		})
 	}
 	if err := h.repo.GetSession(sess.ID()); err != nil {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"message": "Session not found!",
-			"details": err.Error()})
+		return c.Status(fiber.StatusUnauthorized).JSON(models.GenericResponse{
+			Message: "Session not found!",
+			Success: false,
+		})
 	}
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message": "Session found!",
-		"success": true,
+	return c.Status(fiber.StatusOK).JSON(models.GenericResponse{
+		Message: "Session found!",
+		Success: true,
 	})
 }
 
-// DeleteSession ...
+// DeleteSession godoc
 // @Summary Delete session
 // @Description Removes a session from the database
+// @Tags Session
 // @Accept json
 // @Produce json
-// @Param session body models.Session true "Session details"
-// @Success 200 {object} map[string]string
-// @Failure 500 {object} map[string]string
+// @Param session body models.SessionDoc true "Session details"
+// @Success 200 {object} models.GenericResponse
+// @Failure 500 {object} models.GenericResponse
 // @Router /session/delete [delete]
 func (h *SessionHandler) DeleteSession(c *fiber.Ctx) error {
 	var sess models.Session
 	if err := c.BodyParser(&sess); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": "Invalid request format!",
-			"details": err,
+		return c.Status(fiber.StatusBadRequest).JSON(models.GenericResponse{
+			Message: "Invalid request format!",
+			Success: false,
 		})
 	}
 	if err := h.repo.DeleteSession(sess.SessionKey); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Failed to delete session!",
-			"details": err,
+		return c.Status(fiber.StatusInternalServerError).JSON(models.GenericResponse{
+			Message: "Failed to delete session!",
+			Success: false,
 		})
 	}
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message": "Session successfully deleted!",
-		"success": true,
+	return c.Status(fiber.StatusOK).JSON(models.GenericResponse{
+		Message: "Session successfully deleted!",
+		Success: true,
 	})
 }

@@ -2,14 +2,15 @@ package handlers
 
 import (
 	"fmt"
-	"github.com/Varshi292/RoastWear/internal/models"
-	"github.com/gofiber/fiber/v2"
-	"gorm.io/gorm"
 	"io"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/Varshi292/RoastWear/internal/models"
+	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
 )
 
 var ImageDir = "./user_images"
@@ -22,9 +23,9 @@ var ImageDir = "./user_images"
 // @Produce json
 // @Param username formData string true "Username of the user uploading the image"
 // @Param image formData file true "PNG image file"
-// @Success 200 {object} map[string]string {"message": "Image uploaded and data saved.", "filepath": "string"}
-// @Failure 400 {object} map[string]string {"error": "string"}
-// @Failure 500 {object} map[string]string {"error": "string"}
+// @Success 200 {object} models.UploadSuccessResponse
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 500 {object} models.ErrorResponse
 // @Router /upload [post]
 func UploadImageHandler(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {

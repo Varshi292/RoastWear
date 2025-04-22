@@ -1,79 +1,105 @@
 package handlers
 
 import (
-	"fmt"
-
 	"github.com/Varshi292/RoastWear/internal/repositories"
 	"github.com/gofiber/fiber/v2"
 )
 
+// ModifyCartRequest represents the request body to modify a cart item
+type ModifyCartRequest struct {
+	Username  string  `json:"username"`
+	ProductID int     `json:"productid"`
+	Quantity  int     `json:"quantity"`
+	UnitPrice float64 `json:"unitPrice"`
+}
+
+// MessageResponse is a generic response with a message
+type MessageResponse struct {
+	Message string `json:"message"`
+	Success bool   `json:"success,omitempty"`
+}
+
+// CartHandler handles cart operations
 type CartHandler struct {
 	Repo *repositories.CartRepository
 }
 
+// NewCartHandler initializes a new CartHandler
 func NewCartHandler(repo *repositories.CartRepository) *CartHandler {
 	return &CartHandler{Repo: repo}
 }
 
+// ModifyCart modifies the user's cart (add, update, or delete items).
+// @Summary      Modify user's cart
+// @Description  Adds an item to the user's cart, updates quantity, or deletes it if quantity is 0.
+// @Tags         cart
+// @Accept       json
+// @Produce      json
+// @Param        cartItem body handlers.ModifyCartRequest true "Cart item details"
+// @Success      200 {object} handlers.MessageResponse
+// @Failure      400 {object} handlers.MessageResponse
+// @Failure      500 {object} handlers.MessageResponse
+// @Router       /cart/modify [post]
 func (h *CartHandler) ModifyCart(c *fiber.Ctx) error {
-	fmt.Println("📥 Received request to /cart/modify")
-
-	var body struct {
-		Username  string  `json:"username"`
-		ProductID int     `json:"productid"`
-		Quantity  int     `json:"quantity"`
-		UnitPrice float64 `json:"unitPrice"`
-	}
-
-	bodyRaw := c.Body()
-	fmt.Println("🧾 Raw body:", string(bodyRaw))
+	var body ModifyCartRequest
 
 	if err := c.BodyParser(&body); err != nil {
-		fmt.Println("❌ Failed to parse body:", err)
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request"})
+		return c.Status(fiber.StatusBadRequest).JSON(MessageResponse{
+			Message: "Invalid request",
+		})
 	}
 
 	if body.Username == "" {
-		fmt.Println("❌ Missing username in request")
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "You must be logged in to store cart information."})
+		return c.Status(fiber.StatusUnauthorized).JSON(MessageResponse{
+			Message: "You must be logged in to store cart information.",
+		})
 	}
 
-	fmt.Printf("🧑 Username: %s\n", body.Username)
-	fmt.Printf("🛒 ProductID: %d\n", body.ProductID)
-	fmt.Printf("🔢 Quantity: %d\n", body.Quantity)
-	fmt.Printf("💲 TotalPrice: %.2f\n", body.UnitPrice)
-
-	// If quantity is zero, delete the row
+	// Delete if quantity is 0
 	if body.Quantity == 0 {
 		err := h.Repo.DeleteItem(body.Username, body.ProductID)
 		if err != nil {
-			fmt.Println("❌ Error deleting cart item in DB:", err)
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete cart item"})
+			return c.Status(fiber.StatusInternalServerError).JSON(MessageResponse{
+				Message: "Failed to delete cart item",
+			})
 		}
-		fmt.Println("✅ Cart item deleted successfully")
-		return c.JSON(fiber.Map{"message": "Cart item deleted"})
+		return c.JSON(MessageResponse{Message: "Cart item deleted"})
 	}
 
 	if err := h.Repo.ModifyItem(body.Username, body.ProductID, body.Quantity, body.UnitPrice); err != nil {
-		fmt.Println("❌ Error updating cart in DB:", err)
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update cart"})
+		return c.Status(fiber.StatusInternalServerError).JSON(MessageResponse{
+			Message: "Failed to update cart",
+		})
 	}
 
-	fmt.Println("✅ Cart modification successful")
-	return c.JSON(fiber.Map{"message": "Cart updated"})
+	return c.JSON(MessageResponse{Message: "Cart updated"})
 }
 
+// GetCartItems returns the user's cart items
+// @Summary      Get cart items
+// @Description  Fetches all cart items associated with a username
+// @Tags         cart
+// @Accept       json
+// @Produce      json
+// @Param        username query string true "Username"
+// @Success      200 {array} models.CartItem
+// @Failure      400 {object} handlers.MessageResponse
+// @Failure      500 {object} handlers.MessageResponse
+// @Router       /cart/items [get]
 func (h *CartHandler) GetCartItems(c *fiber.Ctx) error {
-	username := c.Query("username") // grab from query param
+	username := c.Query("username")
 
 	if username == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Username is required"})
+		return c.Status(fiber.StatusBadRequest).JSON(MessageResponse{
+			Message: "Username is required",
+		})
 	}
 
 	items, err := h.Repo.GetItemsByUsername(username)
 	if err != nil {
-		fmt.Println("❌ Failed to get cart items:", err)
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Could not retrieve cart items"})
+		return c.Status(fiber.StatusInternalServerError).JSON(MessageResponse{
+			Message: "Could not retrieve cart items",
+		})
 	}
 
 	return c.JSON(items)
