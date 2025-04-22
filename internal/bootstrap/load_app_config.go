@@ -17,7 +17,8 @@ func loadAppConfig(v *viper.Viper) (*config.AppConfig, error) {
 	v.SetDefault("USER_DB_PATH", "./db/users.db")
 	v.SetDefault("SESSION_DB_PATH", "./db/sessions.db")
 	v.SetDefault("UPLOAD_DB_PATH", "./db/uploads.db")
-	v.SetDefault("CART_DB_PATH", "./db/carts.db")
+	v.SetDefault("CART_DB_PATH", "./db/carts_data_database.db")
+	v.SetDefault("PURCHASE_DB_PATH", "./db/purchases.db")
 
 	v.SetDefault("STATIC_FILES_PATH", "./frontend/build")
 

@@ -61,7 +61,7 @@ func InitializeApp() (*fiber.App, string) {
 	sessionDB := InitializeDatabase(database.NewSqliteSessionDatabase(appCfg.SessionDBPath))
 	uploadDB := InitializeDatabase(database.NewSqliteUploadDatabase(appCfg.UploadDBPath))
 	cartDB := database.NewSqliteCartDatabase(appCfg.CartDBPath)
-	purchaseDB := database.NewSqlitePurchaseDatabase(appCfg.CartDBPath) // temporarily reusing CartDBPath
+	purchaseDB := database.NewSqlitePurchaseDatabase(appCfg.PurchaseDBPath)
 
 	cartConn, err := cartDB.Connect()
 	if err != nil {
