@@ -27,6 +27,9 @@
 - Updated the site’s template to a neon theme using neon blue and pink with a dark background, enhancing visual appeal.
 - Successfully implemented the Login and Register components to manage user authentication.
 - Added backend to prevent registration with existing usernames or email IDs, displaying appropriate error messages.
+- Implemented session tracking and storage on a persistent database.
+- Added stricter validation on user input with corrective error messages.
+- Added a Logout feature to log the user out, delete their session, and destroy their cookie.
 
 ## Issues Not Completed and Reasons
 
@@ -156,8 +159,71 @@ No major issues left incomplete during this sprint. All planned tasks were succe
   ![Contact Unit Test](../testing/TestsImages/Image8.png)
 
 ## Backend
+### Unit Tests
+- app_config_test.go
+- session_config_test.go
+- session_repository_test.go
+- error_test.go
+- password_test.go
+- start_session_test.go
+- start_session_test.go
+- validator_test.go
+#### Previous Tests
+- media_test.go
+- session_test.go
 
-- Backend Video
-- Backend API Documentation
-- Frontend Video
-- Backend Video
+### Postman API Tests
+- RegisterHandler
+  - Valid: Valid Request
+  - Invalid: Existing Username
+  - Invalid: Existing Email
+  - Valid: Existing Password
+  - Invalid: Missing Username
+  - Invalid: Missing Email
+  - Invalid: Missing Password
+  - Invalid: Username Too Short
+  - Invalid: Username Too Long
+  - Invalid: Email Missing ‘@’ Symbol
+  - Invalid: Email Missing Domain
+  - Invalid: Email Missing User
+  - Invalid: Email Has Whitespace
+  - Invalid: Email Has Invalid Characters
+  - Invalid: Email Has Consecutive Dots
+  - Invalid: Email Has ‘.’ After ‘@’
+  - Valid: Minimum Password Length
+  - Valid: Maximum Password Length
+  - Invalid: Password Too Short
+  - Invalid: Password Too Long
+  - Invalid: Empty Request
+- LoginHandler
+  - Valid: Login Successfully
+  - Invalid: Incorrect Username
+  - Invalid: Incorrect Password
+  - Invalid: Missing Username
+  - Invalid: Missing Password
+  - Invalid: Empty Request
+- SessionHandler
+  - Valid: Create Session
+  - Invalid: Create Existing Session
+  - Valid: Verify Session
+  - Valid: Delete Session
+- LogoutHandler
+  - Valid: Logout Successfully
+
+#### Previous Tests
+- Register New User
+- Register Existing Username
+- Register Existing Email
+- Register Existing Password
+- Register Empty
+- Register No Username
+- Register No Email
+- Register No Password
+- Register invalid Request
+- Login User
+- Login Wrong Username
+- Login Wrong Password
+- Login No Username
+- Login No Password
+- Login Empty
+- Login Invalid Request
