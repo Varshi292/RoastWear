@@ -1,8 +1,6 @@
-# 🧾 Sprint 4 Report
+# Sprint 4 Report
 
----
-
-## ✅ User Stories
+## User Stories
 
 - As a user, I want to customize my own T-shirts by uploading images or adding text, so that I can see a preview of my personalized design.
 - As a user, I want to browse available T-shirts on a shop page with a search bar so I can easily find specific designs by name.
@@ -10,9 +8,7 @@
 - As a user, I want to securely log in or register so that my data and activity can be saved.
 - As a user, I want to be notified if my username or email is already registered, so I can avoid duplicate accounts and use valid credentials.
 
----
-
-## 🛠️ Issues Planned to Address
+## Issues Planned to Address
 
 - Implement About Page to give users an overview of the website and its purpose.
 - Develop Customize Page with functionality to upload images/text and preview them on a T-shirt.
@@ -22,9 +18,7 @@
 - Build secure and functional Login and Register components.
 - Add validation to prevent users from registering with an already used username or email.
 
----
-
-## ✅ Successfully Completed
+## Successfully Completed
 
 - Developed the About Page to introduce the site and its functionality.
 - Fully implemented the Customize Page allowing image/text uploads and real-time T-shirt previews.
@@ -34,119 +28,136 @@
 - Successfully implemented the Login and Register components to manage user authentication.
 - Added backend to prevent registration with existing usernames or email IDs, displaying appropriate error messages.
 
----
+## Issues Not Completed and Reasons
 
-## ❌ Issues Not Completed and Reasons
+No major issues left incomplete during this sprint. All planned tasks were successfully completed.
 
-> No major issues left incomplete during this sprint. All planned tasks were successfully completed.
+## All functionalities implemented
 
----
+### Pages
 
-## 💡 All Functionalities Implemented
+**About Page** – Displays information about the brand, mission, and customization features.
 
----
+**Customize Page** – Allows users to:
 
-### 📄 Pages
+- Upload an image (e.g., meme, logo, art).
+- Enter custom text.
+- Live preview of the design on a T-shirt.
 
-- **About Page** – Displays information about the brand, mission, and customization features.
-- **Customize Page** – Allows users to:
-  - Upload an image (e.g., meme, logo, art)
-  - Enter custom text
-  - Live preview of the design on a T-shirt
-- **Shop Page** – Showcases all available T-shirts with:
-  - Product image, name, price, and description
-  - A search bar that filters T-shirts by name
-- **Login/Register Page** – Secure authentication system with:
-  - Form validation
-  - Password masking
-  - Error messages for duplicate username/email
+**Shop Page** – Showcases all available T-shirts with:
 
----
+- Product image, name, price, and description.
+- A search bar that filters T-shirts by name.
 
-### 🎨 Design Features
+**Login/Register Page** – Secure authentication system with:
 
-- **Interactive Logo with Meme Glasses** – Glasses animate (move up) on hover, adding a fun brand identity.
-- **Neon-Themed UI** – Website redesigned using:
-  - Neon blue and pink color palette
-  - Dark background for contrast
-  - Modern and eye-catching look
+- Form validation.
+- Password masking.
+- Error messages for duplicate username/email.
 
----
+### Design Features
 
-### 🔐 Authentication & Validation
+**Interactive Logo with Meme Glasses** – Glasses animate (move up) on hover, adding a fun brand identity.
 
-**User Registration**
+**Neon-Themed UI** – Website redesigned using:
 
-- Validates empty fields and invalid inputs
-- Prevents duplicate registration by checking if username or email already exists
+- Neon blue and pink color palette.
+- Dark background for contrast.
+- Modern and eye-catching look.
 
-**User Login**
+## Authentication & Validation
 
-- Validates credentials before login
-- Displays error messages for invalid attempts
+### User Registration
 
----
+- Validates empty fields and invalid inputs.
+- Prevents duplicate registration by checking if username or email already exists.
 
-### 🧠 State Management
+### User Login
 
-**Redux Integration**
+- Validates credentials before login.
+- Displays error messages for invalid attempts.
 
-- Manages user state (e.g., logged in/out)
-- Manages cart items and product listings
+## State Management
 
----
+### Redux Integration
 
-### ♻️ Reusable Components
+- Manages user state (e.g., logged in/out).
+- Manages cart items and product listings.
 
-- **Navbar**
+## Reusable Components
 
-  - Includes navigation links
-  - Shows user authentication status (login/logout)
+**Navbar**
 
-- **Search Bar**
-  - Dynamically filters products in real-time
+- Includes navigation links.
+- Shows user authentication status (login/logout).
 
----
+**Search Bar**
 
-## 📱 Responsiveness & UX
+- Dynamically filters products in real-time.
 
-- Fully responsive layout – works well on mobile, tablet, and desktop
-- Smooth interactions and transitions (e.g., logo hover effect)
-- Clear UI feedback for actions (error messages, button clicks, etc.)
+## Responsiveness & UX
 
----
+- Fully responsive layout – works well on mobile, tablet, and desktop.
+- Smooth interactions and transitions (e.g., logo hover effect).
+- Clear UI feedback for actions (error messages, button clicks, etc.).
 
-## 🧪 List of Tests
+## List of tests
 
-### Frontend Unit Tests
+### Frontend
 
-- `Customize.test.js`
-- `About.test.js`
-- `Contact.test.js`
-- `Shop.test.js`
-- `Register.test.js`
-- `Home.test.js`
-- `Navbar.test.js`
-- `CartItem.test.js`
-- `CartTab.test.js`
-- `Login.test.js`
+- Customize.test.js
+- About.test.js
+- Contact.test.js
+- Shop.test.js
+- about.cy.js
+- customize.cy.js
+- contact.cy.js
+- Shop.cy.js
 
-### Cypress (E2E) Tests
+### Previous tests
 
-- `about.cy.js`
-- `customize.cy.js`
-- `contact.cy.js`
-- `Shop.cy.js`
-- `login.cy.js`
-- `wishlist.cy.js`
-- `navbar.cy.js`
-- `productDetail.cy.js`
+- Register.test.js
+- Home.test.js
+- Navbar.test.js
+- CartItem.test.js
+- CartTab.test.js
+- Login.test.js
+- login.cy.js
+- wishlist.cy.js
+- navbar.cy.js
+- productDetail.cy.js
 
----
+### Cypress
 
-## 🧰 Backend
+- **Shop.cy.js**  
+  ![Shop Cypress](TestsImages/Image1.png)
 
-- **Backend Video**
-- **Backend API Documentation**
-- **Frontend Video**
-- **Backend Video (Listed Twice?)**
+- **customize.cy.js**  
+  ![Customize Cypress](TestsImages/Image2.png)
+
+- **About.cy.js**  
+  ![About Cypress](TestsImages/Image3.png)
+
+- **Contact.cy.js**  
+  ![Contact Cypress](TestsImages/Image4.png)
+
+### Unit tests
+
+- **Customize.test.js**  
+  ![Customize Unit Test](TestsImages/Image5.png)
+
+- **About.test.js**  
+  ![About Unit Test](TestsImages/Image6.png)
+
+- **Shop.test.js**  
+  ![Shop Unit Test](TestsImages/Image7.png)
+
+- **Contact.test.js**  
+  ![Contact Unit Test](TestsImages/Image8.png)
+
+## Backend
+
+- Backend Video
+- Backend API Documentation
+- Frontend Video
+- Backend Video
