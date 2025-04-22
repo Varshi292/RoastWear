@@ -177,7 +177,6 @@ No major issues left incomplete during this sprint. All planned tasks were succe
 - validator_test.go  
   ![Validator Test](../testing/TestsImages/validator_test.png)
 - cart_test.go  
-  ![Cart Test](../testing/TestsImages/cart_test.png)
 #### Previous Tests
 - media_test.go  
   ![Media Test](../testing/TestsImages/media_test.png)
